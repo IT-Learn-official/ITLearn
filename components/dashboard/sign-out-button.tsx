@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { authClient } from "@/lib/auth/client";
+import { authClient } from "@/lib/auth-client";
 
 export function SignOutButton() {
   const [isSigningOut, setIsSigningOut] = useState(false);
