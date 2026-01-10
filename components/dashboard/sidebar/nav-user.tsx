@@ -37,8 +37,7 @@ export function NavUser() {
   const { data, isPending } = authClient.useSession();
   const user = data?.user;
 
-  const displayName =
-    user?.displayUsername || user?.username || user?.name || "User";
+  const displayName = user?.name || "User";
   const email = user?.email ?? "";
   const avatarUrl = user?.image ?? "";
   const fallbackInitial = displayName.charAt(0)?.toUpperCase() ?? "U";
