@@ -44,7 +44,7 @@ export function AppSidebar(
                 <Image
                   alt="IT Learn logo"
                   height={16}
-                  src="/logo.png"
+                  src="/Logo.png"
                   width={16}
                 />
                 <span className="font-semibold">IT Learn</span>
