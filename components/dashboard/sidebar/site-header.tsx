@@ -5,7 +5,6 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
@@ -31,10 +30,9 @@ export function DashboardSiteHeader() {
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
         <SidebarTrigger className="-ml-1" />
-        <Separator
-          className="mx-2 data-[orientation=vertical]:h-4"
-          orientation="vertical"
-        />
+        <div className="flex h-full items-center">
+          <Separator className="mx-2 h-4" orientation="vertical" />
+        </div>
         <nav
           aria-label="Breadcrumb"
           className="flex items-center gap-1 font-medium text-muted-foreground text-xs sm:text-sm"
@@ -58,18 +56,6 @@ export function DashboardSiteHeader() {
             </span>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
-          <Button asChild className="hidden sm:flex" size="sm" variant="ghost">
-            <a
-              className="dark:text-foreground"
-              href="https://nighty.timrodina.online"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Docs
-            </a>
-          </Button>
-        </div>
       </div>
     </header>
   );

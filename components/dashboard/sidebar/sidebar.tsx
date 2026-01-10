@@ -1,6 +1,6 @@
 "use client";
 
-import { Home01Icon } from "@hugeicons/core-free-icons";
+import { Home01Icon, TestTube01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +21,11 @@ const navMain = [
     title: "Dashboard",
     href: "/dashboard",
     icon: Home01Icon,
+  },
+  {
+    title: "Test",
+    href: "/dashboard/test",
+    icon: TestTube01Icon,
   },
 ];
 
