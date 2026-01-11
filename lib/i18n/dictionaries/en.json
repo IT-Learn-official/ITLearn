@@ -128,15 +128,37 @@
       "accountExists": "An account with this email already exists",
       "credentialAccountNotFound": "No password login set up for this account. Try signing in with Google, Discord, or GitHub.",
       "socialAccountExists": "An account with this email already exists. If you previously used Google, Discord, or GitHub, sign in with that provider.",
+      "passwordCompromised": "This password has been found in data breaches. Please choose a stronger, unique password.",
+      "passwordTooShort": "Password must be at least 8 characters long",
+      "passwordTooWeak": "Password is too weak. Please use a stronger password.",
+      "invalidEmail": "Please enter a valid email address",
+      "emailVerificationFailed": "Email verification failed. Please try again.",
+      "emailNotVerified": "Please verify your email address before signing in",
+      "verificationCodeExpired": "Verification code has expired. Please request a new one.",
+      "verificationCodeInvalid": "Invalid verification code",
+      "sessionExpired": "Your session has expired. Please sign in again.",
+      "rateLimitExceeded": "Too many attempts. Please try again later.",
+      "networkError": "Network error. Please check your connection and try again.",
+      "userDisabled": "This account has been disabled. Please contact support.",
       "genericError": "An error occurred. Please try again.",
       "googleError": "Sign in with Google failed",
       "discordError": "Sign in with Discord failed",
-      "githubError": "Sign in with GitHub failed"
+      "githubError": "Sign in with GitHub failed",
+      "emailSendFailed": "Failed to send email. Please try again later.",
+      "tokenExpired": "Your token has expired. Please request a new one.",
+      "unauthorized": "You are not authorized to perform this action",
+      "serverError": "Server error. Please try again later."
     },
     "success": {
       "signedIn": "Successfully signed in",
+      "signedOut": "Successfully signed out",
       "accountCreated": "Account created successfully",
-      "passwordReset": "Password reset email sent"
+      "accountUpdated": "Account updated successfully",
+      "passwordReset": "Password reset email sent",
+      "passwordChanged": "Password changed successfully",
+      "emailVerified": "Email verified successfully",
+      "emailSent": "Email sent successfully",
+      "profileUpdated": "Profile updated successfully"
     }
   },
   "validation": {

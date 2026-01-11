@@ -55,8 +55,7 @@ export default function RegisterPage() {
         let message = error.message ?? dict.auth.errors.genericError;
 
         if (message.toLowerCase().includes("password is compromised")) {
-          message =
-            "Dit wachtwoord is bekend uit datalekken. Kies een sterker, uniek wachtwoord.";
+          message = dict.auth.errors.passwordCompromised;
         }
 
         if (message.toLowerCase().includes("already exists")) {
@@ -76,8 +75,7 @@ export default function RegisterPage() {
         err instanceof Error ? err.message : dict.auth.errors.genericError;
 
       if (message.toLowerCase().includes("password is compromised")) {
-        message =
-          "Dit wachtwoord is bekend uit datalekken. Kies een sterker, uniek wachtwoord.";
+        message = dict.auth.errors.passwordCompromised;
       }
 
       setError(message);

@@ -1,5 +1,5 @@
 {
-  "id": "c5ca3666-62d8-4382-8f47-1fdb5ba2c736",
+  "id": "fff301ac-546b-490e-9721-74e430e84daf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -301,6 +301,12 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "last_login_method": {
+          "name": "last_login_method",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},

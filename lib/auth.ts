@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
+import { lastLoginMethod } from "better-auth/plugins";
 import { db } from "@/server/database";
 // biome-ignore lint/performance/noNamespaceImport: schema is needed as a namespace for better-auth.
 import * as schema from "@/server/database/schema";
@@ -49,5 +50,10 @@ export const auth = betterAuth({
       },
     },
   },
-  plugins: [nextCookies()],
+  plugins: [
+    nextCookies(),
+    lastLoginMethod({
+      storeInDatabase: true,
+    }),
+  ],
 });

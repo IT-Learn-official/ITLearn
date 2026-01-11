@@ -128,15 +128,37 @@
       "accountExists": "Er bestaat al een account met dit e-mailadres",
       "credentialAccountNotFound": "Er is geen wachtwoordlogin ingesteld voor dit account. Probeer in te loggen met Google, Discord of GitHub.",
       "socialAccountExists": "Er bestaat al een account met dit e-mailadres. Als je eerder Google, Discord of GitHub gebruikte, meld je dan aan met die provider.",
+      "passwordCompromised": "Dit wachtwoord is bekend uit datalekken. Kies een sterker, uniek wachtwoord.",
+      "passwordTooShort": "Wachtwoord moet minimaal 8 tekens lang zijn",
+      "passwordTooWeak": "Wachtwoord is te zwak. Gebruik een sterker wachtwoord.",
+      "invalidEmail": "Voer een geldig e-mailadres in",
+      "emailVerificationFailed": "E-mailverificatie mislukt. Probeer het opnieuw.",
+      "emailNotVerified": "Verifieer eerst je e-mailadres voordat je inlogt",
+      "verificationCodeExpired": "Verificatiecode is verlopen. Vraag een nieuwe aan.",
+      "verificationCodeInvalid": "Ongeldige verificatiecode",
+      "sessionExpired": "Je sessie is verlopen. Log opnieuw in.",
+      "rateLimitExceeded": "Te veel pogingen. Probeer het later opnieuw.",
+      "networkError": "Netwerkfout. Controleer je verbinding en probeer het opnieuw.",
+      "userDisabled": "Dit account is uitgeschakeld. Neem contact op met support.",
       "genericError": "Er is een fout opgetreden. Probeer het opnieuw.",
       "googleError": "Aanmelden met Google mislukt",
       "discordError": "Aanmelden met Discord mislukt",
-      "githubError": "Aanmelden met GitHub mislukt"
+      "githubError": "Aanmelden met GitHub mislukt",
+      "emailSendFailed": "E-mail verzenden mislukt. Probeer het later opnieuw.",
+      "tokenExpired": "Je token is verlopen. Vraag een nieuwe aan.",
+      "unauthorized": "Je bent niet geautoriseerd om deze actie uit te voeren",
+      "serverError": "Serverfout. Probeer het later opnieuw."
     },
     "success": {
       "signedIn": "Succesvol aangemeld",
+      "signedOut": "Succesvol afgemeld",
       "accountCreated": "Account succesvol aangemaakt",
-      "passwordReset": "Wachtwoord reset e-mail verzonden"
+      "accountUpdated": "Account succesvol bijgewerkt",
+      "passwordReset": "Wachtwoord reset e-mail verzonden",
+      "passwordChanged": "Wachtwoord succesvol gewijzigd",
+      "emailVerified": "E-mail succesvol geverifieerd",
+      "emailSent": "E-mail succesvol verzonden",
+      "profileUpdated": "Profiel succesvol bijgewerkt"
     }
   },
   "validation": {
