@@ -1,0 +1,155 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "close": "Close",
+    "open": "Open",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "marketing": {
+    "home": {
+      "title": "Discover the World of Coding",
+      "subtitle": "Learn, practice, and build with IT Learn",
+      "login": "Login",
+      "register": "Register",
+      "getStarted": "Get Started",
+      "learnMore": "Learn More"
+    },
+    "features": {
+      "title": "Features",
+      "subtitle": "Everything you need to learn coding"
+    },
+    "pricing": {
+      "title": "Pricing",
+      "subtitle": "Choose the plan that's right for you"
+    },
+    "about": {
+      "title": "About Us",
+      "subtitle": "Learn more about IT Learn"
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Get in touch with us"
+    }
+  },
+  "app": {
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welcome",
+      "overview": "Overview",
+      "recentActivity": "Recent Activity",
+      "yourProgress": "Your Progress",
+      "continuelearning": "Continue Learning"
+    },
+    "courses": {
+      "title": "Courses",
+      "myCourses": "My Courses",
+      "allCourses": "All Courses",
+      "inProgress": "In Progress",
+      "completed": "Completed",
+      "notStarted": "Not Started"
+    },
+    "profile": {
+      "title": "Profile",
+      "editProfile": "Edit Profile",
+      "settings": "Settings",
+      "preferences": "Preferences",
+      "account": "Account",
+      "security": "Security"
+    },
+    "navigation": {
+      "dashboard": "Dashboard",
+      "courses": "Courses",
+      "progress": "Progress",
+      "settings": "Settings",
+      "help": "Help",
+      "signOut": "Sign Out"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to learn, practice, and build with IT Learn.",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign In",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create account",
+      "continueWith": "OR SIGN IN WITH EMAIL",
+      "continueWithDiscord": "Continue with Discord",
+      "continueWithGithub": "Continue with GitHub",
+      "continueWithGoogle": "Continue with Google",
+      "connecting": "Connecting…",
+      "signingIn": "Signing in…",
+      "lastUsed": "Last used"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join IT Learn and start your coding journey",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Create a password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "submit": "Create Account",
+      "hasAccount": "Already have an account?",
+      "loginHere": "Sign in here",
+      "continueWith": "OR SIGN UP WITH EMAIL",
+      "continueWithDiscord": "Continue with Discord",
+      "continueWithGithub": "Continue with GitHub",
+      "continueWithGoogle": "Continue with Google",
+      "connecting": "Connecting…",
+      "creatingAccount": "Creating account…"
+    },
+    "errors": {
+      "invalidCredentials": "Invalid email or password",
+      "accountNotFound": "No account found with this email",
+      "accountExists": "An account with this email already exists",
+      "credentialAccountNotFound": "No password login set up for this account. Try signing in with Google, Discord, or GitHub.",
+      "socialAccountExists": "An account with this email already exists. If you previously used Google, Discord, or GitHub, sign in with that provider.",
+      "genericError": "An error occurred. Please try again.",
+      "googleError": "Sign in with Google failed",
+      "discordError": "Sign in with Discord failed",
+      "githubError": "Sign in with GitHub failed"
+    },
+    "success": {
+      "signedIn": "Successfully signed in",
+      "accountCreated": "Account created successfully",
+      "passwordReset": "Password reset email sent"
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "minLength": "Must be at least {min} characters",
+    "maxLength": "Must be at most {max} characters",
+    "passwordMatch": "Passwords must match",
+    "invalidFormat": "Invalid format"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Go back to homepage"
+  }
+}

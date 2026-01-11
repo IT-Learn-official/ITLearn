@@ -6,21 +6,25 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
+import { useDictionary } from "@/lib/i18n/use-dictionary";
+import { useLocale } from "@/lib/i18n/use-locale";
 
 export function SignOutButton() {
   const [isSigningOut, setIsSigningOut] = useState(false);
   const router = useRouter();
+  const dict = useDictionary();
+  const locale = useLocale();
 
   const handleSignOut = async () => {
     try {
       setIsSigningOut(true);
       await authClient.signOut();
-      toast.success("Signed out");
-      router.push("/login");
+      toast.success(dict.auth.success.signedIn);
+      router.push(`/${locale}/login`);
       router.refresh();
     } catch (err) {
       console.error(err);
-      toast.error("Failed to sign out");
+      toast.error(dict.auth.errors.genericError);
     } finally {
       setIsSigningOut(false);
     }
@@ -37,10 +41,10 @@ export function SignOutButton() {
       {isSigningOut ? (
         <>
           <Spinner />
-          <span className="ml-1">Signing out…</span>
+          <span className="ml-1">{dict.common.loading}</span>
         </>
       ) : (
-        <span>Sign out</span>
+        <span>{dict.app.navigation.signOut}</span>
       )}
     </Button>
   );

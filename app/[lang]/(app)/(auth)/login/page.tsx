@@ -11,76 +11,51 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { FormEvent } from "react";
-import { useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
+import { useDictionary } from "@/lib/i18n/use-dictionary";
+import { useLocale } from "@/lib/i18n/use-locale";
 
-export default function RegisterPage() {
+export default function LoginPage() {
   const router = useRouter();
+  const dict = useDictionary();
+  const locale = useLocale();
+  const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [_error, setError] = useState<string | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
   const [isDiscordLoading, setIsDiscordLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isGithubLoading, setIsGithubLoading] = useState(false);
+  const [lastMethod, setLastMethod] = useState<string | null>(null);
 
-  const toggleVisibility = () => setIsVisible((prev) => !prev);
+  useEffect(() => {
+    setLastMethod(authClient.getLastUsedLoginMethod() ?? null);
+  }, []);
 
-  const handleEmailRegister = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-    setIsSubmitting(true);
+  const toggleVisibility = () => setIsVisible((prevState) => !prevState);
 
+  const handleDiscord = async () => {
     try {
-      const { error } = await authClient.signUp.email({
-        email,
-        password,
-        name: email.split("@")[0] ?? email,
+      setIsDiscordLoading(true);
+      await authClient.signIn.social({
+        provider: "discord",
+        callbackURL: `/${locale}/dashboard`,
+        errorCallbackURL: `/${locale}/login`,
       });
-
-      if (error) {
-        let message = error.message ?? "Account aanmaken mislukt.";
-
-        if (message.toLowerCase().includes("password is compromised")) {
-          message =
-            "Dit wachtwoord is bekend uit datalekken. Kies een sterker, uniek wachtwoord.";
-        }
-
-        if (message.toLowerCase().includes("already exists")) {
-          message =
-            "Er bestaat al een account met dit e-mailadres. Als je eerder Google, Discord of GitHub gebruikte, meld je dan aan met die provider.";
-        }
-
-        setError(message);
-        toast.error(message);
-        return;
-      }
-
-      toast.success("Account succesvol aangemaakt");
-      router.push("/dashboard");
-      router.refresh();
     } catch (err) {
-      let message =
-        err instanceof Error ? err.message : "Account aanmaken mislukt.";
-
-      if (message.toLowerCase().includes("password is compromised")) {
-        message =
-          "Dit wachtwoord is bekend uit datalekken. Kies een sterker, uniek wachtwoord.";
-      }
-
-      setError(message);
-      toast.error(message);
+      console.error(err);
+      toast.error(dict.auth.errors.discordError);
     } finally {
-      setIsSubmitting(false);
+      setIsDiscordLoading(false);
     }
   };
 
@@ -89,12 +64,12 @@ export default function RegisterPage() {
       setIsGoogleLoading(true);
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/dashboard",
-        errorCallbackURL: "/login",
+        callbackURL: `/${locale}/dashboard`,
+        errorCallbackURL: `/${locale}/login`,
       });
     } catch (err) {
       console.error(err);
-      toast.error("Aanmelden met Google mislukt");
+      toast.error(dict.auth.errors.googleError);
     } finally {
       setIsGoogleLoading(false);
     }
@@ -105,29 +80,59 @@ export default function RegisterPage() {
       setIsGithubLoading(true);
       await authClient.signIn.social({
         provider: "github",
-        callbackURL: "/dashboard",
-        errorCallbackURL: "/login",
+        callbackURL: `/${locale}/dashboard`,
+        errorCallbackURL: `/${locale}/login`,
       });
     } catch (err) {
       console.error(err);
-      toast.error("Aanmelden met GitHub mislukt");
+      toast.error(dict.auth.errors.githubError);
     } finally {
       setIsGithubLoading(false);
     }
   };
 
-  const handleDiscord = async () => {
+  const handlePasswordLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+    setIsSubmitting(true);
+
     try {
-      setIsDiscordLoading(true);
-      await authClient.signIn.social({
-        provider: "discord",
-        callbackURL: "/dashboard",
-        errorCallbackURL: "/login",
+      const { error } = await authClient.signIn.email({
+        email,
+        password,
       });
+
+      if (error) {
+        let message = error.message ?? dict.auth.errors.genericError;
+
+        if (message.toLowerCase().includes("credential account not found")) {
+          message = dict.auth.errors.credentialAccountNotFound;
+        }
+
+        if (message.toLowerCase().includes("already exists")) {
+          message = dict.auth.errors.socialAccountExists;
+        }
+
+        setError(message);
+        toast.error(message);
+        return;
+      }
+
+      toast.success(dict.auth.success.signedIn);
+      router.push(`/${locale}/dashboard`);
+      router.refresh();
     } catch (err) {
-      console.error(err);
+      let message =
+        err instanceof Error ? err.message : dict.auth.errors.genericError;
+
+      if (message.toLowerCase().includes("credential account not found")) {
+        message = dict.auth.errors.credentialAccountNotFound;
+      }
+
+      setError(message);
+      toast.error(message);
     } finally {
-      setIsDiscordLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -136,20 +141,16 @@ export default function RegisterPage() {
       <div className="mx-auto w-full max-w-xs space-y-6">
         <div className="space-y-2 text-center">
           <div className="flex items-center justify-center gap-2">
-            {/* UPDATED: Height and Width set to 32 to match Login Page */}
             <Image alt="ITLearn-logo" height={32} src="/Logo.png" width={32} />
             <p className="font-medium text-foreground text-lg dark:text-foreground">
               ITLearn
             </p>
           </div>
-          <h1 className="font-semibold text-3xl">Maak je account aan</h1>
-          <p className="text-muted-foreground">
-            Coderen eenvoudig gemaakt door studenten voor studenten.
-          </p>
+          <h1 className="font-semibold text-3xl">{dict.auth.login.title}</h1>
+          <p className="text-muted-foreground">{dict.auth.login.subtitle}</p>
         </div>
 
         <div className="space-y-3">
-          {/* UPDATED: Added wrapper divs to match Login Page structure */}
           <div className="relative">
             <Button
               className="w-full justify-center gap-1.5"
@@ -166,23 +167,31 @@ export default function RegisterPage() {
               {isDiscordLoading ? (
                 <>
                   <Spinner />
-                  <span className="font-medium text-sm">Verbinden…</span>
+                  <span className="font-medium text-sm">
+                    {dict.auth.login.connecting}
+                  </span>
                 </>
               ) : (
                 <>
                   <Image
                     alt="Discord-logo"
-                    className="shrink-0"
                     height={18}
                     src="/company-logos/discord.svg"
                     width={18}
                   />
-                  <span className="font-medium text-sm">
-                    Doorgaan met Discord
-                  </span>
+                  <span>{dict.auth.login.continueWithDiscord}</span>
                 </>
               )}
             </Button>
+
+            {lastMethod === "discord" ? (
+              <Badge
+                className="pointer-events-none absolute -top-2 right-2 border-transparent bg-background/80 px-2 py-0 font-semibold text-[10px] text-muted-foreground uppercase tracking-wide shadow-sm"
+                variant="outline"
+              >
+                {dict.auth.login.lastUsed}
+              </Badge>
+            ) : null}
           </div>
 
           <div className="relative">
@@ -201,7 +210,9 @@ export default function RegisterPage() {
               {isGithubLoading ? (
                 <>
                   <Spinner />
-                  <span className="font-medium text-sm">Verbinden…</span>
+                  <span className="font-medium text-sm">
+                    {dict.auth.login.connecting}
+                  </span>
                 </>
               ) : (
                 <>
@@ -213,11 +224,20 @@ export default function RegisterPage() {
                     width={18}
                   />
                   <span className="font-medium text-sm">
-                    Doorgaan met GitHub
+                    {dict.auth.login.continueWithGithub}
                   </span>
                 </>
               )}
             </Button>
+
+            {lastMethod === "github" ? (
+              <Badge
+                className="pointer-events-none absolute -top-2 right-2 border-transparent bg-background/80 px-2 py-0 font-semibold text-[10px] text-muted-foreground uppercase tracking-wide shadow-sm"
+                variant="outline"
+              >
+                {dict.auth.login.lastUsed}
+              </Badge>
+            ) : null}
           </div>
 
           <div className="relative">
@@ -236,7 +256,9 @@ export default function RegisterPage() {
               {isGoogleLoading ? (
                 <>
                   <Spinner />
-                  <span className="font-medium text-sm">Verbinden…</span>
+                  <span className="font-medium text-sm">
+                    {dict.auth.login.connecting}
+                  </span>
                 </>
               ) : (
                 <>
@@ -248,32 +270,39 @@ export default function RegisterPage() {
                     width={18}
                   />
                   <span className="font-medium text-sm">
-                    Doorgaan met Google
+                    {dict.auth.login.continueWithGoogle}
                   </span>
                 </>
               )}
             </Button>
+
+            {lastMethod === "google" ? (
+              <Badge
+                className="pointer-events-none absolute -top-2 right-2 border-transparent bg-background/80 px-2 py-0 font-semibold text-[10px] text-muted-foreground uppercase tracking-wide shadow-sm"
+                variant="outline"
+              >
+                {dict.auth.login.lastUsed}
+              </Badge>
+            ) : null}
           </div>
 
           <div className="flex items-center gap-2">
             <Separator className="flex-1" />
             <span className="text-muted-foreground text-sm">
-              OF REGISTREER MET E-MAIL
+              {dict.auth.login.continueWith}
             </span>
             <Separator className="flex-1" />
           </div>
 
-          <form className="space-y-6" onSubmit={handleEmailRegister}>
+          <form className="space-y-6" onSubmit={handlePasswordLogin}>
             <div>
-              {/* UPDATED: Removed extra classes to match Login Page default styling */}
-              <Label htmlFor="email-register">E-mail</Label>
+              <Label htmlFor="email">{dict.auth.login.email}</Label>
               <div className="relative mt-2.5">
                 <Input
-                  autoComplete="email"
                   className="peer ps-9"
-                  id="email-register"
+                  id="email"
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="jij@voorbeeld.com"
+                  placeholder={dict.auth.login.emailPlaceholder}
                   required
                   type="email"
                   value={email}
@@ -289,16 +318,21 @@ export default function RegisterPage() {
                 </div>
               </div>
             </div>
+
             <div>
-              {/* UPDATED: Removed extra classes to match Login Page default styling */}
-              <Label htmlFor="password-register">Wachtwoord</Label>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">{dict.auth.login.password}</Label>
+                <Link className="text-primary text-sm hover:underline" href="#">
+                  {dict.auth.login.forgotPassword}
+                </Link>
+              </div>
               <div className="relative mt-2.5">
                 <Input
-                  autoComplete="new-password"
+                  autoComplete="current-password"
                   className="ps-9 pe-9"
-                  id="password-register"
+                  id="password"
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Voer je wachtwoord in"
+                  placeholder={dict.auth.login.passwordPlaceholder}
                   required
                   type={isVisible ? "text" : "password"}
                   value={password}
@@ -313,10 +347,8 @@ export default function RegisterPage() {
                   />
                 </div>
                 <Button
-                  aria-controls="password-register"
-                  aria-label={
-                    isVisible ? "Wachtwoord verbergen" : "Wachtwoord tonen"
-                  }
+                  aria-controls="password"
+                  aria-label={isVisible ? "Hide password" : "Show password"}
                   aria-pressed={isVisible}
                   className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md text-muted-foreground/80 outline-none transition-[color,box-shadow] hover:text-foreground focus:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                   onClick={toggleVisibility}
@@ -334,6 +366,7 @@ export default function RegisterPage() {
                 </Button>
               </div>
             </div>
+
             <Button
               className="w-full gap-1"
               disabled={isSubmitting || isDiscordLoading}
@@ -342,11 +375,11 @@ export default function RegisterPage() {
               {isSubmitting ? (
                 <>
                   <Spinner />
-                  <span className="ml-2">Account aanmaken…</span>
+                  <span className="ml-2">{dict.auth.login.signingIn}</span>
                 </>
               ) : (
                 <>
-                  <span>Account aanmaken</span>
+                  <span>{dict.auth.login.submit}</span>
                   <HugeiconsIcon
                     aria-hidden={true}
                     color="currentColor"
@@ -359,12 +392,12 @@ export default function RegisterPage() {
             </Button>
 
             <div className="text-center text-sm">
-              Heb je al een account?{" "}
+              {dict.auth.login.noAccount}{" "}
               <Link
                 className="font-medium text-primary hover:underline"
-                href="/login"
+                href={`/${locale}/register`}
               >
-                Aanmelden
+                {dict.auth.login.createAccount}
               </Link>
             </div>
           </form>

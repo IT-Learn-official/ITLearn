@@ -1,0 +1,155 @@
+{
+  "common": {
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Succesvol",
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "create": "Aanmaken",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "search": "Zoeken",
+    "filter": "Filteren",
+    "sort": "Sorteren",
+    "close": "Sluiten",
+    "open": "Openen",
+    "submit": "Verzenden",
+    "confirm": "Bevestigen",
+    "yes": "Ja",
+    "no": "Nee"
+  },
+  "marketing": {
+    "home": {
+      "title": "Ontdek de Wereld van Coderen",
+      "subtitle": "Leer, oefen en bouw met IT Learn",
+      "login": "Inloggen",
+      "register": "Registreren",
+      "getStarted": "Aan de slag",
+      "learnMore": "Meer informatie"
+    },
+    "features": {
+      "title": "Functies",
+      "subtitle": "Alles wat je nodig hebt om te leren programmeren"
+    },
+    "pricing": {
+      "title": "Prijzen",
+      "subtitle": "Kies het abonnement dat bij jou past"
+    },
+    "about": {
+      "title": "Over Ons",
+      "subtitle": "Meer informatie over IT Learn"
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Neem contact met ons op"
+    }
+  },
+  "app": {
+    "dashboard": {
+      "title": "Dashboard",
+      "welcome": "Welkom",
+      "overview": "Overzicht",
+      "recentActivity": "Recente Activiteit",
+      "yourProgress": "Jouw Voortgang",
+      "continuelearning": "Doorgaan met Leren"
+    },
+    "courses": {
+      "title": "Cursussen",
+      "myCourses": "Mijn Cursussen",
+      "allCourses": "Alle Cursussen",
+      "inProgress": "Bezig",
+      "completed": "Voltooid",
+      "notStarted": "Niet Gestart"
+    },
+    "profile": {
+      "title": "Profiel",
+      "editProfile": "Profiel Bewerken",
+      "settings": "Instellingen",
+      "preferences": "Voorkeuren",
+      "account": "Account",
+      "security": "Beveiliging"
+    },
+    "navigation": {
+      "dashboard": "Dashboard",
+      "courses": "Cursussen",
+      "progress": "Voortgang",
+      "settings": "Instellingen",
+      "help": "Help",
+      "signOut": "Uitloggen"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Welkom terug",
+      "subtitle": "Meld je aan om te leren, oefenen en bouwen met IT Learn.",
+      "email": "E-mail",
+      "emailPlaceholder": "jij@voorbeeld.com",
+      "password": "Wachtwoord",
+      "passwordPlaceholder": "Voer je wachtwoord in",
+      "forgotPassword": "Wachtwoord vergeten?",
+      "submit": "Aanmelden",
+      "noAccount": "Nog geen account?",
+      "createAccount": "Account aanmaken",
+      "continueWith": "OF MELD JE AAN MET E-MAIL",
+      "continueWithDiscord": "Doorgaan met Discord",
+      "continueWithGithub": "Doorgaan met GitHub",
+      "continueWithGoogle": "Doorgaan met Google",
+      "connecting": "Verbinden…",
+      "signingIn": "Bezig met aanmelden…",
+      "lastUsed": "Laatst gebruikt"
+    },
+    "register": {
+      "title": "Account Aanmaken",
+      "subtitle": "Word lid van IT Learn en begin je programmeerreis",
+      "name": "Naam",
+      "namePlaceholder": "Jouw naam",
+      "email": "E-mail",
+      "emailPlaceholder": "jij@voorbeeld.com",
+      "password": "Wachtwoord",
+      "passwordPlaceholder": "Maak een wachtwoord",
+      "confirmPassword": "Bevestig Wachtwoord",
+      "confirmPasswordPlaceholder": "Bevestig je wachtwoord",
+      "submit": "Account Aanmaken",
+      "hasAccount": "Al een account?",
+      "loginHere": "Hier inloggen",
+      "continueWith": "OF REGISTREER MET E-MAIL",
+      "continueWithDiscord": "Doorgaan met Discord",
+      "continueWithGithub": "Doorgaan met GitHub",
+      "continueWithGoogle": "Doorgaan met Google",
+      "connecting": "Verbinden…",
+      "creatingAccount": "Account aanmaken…"
+    },
+    "errors": {
+      "invalidCredentials": "Ongeldig e-mailadres of wachtwoord",
+      "accountNotFound": "Geen account gevonden met dit e-mailadres",
+      "accountExists": "Er bestaat al een account met dit e-mailadres",
+      "credentialAccountNotFound": "Er is geen wachtwoordlogin ingesteld voor dit account. Probeer in te loggen met Google, Discord of GitHub.",
+      "socialAccountExists": "Er bestaat al een account met dit e-mailadres. Als je eerder Google, Discord of GitHub gebruikte, meld je dan aan met die provider.",
+      "genericError": "Er is een fout opgetreden. Probeer het opnieuw.",
+      "googleError": "Aanmelden met Google mislukt",
+      "discordError": "Aanmelden met Discord mislukt",
+      "githubError": "Aanmelden met GitHub mislukt"
+    },
+    "success": {
+      "signedIn": "Succesvol aangemeld",
+      "accountCreated": "Account succesvol aangemaakt",
+      "passwordReset": "Wachtwoord reset e-mail verzonden"
+    }
+  },
+  "validation": {
+    "required": "Dit veld is verplicht",
+    "email": "Voer een geldig e-mailadres in",
+    "minLength": "Moet minimaal {min} tekens bevatten",
+    "maxLength": "Mag maximaal {max} tekens bevatten",
+    "passwordMatch": "Wachtwoorden moeten overeenkomen",
+    "invalidFormat": "Ongeldig formaat"
+  },
+  "notFound": {
+    "title": "Pagina niet gevonden",
+    "description": "De pagina die je zoekt bestaat niet of is verplaatst.",
+    "backHome": "Ga terug naar de startpagina"
+  }
+}

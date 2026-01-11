@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import proximaNova from "next/font/local";
 import { ViewTransition } from "react";
-import "./globals.css";
+import "../globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
 const ProximaNova = proximaNova({
-  src: "./fonts/Proxima-Nova.woff",
+  src: "../fonts/Proxima-Nova.woff",
   variable: "--font-proxima-nova",
 });
 
@@ -14,13 +14,21 @@ export const metadata: Metadata = {
   description: "Gegenereerd door create next app",
 };
 
-export default function RootLayout({
+export async function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "nl" }];
+}
+
+export default async function RootLayout({
   children,
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+
   return (
-    <html lang="nl">
+    <html lang={lang}>
       <body className={`${ProximaNova.variable} dark antialiased`}>
         <ViewTransition>{children}</ViewTransition>
         <Toaster position="bottom-right" richColors={true} />

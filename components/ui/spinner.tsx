@@ -1,26 +1,16 @@
-import { Loading03Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { cn } from "@/lib/utils";
+import { LoaderIcon } from "lucide-react"
 
-function Spinner({
-  className,
-  strokeWidth,
-  ...props
-}: React.ComponentProps<"svg">) {
-  const resolvedStrokeWidth =
-    typeof strokeWidth === "number" ? strokeWidth : 2;
+import { cn } from "@/lib/utils"
 
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
   return (
-    <HugeiconsIcon
-      aria-label="Bezig met laden"
-      className={cn("size-4 animate-spin", className)}
-      icon={Loading03Icon}
+    <LoaderIcon
       role="status"
-      strokeWidth={resolvedStrokeWidth}
+      aria-label="Loading"
+      className={cn("size-4 animate-spin", className)}
       {...props}
     />
-  );
+  )
 }
 
-
-export { Spinner };
+export { Spinner }
