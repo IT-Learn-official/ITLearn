@@ -27,7 +27,6 @@ export function LanguageSwitcher({ currentLocale }: { currentLocale: string }) {
 
     setCookie(LOCALE_COOKIE_NAME, newLocale);
 
-    // Remove the current locale from the pathname
     const segments = pathname.split("/");
     segments[1] = newLocale;
     const newPathname = segments.join("/");
@@ -37,7 +36,7 @@ export function LanguageSwitcher({ currentLocale }: { currentLocale: string }) {
 
   return (
     <Select onValueChange={handleLanguageChange} value={currentLocale}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-45">
         <SelectValue>
           {languages.find((lang) => lang.code === currentLocale)?.label}
         </SelectValue>
