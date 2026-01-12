@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import proximaNova from "next/font/local";
 import { ViewTransition } from "react";
 import "../globals.css";
+import { TRPCProvider } from "@/components/providers/trpc-provider";
 import { Toaster } from "@/components/ui/sonner";
 
 const ProximaNova = proximaNova({
@@ -30,8 +31,10 @@ export default async function RootLayout({
   return (
     <html lang={lang}>
       <body className={`${ProximaNova.variable} dark antialiased`}>
-        <ViewTransition>{children}</ViewTransition>
-        <Toaster position="bottom-right" richColors={true} />
+        <TRPCProvider>
+          <ViewTransition>{children}</ViewTransition>
+          <Toaster position="bottom-right" richColors={true} />
+        </TRPCProvider>
       </body>
     </html>
   );
