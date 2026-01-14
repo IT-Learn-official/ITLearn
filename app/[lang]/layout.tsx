@@ -12,7 +12,7 @@ const ProximaNova = proximaNova({
 
 export const metadata: Metadata = {
   title: "ITLearn",
-  description: "Gegenereerd door create next app",
+  description: "Learn how to program",
 };
 
 export async function generateStaticParams() {
