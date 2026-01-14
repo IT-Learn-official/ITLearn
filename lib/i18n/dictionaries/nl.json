@@ -22,29 +22,261 @@
     "no": "Nee"
   },
   "marketing": {
-    "home": {
-      "title": "Ontdek de Wereld van Coderen",
-      "subtitle": "Leer, oefen en bouw met IT Learn",
+    "nav": {
+      "courses": "Cursussen",
+      "pricing": "Prijzen",
+      "community": "Community",
+      "about": "Over",
       "login": "Inloggen",
-      "register": "Registreren",
-      "getStarted": "Aan de slag",
-      "learnMore": "Meer informatie"
+      "startFree": "Start gratis met leren"
     },
-    "features": {
-      "title": "Functies",
-      "subtitle": "Alles wat je nodig hebt om te leren programmeren"
+    "home": {
+      "hero": {
+        "headline": "Leer coderen zonder vast te lopen.",
+        "subheadline": "Interactieve lessen, gamification en een ondersteunende community — gebouwd voor complete beginners.",
+        "primaryCta": "Start gratis met leren",
+        "secondaryCta": "Zie hoe het werkt",
+        "trustLine": "Gebouwd door onze studenten, gebruikt door leerlingen wereldwijd."
+      },
+      "socialProof": {
+        "headline": "Vertrouwd door leerlingen over de hele wereld",
+        "stats": [
+          {
+            "value": "10+",
+            "label": "actieve leerlingen"
+          },
+          {
+            "value": "100+",
+            "label": "landen bereikt"
+          },
+          {
+            "value": "40+",
+            "label": "interactieve oefeningen"
+          }
+        ]
+      },
+      "howItWorks": {
+        "headline": "Hoe IT Learn werkt",
+        "steps": [
+          {
+            "title": "Kies een cursus",
+            "description": "Begin met Python, HTML of CSS — geen ervaring nodig."
+          },
+          {
+            "title": "Leer door te doen",
+            "description": "Korte lessen, directe feedback, XP en badges."
+          },
+          {
+            "title": "Bouw echte projecten",
+            "description": "Pas toe wat je leert en krijg hulp van de community."
+          }
+        ],
+        "cta": "Start je eerste les"
+      },
+      "courses": {
+        "headline": "Leer de meest gevraagde skills",
+        "cards": [
+          {
+            "title": "Python",
+            "level": "Beginner",
+            "description": "Leer variabelen, lussen en logica",
+            "project": "Bouw echte scripts",
+            "time": "Geschatte tijd: 6–8 uur"
+          },
+          {
+            "title": "HTML",
+            "level": "Beginner",
+            "description": "Structureer pagina's met semantische HTML",
+            "project": "Bouw je eerste webpagina",
+            "time": "Geschatte tijd: 4–6 uur"
+          },
+          {
+            "title": "CSS",
+            "level": "Beginner",
+            "description": "Style layouts, kleuren en spacing",
+            "project": "Bouw een gepolijste landingspagina",
+            "time": "Geschatte tijd: 5–7 uur"
+          },
+          {
+            "title": "JavaScript",
+            "level": "Beginner",
+            "description": "Maak pagina's interactief met JS",
+            "project": "Bouw een mini webapp",
+            "time": "Geschatte tijd: 6–8 uur"
+          }
+        ],
+        "cta": "Start cursus"
+      },
+      "gamification": {
+        "headline": "Leren dat je gemotiveerd houdt",
+        "bullets": [
+          "Verdien XP voor elke les",
+          "Ontgrendel badges terwijl je vordert",
+          "Volg je leertraject visueel"
+        ],
+        "supportingText": "Vooruitgang is niet onzichtbaar. Je ziet het groeien met elke les die je afrondt."
+      },
+      "community": {
+        "headline": "Je leert nooit alleen",
+        "text": "Word lid van onze Discord-community om vragen te stellen, feedback te krijgen en gemotiveerd te blijven met andere leerlingen.",
+        "features": [
+          "Hulp bij oefeningen",
+          "Feedback op projecten",
+          "Challenges & motivatie"
+        ],
+        "cta": "Word lid van de community"
+      },
+      "pricing": {
+        "headline": "Eenvoudige, eerlijke prijzen",
+        "subheadline": "Begin gratis. Upgrade wanneer je klaar bent.",
+        "plans": {
+          "free": {
+            "title": "Gratis plan",
+            "price": "€0 / maand",
+            "features": [
+              "Toegang tot beginnerslessen",
+              "Beperkte oefeningen",
+              "Community-toegang"
+            ],
+            "cta": "Start gratis"
+          },
+          "pro": {
+            "title": "Pro Plan",
+            "price": "€9 / maand",
+            "badge": "Meest gekozen",
+            "features": [
+              "Toegang tot alle cursussen",
+              "Alle oefeningen & challenges",
+              "XP & badge-voortgang",
+              "Projectfeedback",
+              "Priority support"
+            ],
+            "cta": "Upgrade naar Pro"
+          },
+          "lifetime": {
+            "title": "Lifetime Supporter",
+            "price": "€69 (eenmalig)",
+            "features": [
+              "Alles in Pro",
+              "Levenslange toegang",
+              "Supporter badge",
+              "Steun het platform"
+            ],
+            "cta": "Word supporter"
+          }
+        },
+        "note": "Altijd opzegbaar.",
+        "comparison": {
+          "headline": "Vergelijk plannen",
+          "headers": ["Functie", "Gratis", "Pro"],
+          "rows": [
+            {
+              "feature": "Alle cursussen",
+              "free": "❌",
+              "pro": "✅"
+            },
+            {
+              "feature": "Oefeningen",
+              "free": "Beperkt",
+              "pro": "Onbeperkt"
+            },
+            {
+              "feature": "XP & badges",
+              "free": "Beperkt",
+              "pro": "Volledig"
+            },
+            {
+              "feature": "Community",
+              "free": "✅",
+              "pro": "✅"
+            },
+            {
+              "feature": "Projectfeedback",
+              "free": "❌",
+              "pro": "✅"
+            }
+          ]
+        }
+      },
+      "finalCta": {
+        "headline": "Start vandaag met coderen",
+        "subheadline": "Geen creditcard nodig.",
+        "cta": "Start gratis met leren"
+      }
     },
-    "pricing": {
-      "title": "Prijzen",
-      "subtitle": "Kies het abonnement dat bij jou past"
+    "pricingPage": {
+      "headline": "Kies het plan dat bij je leerdoelen past",
+      "subheadline": "Geen verborgen kosten. Altijd opzegbaar.",
+      "upgradeNote": "Studenten upgraden meestal na hun eerste cursus."
     },
-    "about": {
-      "title": "Over Ons",
-      "subtitle": "Meer informatie over IT Learn"
+    "coursesPage": {
+      "headline": "Alle cursussen",
+      "subheadline": "Leer stap voor stap, van nul tot zelfverzekerd.",
+      "courses": [
+        {
+          "title": "Python",
+          "level": "Beginner",
+          "time": "6–8 uur",
+          "build": "Automatiseringsscripts",
+          "description": "Leer de basis van programmeren met Python."
+        },
+        {
+          "title": "HTML",
+          "level": "Beginner",
+          "time": "4–6 uur",
+          "build": "Landingspagina's",
+          "description": "Structureer pagina's en content met semantische HTML."
+        },
+        {
+          "title": "CSS",
+          "level": "Beginner",
+          "time": "5–7 uur",
+          "build": "Portfolio websites",
+          "description": "Style layouts, kleuren en responsive designs."
+        },
+        {
+          "title": "JavaScript",
+          "level": "Beginner",
+          "time": "6–8 uur",
+          "build": "Interactieve webapps",
+          "description": "Voeg interactiviteit en logica toe aan het web."
+        }
+      ],
+      "cta": "Start cursus"
     },
-    "contact": {
-      "title": "Contact",
-      "subtitle": "Neem contact met ons op"
+    "courseDetail": {
+      "title": "Python voor beginners",
+      "description": "Leer de basis van programmeren met Python — een van de populairste talen ter wereld.",
+      "cta": "Start cursus",
+      "learnHeadline": "Wat je leert",
+      "learnPoints": [
+        "Variabelen & datatypes",
+        "Lussen & voorwaarden",
+        "Basis probleemoplossing"
+      ]
+    },
+    "aboutPage": {
+      "headline": "Gebouwd door studenten, voor studenten",
+      "text": "IT Learn is gemaakt door studenten die weten hoe frustrerend coderen leren kan zijn. Ons doel is om programmeren toegankelijk, motiverend en leuk te maken."
+    },
+    "communityPage": {
+      "headline": "Leer samen",
+      "text": "Coderen is makkelijker als je het niet alleen doet. Sluit je aan bij onze Discord om contact te maken met andere leerlingen.",
+      "cta": "Join Discord"
+    },
+    "footer": {
+      "product": "Product",
+      "company": "Bedrijf",
+      "legal": "Juridisch",
+      "courses": "Cursussen",
+      "pricing": "Prijzen",
+      "roadmap": "Roadmap",
+      "about": "Over",
+      "team": "Team",
+      "contact": "Contact",
+      "terms": "Voorwaarden",
+      "privacy": "Privacy",
+      "tagline": "IT Learn — Gebouwd in België 🇧🇪"
     }
   },
   "app": {
@@ -102,8 +334,8 @@
       "lastUsed": "Laatst gebruikt"
     },
     "register": {
-      "title": "Account Aanmaken",
-      "subtitle": "Word lid van IT Learn en begin je programmeerreis",
+      "title": "Maak je gratis account aan",
+      "subtitle": "Begin binnen enkele minuten met leren.",
       "name": "Naam",
       "namePlaceholder": "Jouw naam",
       "email": "E-mail",

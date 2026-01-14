@@ -22,29 +22,261 @@
     "no": "No"
   },
   "marketing": {
-    "home": {
-      "title": "Discover the World of Coding",
-      "subtitle": "Learn, practice, and build with IT Learn",
+    "nav": {
+      "courses": "Courses",
+      "pricing": "Pricing",
+      "community": "Community",
+      "about": "About",
       "login": "Login",
-      "register": "Register",
-      "getStarted": "Get Started",
-      "learnMore": "Learn More"
+      "startFree": "Start learning for free"
     },
-    "features": {
-      "title": "Features",
-      "subtitle": "Everything you need to learn coding"
+    "home": {
+      "hero": {
+        "headline": "Learn to code without getting stuck.",
+        "subheadline": "Interactive coding lessons, gamification, and a supportive community — built for complete beginners.",
+        "primaryCta": "Start learning for free",
+        "secondaryCta": "See how it works",
+        "trustLine": "Built by our students, used by learners worldwide."
+      },
+      "socialProof": {
+        "headline": "Trusted by learners around the world",
+        "stats": [
+          {
+            "value": "10+",
+            "label": "active learners"
+          },
+          {
+            "value": "100+",
+            "label": "countries reached"
+          },
+          {
+            "value": "40+",
+            "label": "interactive exercises"
+          }
+        ]
+      },
+      "howItWorks": {
+        "headline": "How IT Learn works",
+        "steps": [
+          {
+            "title": "Choose a course",
+            "description": "Start with Python, HTML, or CSS — no experience needed."
+          },
+          {
+            "title": "Learn by doing",
+            "description": "Short lessons, instant feedback, XP, and badges."
+          },
+          {
+            "title": "Build real projects",
+            "description": "Apply what you learn and get help from the community."
+          }
+        ],
+        "cta": "Start your first lesson"
+      },
+      "courses": {
+        "headline": "Learn the most in-demand skills",
+        "cards": [
+          {
+            "title": "Python",
+            "level": "Beginner",
+            "description": "Learn variables, loops, and logic",
+            "project": "Build real scripts",
+            "time": "Estimated time: 6–8 hours"
+          },
+          {
+            "title": "HTML",
+            "level": "Beginner",
+            "description": "Structure pages with semantic HTML",
+            "project": "Build your first webpage",
+            "time": "Estimated time: 4–6 hours"
+          },
+          {
+            "title": "CSS",
+            "level": "Beginner",
+            "description": "Style layouts, colors, and spacing",
+            "project": "Build a polished landing page",
+            "time": "Estimated time: 5–7 hours"
+          },
+          {
+            "title": "JavaScript",
+            "level": "Beginner",
+            "description": "Make pages interactive with JS",
+            "project": "Build a mini web app",
+            "time": "Estimated time: 6–8 hours"
+          }
+        ],
+        "cta": "Start course"
+      },
+      "gamification": {
+        "headline": "Learning that keeps you motivated",
+        "bullets": [
+          "Earn XP for every lesson",
+          "Unlock badges as you progress",
+          "Track your learning journey visually"
+        ],
+        "supportingText": "Progress isn’t invisible. You see it grow with every lesson you complete."
+      },
+      "community": {
+        "headline": "You never learn alone",
+        "text": "Join our Discord community to ask questions, get feedback, and stay motivated with other learners.",
+        "features": [
+          "Help with exercises",
+          "Project feedback",
+          "Challenges & motivation"
+        ],
+        "cta": "Join the community"
+      },
+      "pricing": {
+        "headline": "Simple, honest pricing",
+        "subheadline": "Start free. Upgrade when you’re ready.",
+        "plans": {
+          "free": {
+            "title": "Free Plan",
+            "price": "€0 / month",
+            "features": [
+              "Access to beginner lessons",
+              "Limited exercises",
+              "Community access"
+            ],
+            "cta": "Get started for free"
+          },
+          "pro": {
+            "title": "Pro Plan",
+            "price": "€9 / month",
+            "badge": "Most popular",
+            "features": [
+              "Access to all courses",
+              "All exercises & challenges",
+              "XP & badge progression",
+              "Project feedback",
+              "Priority support"
+            ],
+            "cta": "Upgrade to Pro"
+          },
+          "lifetime": {
+            "title": "Lifetime Supporter",
+            "price": "€69 (one-time)",
+            "features": [
+              "Everything in Pro",
+              "Lifetime access",
+              "Supporter badge",
+              "Help support the platform"
+            ],
+            "cta": "Become a supporter"
+          }
+        },
+        "note": "Cancel anytime.",
+        "comparison": {
+          "headline": "Compare plans",
+          "headers": ["Feature", "Free", "Pro"],
+          "rows": [
+            {
+              "feature": "All courses",
+              "free": "❌",
+              "pro": "✅"
+            },
+            {
+              "feature": "Exercises",
+              "free": "Limited",
+              "pro": "Unlimited"
+            },
+            {
+              "feature": "XP & badges",
+              "free": "Limited",
+              "pro": "Full"
+            },
+            {
+              "feature": "Community",
+              "free": "✅",
+              "pro": "✅"
+            },
+            {
+              "feature": "Project feedback",
+              "free": "❌",
+              "pro": "✅"
+            }
+          ]
+        }
+      },
+      "finalCta": {
+        "headline": "Start your coding journey today",
+        "subheadline": "No credit card required.",
+        "cta": "Start learning for free"
+      }
     },
-    "pricing": {
-      "title": "Pricing",
-      "subtitle": "Choose the plan that's right for you"
+    "pricingPage": {
+      "headline": "Choose the plan that fits your learning goals",
+      "subheadline": "No hidden fees. Cancel anytime.",
+      "upgradeNote": "Students usually upgrade after completing their first course."
     },
-    "about": {
-      "title": "About Us",
-      "subtitle": "Learn more about IT Learn"
+    "coursesPage": {
+      "headline": "All courses",
+      "subheadline": "Learn step by step, from zero to confident.",
+      "courses": [
+        {
+          "title": "Python",
+          "level": "Beginner",
+          "time": "6–8 hours",
+          "build": "Automation scripts",
+          "description": "Learn the fundamentals of programming with Python."
+        },
+        {
+          "title": "HTML",
+          "level": "Beginner",
+          "time": "4–6 hours",
+          "build": "Landing pages",
+          "description": "Structure pages and content with semantic HTML."
+        },
+        {
+          "title": "CSS",
+          "level": "Beginner",
+          "time": "5–7 hours",
+          "build": "Portfolio sites",
+          "description": "Style layouts, colors, and responsive designs."
+        },
+        {
+          "title": "JavaScript",
+          "level": "Beginner",
+          "time": "6–8 hours",
+          "build": "Interactive web apps",
+          "description": "Add interactivity and logic to the web."
+        }
+      ],
+      "cta": "Start course"
     },
-    "contact": {
-      "title": "Contact",
-      "subtitle": "Get in touch with us"
+    "courseDetail": {
+      "title": "Python for Beginners",
+      "description": "Learn the fundamentals of programming using Python — one of the most popular languages in the world.",
+      "cta": "Start course",
+      "learnHeadline": "What you’ll learn",
+      "learnPoints": [
+        "Variables & data types",
+        "Loops & conditions",
+        "Basic problem solving"
+      ]
+    },
+    "aboutPage": {
+      "headline": "Built by students, for students",
+      "text": "IT Learn was created by students who know how frustrating learning to code can be. Our goal is to make programming approachable, motivating, and fun."
+    },
+    "communityPage": {
+      "headline": "Learn together",
+      "text": "Coding is easier when you’re not alone. Join our Discord to connect with other learners.",
+      "cta": "Join Discord"
+    },
+    "footer": {
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal",
+      "courses": "Courses",
+      "pricing": "Pricing",
+      "roadmap": "Roadmap",
+      "about": "About",
+      "team": "Team",
+      "contact": "Contact",
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "tagline": "IT Learn — Built in Belgium 🇧🇪"
     }
   },
   "app": {
@@ -83,7 +315,7 @@
   },
   "auth": {
     "login": {
-      "title": "Welcome Back",
+      "title": "Welcome back",
       "subtitle": "Sign in to learn, practice, and build with IT Learn.",
       "email": "Email",
       "emailPlaceholder": "you@example.com",
@@ -102,8 +334,8 @@
       "lastUsed": "Last used"
     },
     "register": {
-      "title": "Create Account",
-      "subtitle": "Join IT Learn and start your coding journey",
+      "title": "Create your free account",
+      "subtitle": "Start learning in minutes.",
       "name": "Name",
       "namePlaceholder": "Your name",
       "email": "Email",
