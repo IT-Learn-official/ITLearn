@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { badge, userBadge } from "@/server/database/schemas/badges";
@@ -41,7 +42,10 @@ export const badgesRouter = createTRPCRouter({
       });
 
       if (existing) {
-        throw new Error("Badge already claimed");
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "Badge already claimed",
+        });
       }
 
       // Get badge details
@@ -50,7 +54,10 @@ export const badgesRouter = createTRPCRouter({
       });
 
       if (!badgeDetails) {
-        throw new Error("Badge not found");
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Badge not found",
+        });
       }
 
       // Create user badge

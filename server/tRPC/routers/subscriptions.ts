@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import {
@@ -115,7 +116,10 @@ export const subscriptionsRouter = createTRPCRouter({
       });
 
       if (!userSubscription) {
-        throw new Error("No active subscription found");
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "No active subscription found",
+        });
       }
 
       const [cancelled] = await ctx.db

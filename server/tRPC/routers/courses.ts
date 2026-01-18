@@ -1,4 +1,5 @@
-import { asc, eq } from "drizzle-orm";
+import { TRPCError } from "@trpc/server";
+import { and, asc, eq } from "drizzle-orm";
 import { z } from "zod";
 import { chapter } from "@/server/database/schemas/chapters";
 import { course } from "@/server/database/schemas/courses";
@@ -23,14 +24,14 @@ export const coursesRouter = createTRPCRouter({
         .optional()
     )
     .query(async ({ ctx, input }) => {
-      let whereClause = eq(course.status, "published");
+      const conditions = [eq(course.status, "published")];
 
       if (input?.accessType) {
-        whereClause = eq(course.accessType, input.accessType);
+        conditions.push(eq(course.accessType, input.accessType));
       }
 
       const courses = await ctx.db.query.course.findMany({
-        where: whereClause,
+        where: and(...conditions),
         limit: input?.limit ?? 50,
         offset: input?.offset ?? 0,
         orderBy: (course, { asc }) => [asc(course.displayOrder)],
@@ -49,7 +50,10 @@ export const coursesRouter = createTRPCRouter({
     )
     .query(async ({ ctx, input }) => {
       if (!(input.id || input.slug)) {
-        throw new Error("Either id or slug must be provided");
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Either id or slug must be provided",
+        });
       }
 
       const courseData = await ctx.db.query.course.findFirst({
