@@ -59,12 +59,12 @@
         "headline": "How IT Learn works",
         "steps": [
           {
-            "title": "Choose a course",
-            "description": "Start with Python, HTML, or CSS - no experience needed."
+            "title": "Done with the old way?",
+            "description": "Skip the boring lectures and frustration of learning alone."
           },
           {
-            "title": "Learn by doing",
-            "description": "Short lessons, instant feedback, XP, and badges."
+            "title": "Choose a course",
+            "description": "Start with Python, HTML, or CSS - no experience needed."
           },
           {
             "title": "Build real projects",

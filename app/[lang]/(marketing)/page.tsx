@@ -41,27 +41,26 @@ export default async function Home({
   const howItWorksId = "how-it-works";
   const coursesId = "courses";
   const pricingId = "pricing";
-  const howItWorksCards = [
+  const howItWorksMedia = [
     {
-      title: "Done with the old way?",
-      description:
-        "Skip the boring lectures and frustration of learning alone.",
       videoSrc: "/marketing/done-with-the-old-way.mp4",
       poster: "/marketing/done-with-the-old-way.jpg",
     },
     {
-      title: "Choose a course",
-      description: "Start with Python, HTML, or CSS - no experience needed.",
       videoSrc: "/marketing/choose-a-course.mp4",
       poster: "/marketing/choose-a-course.jpg",
     },
     {
-      title: "Build real projects",
-      description: "Apply what you learn and get help from the community.",
       videoSrc: "/marketing/build-real-projects.mp4",
       poster: "/marketing/build-real-projects.jpg",
     },
   ];
+  const howItWorksCards = dict.marketing.home.howItWorks.steps.map(
+    (step, index) => ({
+      ...step,
+      ...howItWorksMedia[index],
+    })
+  );
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">

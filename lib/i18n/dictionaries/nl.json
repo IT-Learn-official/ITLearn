@@ -59,12 +59,12 @@
         "headline": "Hoe IT Learn werkt",
         "steps": [
           {
-            "title": "Kies een cursus",
-            "description": "Begin met Python, HTML of CSS - geen ervaring nodig."
+            "title": "Klaar met de oude manier?",
+            "description": "Sla saaie lessen over en stop met worstelen in je eentje."
           },
           {
-            "title": "Leer door te doen",
-            "description": "Korte lessen, directe feedback, XP en badges."
+            "title": "Kies een cursus",
+            "description": "Begin met Python, HTML of CSS - geen ervaring nodig."
           },
           {
             "title": "Bouw echte projecten",
