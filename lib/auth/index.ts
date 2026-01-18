@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
-import { lastLoginMethod } from "better-auth/plugins";
+import { haveIBeenPwned, lastLoginMethod } from "better-auth/plugins";
 import { db } from "@/server/database/index";
 import {
   account,
@@ -99,6 +99,7 @@ export const auth = betterAuth({
     lastLoginMethod({
       storeInDatabase: true,
     }),
+    haveIBeenPwned(),
   ],
 
   debug: process.env.NODE_ENV !== "production",
