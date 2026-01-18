@@ -669,7 +669,11 @@
       "continueWithGoogle": "Continue with Google",
       "connecting": "Connecting…",
       "signingIn": "Signing in…",
-      "lastUsed": "Last used"
+      "lastUsed": "Last used",
+      "verifyTitle": "Verify your email",
+      "verifyDescription": "We sent a verification link to your email. Please verify your account to continue.",
+      "resendEmail": "Resend verification email",
+      "resendingEmail": "Resending…"
     },
     "register": {
       "title": "Create your free account",
@@ -729,6 +733,43 @@
       "emailVerified": "Email verified successfully",
       "emailSent": "Email sent successfully",
       "profileUpdated": "Profile updated successfully"
+    },
+    "verify": {
+      "title": "Check your inbox",
+      "subtitle": "We sent a verification link to your email. Open it to verify your account.",
+      "subtitleWithEmail": "We sent a verification link to {email}. Open it to verify your account.",
+      "invalidToken": "This verification link is invalid or expired.",
+      "tipTitle": "Did not get the email?",
+      "tipBody": "Check your spam folder or resend the verification email.",
+      "resend": "Resend verification email",
+      "resent": "Verification email sent",
+      "resending": "Resending…",
+      "backToLogin": "Already verified?",
+      "loginLink": "Back to login"
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email and we will send you a reset link.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "submit": "Send reset link",
+      "submitting": "Sending…",
+      "sentTitle": "Check your email",
+      "sentBody": "If an account exists, you will receive a reset link shortly.",
+      "backToLogin": "Remembered your password?",
+      "loginLink": "Back to login"
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "subtitle": "Create a new password to secure your account.",
+      "passwordLabel": "New password",
+      "passwordPlaceholder": "Create a new password",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "Re-enter your new password",
+      "submit": "Update password",
+      "submitting": "Updating…",
+      "invalidToken": "This reset link is invalid or expired.",
+      "requestNewLink": "Request a new reset link"
     }
   },
   "validation": {

@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useEffect, useId, useState } from "react";
 import { toast } from "sonner";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,6 +35,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [_error, setError] = useState<string | null>(null);
+  const [verificationEmail, setVerificationEmail] = useState<string | null>(
+    null
+  );
+  const [isVerificationSending, setIsVerificationSending] = useState(false);
   const [isDiscordLoading, setIsDiscordLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isGithubLoading, setIsGithubLoading] = useState(false);
@@ -93,9 +98,30 @@ export default function LoginPage() {
     }
   };
 
+  const resolveSignInError = (error: { message?: string; status?: number }) => {
+    let message = error.message ?? dict.auth.errors.genericError;
+    const lowerMessage = message.toLowerCase();
+
+    if (lowerMessage.includes("credential account not found")) {
+      message = dict.auth.errors.credentialAccountNotFound;
+    }
+
+    if (lowerMessage.includes("already exists")) {
+      message = dict.auth.errors.socialAccountExists;
+    }
+
+    if (error.status === 403) {
+      message = dict.auth.errors.emailNotVerified;
+      setVerificationEmail(email);
+    }
+
+    return message;
+  };
+
   const handlePasswordLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
+    setVerificationEmail(null);
     setIsSubmitting(true);
 
     try {
@@ -105,16 +131,7 @@ export default function LoginPage() {
       });
 
       if (error) {
-        let message = error.message ?? dict.auth.errors.genericError;
-
-        if (message.toLowerCase().includes("credential account not found")) {
-          message = dict.auth.errors.credentialAccountNotFound;
-        }
-
-        if (message.toLowerCase().includes("already exists")) {
-          message = dict.auth.errors.socialAccountExists;
-        }
-
+        const message = resolveSignInError(error);
         setError(message);
         toast.error(message);
         return;
@@ -124,17 +141,39 @@ export default function LoginPage() {
       router.push(`/${locale}/dashboard`);
       router.refresh();
     } catch (err) {
-      let message =
-        err instanceof Error ? err.message : dict.auth.errors.genericError;
-
-      if (message.toLowerCase().includes("credential account not found")) {
-        message = dict.auth.errors.credentialAccountNotFound;
-      }
-
+      const message = resolveSignInError(
+        err instanceof Error ? { message: err.message } : {}
+      );
       setError(message);
       toast.error(message);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    if (!verificationEmail) {
+      return;
+    }
+
+    try {
+      setIsVerificationSending(true);
+      const { error } = await authClient.sendVerificationEmail({
+        email: verificationEmail,
+        callbackURL: `/${locale}/verify`,
+      });
+
+      if (error) {
+        toast.error(dict.auth.errors.emailSendFailed);
+        return;
+      }
+
+      toast.success(dict.auth.success.emailSent);
+    } catch (err) {
+      console.error(err);
+      toast.error(dict.auth.errors.emailSendFailed);
+    } finally {
+      setIsVerificationSending(false);
     }
   };
 
@@ -151,6 +190,31 @@ export default function LoginPage() {
           <h1 className="font-semibold text-3xl">{dict.auth.login.title}</h1>
           <p className="text-muted-foreground">{dict.auth.login.subtitle}</p>
         </div>
+
+        {verificationEmail ? (
+          <Alert>
+            <AlertTitle>{dict.auth.login.verifyTitle}</AlertTitle>
+            <AlertDescription>
+              <p>{dict.auth.login.verifyDescription}</p>
+              <Button
+                className="mt-3 w-full"
+                disabled={isVerificationSending}
+                onClick={handleResendVerification}
+                type="button"
+                variant="secondary"
+              >
+                {isVerificationSending ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Spinner />
+                    {dict.auth.login.resendingEmail}
+                  </span>
+                ) : (
+                  dict.auth.login.resendEmail
+                )}
+              </Button>
+            </AlertDescription>
+          </Alert>
+        ) : null}
 
         <div className="space-y-3">
           <div className="relative">
@@ -326,7 +390,10 @@ export default function LoginPage() {
                 <Label htmlFor={passwordInputId}>
                   {dict.auth.login.password}
                 </Label>
-                <Link className="text-primary text-sm hover:underline" href="#">
+                <Link
+                  className="text-primary text-sm hover:underline"
+                  href={`/${locale}/forgot-password`}
+                >
                   {dict.auth.login.forgotPassword}
                 </Link>
               </div>

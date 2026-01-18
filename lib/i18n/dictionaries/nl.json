@@ -669,7 +669,11 @@
       "continueWithGoogle": "Doorgaan met Google",
       "connecting": "Verbinden…",
       "signingIn": "Bezig met aanmelden…",
-      "lastUsed": "Laatst gebruikt"
+      "lastUsed": "Laatst gebruikt",
+      "verifyTitle": "Verifieer je e-mailadres",
+      "verifyDescription": "We hebben een verificatielink gestuurd. Verifieer je account om verder te gaan.",
+      "resendEmail": "Verificatie e-mail opnieuw sturen",
+      "resendingEmail": "Opnieuw verzenden…"
     },
     "register": {
       "title": "Maak je gratis account aan",
@@ -729,6 +733,43 @@
       "emailVerified": "E-mail succesvol geverifieerd",
       "emailSent": "E-mail succesvol verzonden",
       "profileUpdated": "Profiel succesvol bijgewerkt"
+    },
+    "verify": {
+      "title": "Controleer je inbox",
+      "subtitle": "We hebben een verificatielink gestuurd. Open deze om je account te verifiëren.",
+      "subtitleWithEmail": "We hebben een verificatielink gestuurd naar {email}. Open deze om je account te verifiëren.",
+      "invalidToken": "Deze verificatielink is ongeldig of verlopen.",
+      "tipTitle": "Geen e-mail ontvangen?",
+      "tipBody": "Controleer je spamfolder of stuur de verificatie e-mail opnieuw.",
+      "resend": "Verificatie e-mail opnieuw sturen",
+      "resent": "Verificatie e-mail verzonden",
+      "resending": "Opnieuw verzenden…",
+      "backToLogin": "Al geverifieerd?",
+      "loginLink": "Terug naar inloggen"
+    },
+    "forgot": {
+      "title": "Wachtwoord opnieuw instellen",
+      "subtitle": "Voer je e-mailadres in en we sturen een resetlink.",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "jij@voorbeeld.com",
+      "submit": "Resetlink versturen",
+      "submitting": "Versturen…",
+      "sentTitle": "Controleer je e-mail",
+      "sentBody": "Als er een account bestaat, ontvang je snel een resetlink.",
+      "backToLogin": "Wachtwoord toch nog?",
+      "loginLink": "Terug naar inloggen"
+    },
+    "reset": {
+      "title": "Kies een nieuw wachtwoord",
+      "subtitle": "Maak een nieuw wachtwoord om je account te beveiligen.",
+      "passwordLabel": "Nieuw wachtwoord",
+      "passwordPlaceholder": "Maak een nieuw wachtwoord",
+      "confirmPasswordLabel": "Bevestig wachtwoord",
+      "confirmPasswordPlaceholder": "Herhaal je nieuwe wachtwoord",
+      "submit": "Wachtwoord bijwerken",
+      "submitting": "Bijwerken…",
+      "invalidToken": "Deze resetlink is ongeldig of verlopen.",
+      "requestNewLink": "Nieuwe resetlink aanvragen"
     }
   },
   "validation": {

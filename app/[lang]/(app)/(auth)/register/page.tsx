@@ -50,16 +50,21 @@ export default function RegisterPage() {
         email,
         password,
         name: email.split("@")[0] ?? email,
+        callbackURL: `/${locale}/verify`,
       });
 
       if (error) {
         let message = error.message ?? dict.auth.errors.genericError;
+        const lowerMessage = message.toLowerCase();
+        const isPasswordCompromised =
+          error.code === "PASSWORD_COMPROMISED" ||
+          lowerMessage.includes("compromised");
 
-        if (message.toLowerCase().includes("password is compromised")) {
+        if (isPasswordCompromised) {
           message = dict.auth.errors.passwordCompromised;
         }
 
-        if (message.toLowerCase().includes("already exists")) {
+        if (lowerMessage.includes("already exists")) {
           message = dict.auth.errors.socialAccountExists;
         }
 
@@ -69,15 +74,15 @@ export default function RegisterPage() {
       }
 
       toast.success(dict.auth.success.accountCreated);
-      router.push(`/${locale}/dashboard`);
+      router.push(`/${locale}/verify?email=${encodeURIComponent(email)}`);
       router.refresh();
     } catch (err) {
-      let message =
+      const rawMessage =
         err instanceof Error ? err.message : dict.auth.errors.genericError;
-
-      if (message.toLowerCase().includes("password is compromised")) {
-        message = dict.auth.errors.passwordCompromised;
-      }
+      const lowerMessage = rawMessage.toLowerCase();
+      const message = lowerMessage.includes("compromised")
+        ? dict.auth.errors.passwordCompromised
+        : rawMessage;
 
       setError(message);
       toast.error(message);

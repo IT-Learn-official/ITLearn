@@ -33,7 +33,12 @@ export default async function RootLayout({
       <body className={`${ProximaNova.variable} dark antialiased`}>
         <TRPCProvider>
           <ViewTransition>{children}</ViewTransition>
-          <Toaster position="bottom-right" richColors={true} />
+          <Toaster
+            closeButton={true}
+            duration={5000}
+            position="bottom-right"
+            richColors={true}
+          />
         </TRPCProvider>
       </body>
     </html>

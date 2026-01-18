@@ -2,6 +2,10 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { haveIBeenPwned, lastLoginMethod } from "better-auth/plugins";
+import {
+  sendResetPasswordEmail,
+  sendVerificationEmail,
+} from "@/lib/emails/send-email";
 import { db } from "@/server/database/index";
 import {
   account,
@@ -37,6 +41,27 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    autoSignIn: false,
+    sendResetPassword: async ({ user, url }) => {
+      await sendResetPasswordEmail({
+        to: user.email,
+        url,
+      });
+    },
+    resetPasswordTokenExpiresIn: 60 * 10,
+  },
+
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendVerificationEmail({
+        to: user.email,
+        url,
+      });
+    },
+    sendOnSignUp: true,
+    sendOnSignIn: true,
+    autoSignInAfterVerification: true,
+    expiresIn: 60 * 10,
   },
 
   socialProviders: {

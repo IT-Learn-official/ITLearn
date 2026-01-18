@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import BlurText from "@/components/marketing/blur-text";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -44,7 +43,7 @@ export default async function Home({
   const pricingId = "pricing";
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
       {/* --- HERO SECTION --- */}
       <section className="relative pt-24 pb-32 lg:pt-36 lg:pb-40">
         {/* Background Gradients/Glows */}
@@ -252,7 +251,7 @@ export default async function Home({
             </div>
             {/* Visual Placeholder for Gamification */}
             <div className="relative order-1 flex h-75 items-center justify-center overflow-hidden rounded-2xl border bg-linear-to-br from-orange-500/20 via-background to-background lg:order-2 lg:h-100">
-              <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20" />
+              <div className="absolute inset-0 opacity-20" />
               <Trophy className="h-32 w-32 text-orange-500" />
             </div>
           </div>
@@ -260,7 +259,7 @@ export default async function Home({
           {/* Community */}
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div className="relative flex h-75 items-center justify-center overflow-hidden rounded-2xl border bg-linear-to-br from-blue-500/20 via-background to-background lg:h-100">
-              <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20" />
+              <div className="absolute inset-0 opacity-20" />
               <Users className="h-32 w-32 text-blue-500" />
             </div>
             <div className="space-y-8">
