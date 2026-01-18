@@ -164,7 +164,7 @@ export default async function Home({
           <div className="grid gap-8 md:grid-cols-3">
             {howItWorksCards.map((card, index) => (
               <div
-                className="group relative min-h-[420px] overflow-hidden rounded-2xl border border-border/50 bg-[#181d2c] p-8 text-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                className="group relative min-h-105 overflow-hidden rounded-2xl border border-border/50 bg-[#181d2c] p-8 text-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                 key={card.title}
               >
                 <div className="mb-6 overflow-hidden rounded-xl">

@@ -81,7 +81,9 @@ export const subscription = pgTable(
     stripePriceId: text("stripe_price_id"),
     stripeCurrentPeriodStart: timestamp("stripe_current_period_start"),
     stripeCurrentPeriodEnd: timestamp("stripe_current_period_end"),
-    stripeCancelAtPeriodEnd: boolean("stripe_cancel_at_period_end").default(false),
+    stripeCancelAtPeriodEnd: boolean("stripe_cancel_at_period_end").default(
+      false
+    ),
     trialStart: timestamp("trial_start"),
     trialEnd: timestamp("trial_end"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -95,7 +97,9 @@ export const subscription = pgTable(
     index("subscription_status_idx").on(table.status),
     index("subscription_endDate_idx").on(table.endDate),
     index("subscription_stripeCustomerId_idx").on(table.stripeCustomerId),
-    index("subscription_stripeSubscriptionId_idx").on(table.stripeSubscriptionId),
+    index("subscription_stripeSubscriptionId_idx").on(
+      table.stripeSubscriptionId
+    ),
   ]
 );
 
@@ -135,7 +139,9 @@ export const paymentHistory = pgTable(
     index("payment_history_userProfileId_idx").on(table.userProfileId),
     index("payment_history_status_idx").on(table.status),
     index("payment_history_transactionId_idx").on(table.transactionId),
-    index("payment_history_stripePaymentIntentId_idx").on(table.stripePaymentIntentId),
+    index("payment_history_stripePaymentIntentId_idx").on(
+      table.stripePaymentIntentId
+    ),
   ]
 );
 

@@ -9,9 +9,65 @@ CREATE TYPE "public"."progress_status" AS ENUM('not_started', 'in_progress', 'co
 CREATE TYPE "public"."project_status" AS ENUM('draft', 'submitted', 'under_review', 'approved', 'needs_revision');--> statement-breakpoint
 CREATE TYPE "public"."payment_status" AS ENUM('pending', 'completed', 'failed', 'refunded');--> statement-breakpoint
 CREATE TYPE "public"."subscription_status" AS ENUM('active', 'cancelled', 'expired', 'pending');--> statement-breakpoint
-CREATE TYPE "public"."subscription_type" AS ENUM('free', 'pro_monthly', 'pro_quarterly', 'pro_yearly', 'lifetime');--> statement-breakpoint
+CREATE TYPE "public"."subscription_type" AS ENUM('free', 'pro_yearly', 'lifetime');--> statement-breakpoint
 CREATE TYPE "public"."user_role" AS ENUM('student', 'teacher', 'admin', 'school_admin');--> statement-breakpoint
 CREATE TYPE "public"."xp_transaction_type" AS ENUM('lesson_completed', 'quiz_passed', 'exercise_completed', 'project_submitted', 'project_approved', 'course_completed', 'streak_bonus', 'badge_claimed', 'daily_cap', 'manual_adjustment');--> statement-breakpoint
+CREATE TABLE "account" (
+	"id" text PRIMARY KEY NOT NULL,
+	"account_id" text NOT NULL,
+	"provider_id" text NOT NULL,
+	"user_id" text NOT NULL,
+	"access_token" text,
+	"refresh_token" text,
+	"id_token" text,
+	"access_token_expires_at" timestamp,
+	"refresh_token_expires_at" timestamp,
+	"scope" text,
+	"password" text,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "rate_limit" (
+	"id" text PRIMARY KEY NOT NULL,
+	"key" text,
+	"count" integer,
+	"last_request" bigint
+);
+--> statement-breakpoint
+CREATE TABLE "session" (
+	"id" text PRIMARY KEY NOT NULL,
+	"expires_at" timestamp NOT NULL,
+	"token" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp NOT NULL,
+	"ip_address" text,
+	"user_agent" text,
+	"user_id" text NOT NULL,
+	CONSTRAINT "session_token_unique" UNIQUE("token")
+);
+--> statement-breakpoint
+CREATE TABLE "user" (
+	"id" text PRIMARY KEY NOT NULL,
+	"name" text NOT NULL,
+	"email" text NOT NULL,
+	"email_verified" boolean DEFAULT false NOT NULL,
+	"image" text,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"last_login_method" text,
+	CONSTRAINT "user_email_unique" UNIQUE("email")
+);
+--> statement-breakpoint
+CREATE TABLE "verification" (
+	"id" text PRIMARY KEY NOT NULL,
+	"identifier" text NOT NULL,
+	"value" text NOT NULL,
+	"expires_at" timestamp NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "badge" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
@@ -379,12 +435,17 @@ CREATE TABLE "payment_history" (
 	"transaction_id" text,
 	"invoice_url" text,
 	"metadata" text,
+	"stripe_payment_intent_id" text,
+	"stripe_invoice_id" text,
+	"stripe_charge_id" text,
 	"paid_at" timestamp,
 	"refunded_at" timestamp,
 	"refund_reason" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "payment_history_transaction_id_unique" UNIQUE("transaction_id")
+	CONSTRAINT "payment_history_transaction_id_unique" UNIQUE("transaction_id"),
+	CONSTRAINT "payment_history_stripe_payment_intent_id_unique" UNIQUE("stripe_payment_intent_id"),
+	CONSTRAINT "payment_history_stripe_invoice_id_unique" UNIQUE("stripe_invoice_id")
 );
 --> statement-breakpoint
 CREATE TABLE "subscription" (
@@ -397,9 +458,19 @@ CREATE TABLE "subscription" (
 	"auto_renew" boolean DEFAULT false NOT NULL,
 	"cancelled_at" timestamp,
 	"cancellation_reason" text,
+	"stripe_customer_id" text,
+	"stripe_subscription_id" text,
+	"stripe_price_id" text,
+	"stripe_current_period_start" timestamp,
+	"stripe_current_period_end" timestamp,
+	"stripe_cancel_at_period_end" boolean DEFAULT false,
+	"trial_start" timestamp,
+	"trial_end" timestamp,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "subscription_user_profile_id_unique" UNIQUE("user_profile_id")
+	CONSTRAINT "subscription_user_profile_id_unique" UNIQUE("user_profile_id"),
+	CONSTRAINT "subscription_stripe_customer_id_unique" UNIQUE("stripe_customer_id"),
+	CONSTRAINT "subscription_stripe_subscription_id_unique" UNIQUE("stripe_subscription_id")
 );
 --> statement-breakpoint
 CREATE TABLE "subscription_plan" (
@@ -411,11 +482,15 @@ CREATE TABLE "subscription_plan" (
 	"currency" text DEFAULT 'EUR' NOT NULL,
 	"duration_days" integer,
 	"features" text[],
+	"stripe_price_id" text,
+	"stripe_product_id" text,
+	"trial_days" integer DEFAULT 0,
 	"is_active" boolean DEFAULT true NOT NULL,
 	"display_order" integer DEFAULT 0 NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "subscription_plan_type_unique" UNIQUE("type")
+	CONSTRAINT "subscription_plan_type_unique" UNIQUE("type"),
+	CONSTRAINT "subscription_plan_stripe_price_id_unique" UNIQUE("stripe_price_id")
 );
 --> statement-breakpoint
 CREATE TABLE "user_profile" (
@@ -471,10 +546,11 @@ CREATE TABLE "xp_transaction" (
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
+ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_badge" ADD CONSTRAINT "user_badge_user_profile_id_user_profile_id_fk" FOREIGN KEY ("user_profile_id") REFERENCES "public"."user_profile"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_badge" ADD CONSTRAINT "user_badge_badge_id_badge_id_fk" FOREIGN KEY ("badge_id") REFERENCES "public"."badge"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "chapter" ADD CONSTRAINT "chapter_course_id_course_id_fk" FOREIGN KEY ("course_id") REFERENCES "public"."course"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "course" ADD CONSTRAINT "course_previous_version_id_course_id_fk" FOREIGN KEY ("previous_version_id") REFERENCES "public"."course"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "course_prerequisite" ADD CONSTRAINT "course_prerequisite_course_id_course_id_fk" FOREIGN KEY ("course_id") REFERENCES "public"."course"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "course_prerequisite" ADD CONSTRAINT "course_prerequisite_prerequisite_course_id_course_id_fk" FOREIGN KEY ("prerequisite_course_id") REFERENCES "public"."course"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "exercise" ADD CONSTRAINT "exercise_lesson_id_lesson_id_fk" FOREIGN KEY ("lesson_id") REFERENCES "public"."lesson"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -514,6 +590,9 @@ ALTER TABLE "subscription" ADD CONSTRAINT "subscription_plan_id_subscription_pla
 ALTER TABLE "user_profile" ADD CONSTRAINT "user_profile_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "daily_xp" ADD CONSTRAINT "daily_xp_user_profile_id_user_profile_id_fk" FOREIGN KEY ("user_profile_id") REFERENCES "public"."user_profile"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "xp_transaction" ADD CONSTRAINT "xp_transaction_user_profile_id_user_profile_id_fk" FOREIGN KEY ("user_profile_id") REFERENCES "public"."user_profile"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+CREATE INDEX "account_userId_idx" ON "account" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "session_userId_idx" ON "session" USING btree ("user_id");--> statement-breakpoint
+CREATE INDEX "verification_identifier_idx" ON "verification" USING btree ("identifier");--> statement-breakpoint
 CREATE INDEX "user_badge_userProfileId_idx" ON "user_badge" USING btree ("user_profile_id");--> statement-breakpoint
 CREATE INDEX "user_badge_badgeId_idx" ON "user_badge" USING btree ("badge_id");--> statement-breakpoint
 CREATE INDEX "user_badge_earnedAt_idx" ON "user_badge" USING btree ("earned_at");--> statement-breakpoint
@@ -575,9 +654,12 @@ CREATE INDEX "payment_history_subscriptionId_idx" ON "payment_history" USING btr
 CREATE INDEX "payment_history_userProfileId_idx" ON "payment_history" USING btree ("user_profile_id");--> statement-breakpoint
 CREATE INDEX "payment_history_status_idx" ON "payment_history" USING btree ("status");--> statement-breakpoint
 CREATE INDEX "payment_history_transactionId_idx" ON "payment_history" USING btree ("transaction_id");--> statement-breakpoint
+CREATE INDEX "payment_history_stripePaymentIntentId_idx" ON "payment_history" USING btree ("stripe_payment_intent_id");--> statement-breakpoint
 CREATE INDEX "subscription_userProfileId_idx" ON "subscription" USING btree ("user_profile_id");--> statement-breakpoint
 CREATE INDEX "subscription_status_idx" ON "subscription" USING btree ("status");--> statement-breakpoint
 CREATE INDEX "subscription_endDate_idx" ON "subscription" USING btree ("end_date");--> statement-breakpoint
+CREATE INDEX "subscription_stripeCustomerId_idx" ON "subscription" USING btree ("stripe_customer_id");--> statement-breakpoint
+CREATE INDEX "subscription_stripeSubscriptionId_idx" ON "subscription" USING btree ("stripe_subscription_id");--> statement-breakpoint
 CREATE INDEX "user_profile_userId_idx" ON "user_profile" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX "user_profile_role_idx" ON "user_profile" USING btree ("role");--> statement-breakpoint
 CREATE INDEX "user_profile_username_idx" ON "user_profile" USING btree ("username");--> statement-breakpoint

@@ -1,5 +1,3 @@
-# bun test
-
 #!/bin/sh
 # Exit on any error
 set -e
@@ -10,8 +8,27 @@ if [ -z "$(git diff --cached --name-only)" ]; then
   exit 0
 fi
 
+hash_staged_changes() {
+  if command -v sha256sum >/dev/null 2>&1; then
+    git diff --cached | sha256sum | cut -d' ' -f1
+    return
+  fi
+
+  if command -v shasum >/dev/null 2>&1; then
+    git diff --cached | shasum -a 256 | cut -d' ' -f1
+    return
+  fi
+
+  if command -v openssl >/dev/null 2>&1; then
+    git diff --cached | openssl dgst -sha256 | awk '{print $NF}'
+    return
+  fi
+
+  echo ""
+}
+
 # Store the hash of staged changes to detect modifications
-STAGED_HASH=$(git diff --cached | sha256sum | cut -d' ' -f1)
+STAGED_HASH=$(hash_staged_changes)
 
 # Save list of staged files (handling all file states)
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
@@ -23,7 +40,7 @@ git stash push --quiet --keep-index --message "pre-commit-stash" || true
 STASHED=$?
 
 # Run formatter on the staged files
-npx ultracite fix
+bun x ultracite fix
 FORMAT_EXIT_CODE=$?
 
 # Restore working directory state
@@ -62,8 +79,8 @@ else
 fi
 
 # Check if staged files actually changed
-NEW_STAGED_HASH=$(git diff --cached | sha256sum | cut -d' ' -f1)
-if [ "$STAGED_HASH" != "$NEW_STAGED_HASH" ]; then
+NEW_STAGED_HASH=$(hash_staged_changes)
+if [ -n "$STAGED_HASH" ] && [ -n "$NEW_STAGED_HASH" ] && [ "$STAGED_HASH" != "$NEW_STAGED_HASH" ]; then
   echo "✨ Files formatted by Ultracite"
 fi
 

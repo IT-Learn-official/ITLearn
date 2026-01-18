@@ -7,12 +7,11 @@
  * - Handling trials
  */
 
-import Stripe from "stripe";
-import { stripeConfig } from "./config";
-import { db } from "@/server/database";
-import { subscription, subscriptionPlan } from "@/server/database/schemas/subscriptions";
-import { userProfile } from "@/server/database/schemas/users";
 import { eq } from "drizzle-orm";
+import Stripe from "stripe";
+import { db } from "@/server/database";
+import { subscription } from "@/server/database/schemas/subscriptions";
+import { stripeConfig } from "./config";
 
 // Initialize Stripe client
 export const stripe = new Stripe(stripeConfig.secretKey, {
@@ -71,7 +70,8 @@ export async function createSubscription(params: {
     subscriptionData.trial_period_days = trialDays;
   }
 
-  const stripeSubscription = await stripe.subscriptions.create(subscriptionData);
+  const stripeSubscription =
+    await stripe.subscriptions.create(subscriptionData);
 
   return stripeSubscription;
 }
@@ -115,19 +115,27 @@ export async function updateSubscription(params: {
   newPriceId: string;
   prorationBehavior?: "create_prorations" | "none" | "always_invoice";
 }) {
-  const { subscriptionId, newPriceId, prorationBehavior = "create_prorations" } = params;
+  const {
+    subscriptionId,
+    newPriceId,
+    prorationBehavior = "create_prorations",
+  } = params;
 
-  const stripeSubscription = await stripe.subscriptions.retrieve(subscriptionId);
+  const stripeSubscription =
+    await stripe.subscriptions.retrieve(subscriptionId);
 
-  const updatedSubscription = await stripe.subscriptions.update(subscriptionId, {
-    items: [
-      {
-        id: stripeSubscription.items.data[0]?.id,
-        price: newPriceId,
-      },
-    ],
-    proration_behavior: prorationBehavior,
-  });
+  const updatedSubscription = await stripe.subscriptions.update(
+    subscriptionId,
+    {
+      items: [
+        {
+          id: stripeSubscription.items.data[0]?.id,
+          price: newPriceId,
+        },
+      ],
+      proration_behavior: prorationBehavior,
+    }
+  );
 
   return updatedSubscription;
 }
@@ -143,7 +151,14 @@ export async function createCheckoutSession(params: {
   cancelUrl: string;
   trialDays?: number;
 }) {
-  const { priceId, customerId, userProfileId, successUrl, cancelUrl, trialDays } = params;
+  const {
+    priceId,
+    customerId,
+    userProfileId,
+    successUrl,
+    cancelUrl,
+    trialDays,
+  } = params;
 
   // Check if user has already used a trial
   const hasUsedTrial = await checkUserTrialHistory(userProfileId);

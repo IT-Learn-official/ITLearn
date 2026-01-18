@@ -9,8 +9,6 @@
  * - Trial abuse prevention (one trial per user across all plans)
  */
 
-import type Stripe from "stripe";
-
 export const stripeConfig = {
   // Stripe API Keys (from environment variables)
   secretKey: process.env.STRIPE_SECRET_KEY || "",

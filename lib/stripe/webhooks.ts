@@ -8,15 +8,13 @@
  * - Customer updates
  */
 
+import { eq } from "drizzle-orm";
 import type { Stripe } from "stripe";
 import { db } from "@/server/database";
 import {
   paymentHistory,
   subscription,
-  subscriptionPlan,
 } from "@/server/database/schemas/subscriptions";
-import { userProfile } from "@/server/database/schemas/users";
-import { eq } from "drizzle-orm";
 
 /**
  * Handle customer.subscription.created event
@@ -29,11 +27,17 @@ export async function handleSubscriptionCreated(
 
   // Find user by Stripe customer ID
   const existingSubscription = await db.query.subscription.findFirst({
-    where: eq(subscription.stripeCustomerId, stripeSubscription.customer as string),
+    where: eq(
+      subscription.stripeCustomerId,
+      stripeSubscription.customer as string
+    ),
   });
 
   if (!existingSubscription) {
-    console.error("User not found for Stripe customer:", stripeSubscription.customer);
+    console.error(
+      "User not found for Stripe customer:",
+      stripeSubscription.customer
+    );
     return;
   }
 
@@ -44,8 +48,12 @@ export async function handleSubscriptionCreated(
       stripeSubscriptionId: stripeSubscription.id,
       stripePriceId: stripeSubscription.items.data[0]?.price.id,
       status: mapStripeStatus(stripeSubscription.status),
-      stripeCurrentPeriodStart: new Date(stripeSubscription.current_period_start * 1000),
-      stripeCurrentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
+      stripeCurrentPeriodStart: new Date(
+        stripeSubscription.current_period_start * 1000
+      ),
+      stripeCurrentPeriodEnd: new Date(
+        stripeSubscription.current_period_end * 1000
+      ),
       stripeCancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
       trialStart: stripeSubscription.trial_start
         ? new Date(stripeSubscription.trial_start * 1000)
@@ -55,7 +63,9 @@ export async function handleSubscriptionCreated(
         : null,
       updatedAt: new Date(),
     })
-    .where(eq(subscription.stripeCustomerId, stripeSubscription.customer as string));
+    .where(
+      eq(subscription.stripeCustomerId, stripeSubscription.customer as string)
+    );
 }
 
 /**
@@ -72,8 +82,12 @@ export async function handleSubscriptionUpdated(
     .set({
       stripePriceId: stripeSubscription.items.data[0]?.price.id,
       status: mapStripeStatus(stripeSubscription.status),
-      stripeCurrentPeriodStart: new Date(stripeSubscription.current_period_start * 1000),
-      stripeCurrentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
+      stripeCurrentPeriodStart: new Date(
+        stripeSubscription.current_period_start * 1000
+      ),
+      stripeCurrentPeriodEnd: new Date(
+        stripeSubscription.current_period_end * 1000
+      ),
       stripeCancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
       cancelledAt: stripeSubscription.canceled_at
         ? new Date(stripeSubscription.canceled_at * 1000)
@@ -113,7 +127,10 @@ export async function handlePaymentSucceeded(
 
   // Find subscription by Stripe subscription ID
   const sub = await db.query.subscription.findFirst({
-    where: eq(subscription.stripeSubscriptionId, invoice.subscription as string),
+    where: eq(
+      subscription.stripeSubscriptionId,
+      invoice.subscription as string
+    ),
   });
 
   if (!sub) {
@@ -134,7 +151,9 @@ export async function handlePaymentSucceeded(
     stripePaymentIntentId: invoice.payment_intent as string,
     stripeChargeId: invoice.charge as string,
     invoiceUrl: invoice.hosted_invoice_url || undefined,
-    paidAt: new Date(invoice.status_transitions.paid_at! * 1000),
+    paidAt: invoice.status_transitions.paid_at
+      ? new Date(invoice.status_transitions.paid_at * 1000)
+      : undefined,
     metadata: JSON.stringify({
       billingReason: invoice.billing_reason,
       invoiceNumber: invoice.number,
@@ -152,7 +171,10 @@ export async function handlePaymentFailed(
   const invoice = event.data.object;
 
   const sub = await db.query.subscription.findFirst({
-    where: eq(subscription.stripeSubscriptionId, invoice.subscription as string),
+    where: eq(
+      subscription.stripeSubscriptionId,
+      invoice.subscription as string
+    ),
   });
 
   if (!sub) {
