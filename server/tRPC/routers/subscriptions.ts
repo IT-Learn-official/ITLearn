@@ -51,11 +51,7 @@ export const subscriptionsRouter = createTRPCRouter({
     }
 
     const planType = userSubscription.plan.type;
-    const isPro =
-      planType === "pro_monthly" ||
-      planType === "pro_quarterly" ||
-      planType === "pro_yearly";
-
+    const isPro = planType === "pro_yearly";
     const isLifetime = planType === "lifetime";
 
     return {

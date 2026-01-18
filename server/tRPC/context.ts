@@ -6,7 +6,15 @@ import { db } from "../database";
 export const createTRPCContext = async ({
   req,
 }: FetchCreateContextFnOptions) => {
-  const session = await auth.api.getSession({ headers: req.headers });
+  let session = null;
+  
+  try {
+    session = await auth.api.getSession({ headers: req.headers });
+  } catch (error) {
+    // Log the error but allow the context to be created
+    // Authentication will be enforced by middleware on protected routes
+    console.error("Error getting session:", error);
+  }
 
   return {
     db,

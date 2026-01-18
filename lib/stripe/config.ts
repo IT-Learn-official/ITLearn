@@ -9,17 +9,32 @@
  * - Trial abuse prevention (one trial per user across all plans)
  */
 
+/**
+ * Helper function to get required environment variables
+ * Throws an error if the variable is not set in production
+ */
+function getRequiredEnv(name: string): string {
+  const value = process.env[name];
+  
+  // In development, allow empty values for easier local setup
+  if (!value && process.env.NODE_ENV === "production") {
+    throw new Error(`Missing required Stripe environment variable: ${name}`);
+  }
+  
+  return value || "";
+}
+
 export const stripeConfig = {
   // Stripe API Keys (from environment variables)
-  secretKey: process.env.STRIPE_SECRET_KEY || "",
-  publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || "",
-  webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || "",
+  secretKey: getRequiredEnv("STRIPE_SECRET_KEY"),
+  publishableKey: getRequiredEnv("STRIPE_PUBLISHABLE_KEY"),
+  webhookSecret: getRequiredEnv("STRIPE_WEBHOOK_SECRET"),
 
   // Subscription Plans Mapping
   // Map internal subscription types to Stripe Price IDs
   plans: {
-    pro_yearly: process.env.STRIPE_PRICE_PRO_YEARLY || "", // €9/month billed annually
-    lifetime: process.env.STRIPE_PRICE_LIFETIME || "", // €69 one-time
+    pro_yearly: getRequiredEnv("STRIPE_PRICE_PRO_YEARLY"), // €9/month billed annually
+    lifetime: getRequiredEnv("STRIPE_PRICE_LIFETIME"), // €69 one-time
   },
 
   // Feature Configuration

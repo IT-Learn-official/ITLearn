@@ -67,10 +67,27 @@ const withUserProfile = t.middleware(async ({ ctx, next }) => {
 });
 
 // Middleware to ensure user has a specific role
+// This middleware builds on top of withUserProfile to avoid duplicate queries
 const hasRole = (
   roles: Array<"student" | "teacher" | "admin" | "school_admin">
 ) =>
   t.middleware(async ({ ctx, next }) => {
+    // Check if we already have userProfile from withUserProfile middleware
+    if ("userProfile" in ctx && ctx.userProfile) {
+      // Profile already fetched, just check the role
+      if (!roles.includes(ctx.userProfile.role)) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `You must be a ${roles.join(" or ")} to access this resource`,
+        });
+      }
+
+      return next({
+        ctx,
+      });
+    }
+
+    // If no profile in context, fetch it (fallback for standalone usage)
     if (!(ctx.session && ctx.user)) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
@@ -116,8 +133,14 @@ const hasRole = (
 // Protected procedures
 export const protectedProcedure = t.procedure.use(isAuthenticated);
 export const userProcedure = t.procedure.use(withUserProfile);
-export const teacherProcedure = t.procedure.use(hasRole(["teacher", "admin"]));
-export const adminProcedure = t.procedure.use(hasRole(["admin"]));
-export const schoolAdminProcedure = t.procedure.use(
-  hasRole(["school_admin", "admin"])
-);
+
+// Role-based procedures that compose withUserProfile to avoid duplicate queries
+export const teacherProcedure = t.procedure
+  .use(withUserProfile)
+  .use(hasRole(["teacher", "admin"]));
+export const adminProcedure = t.procedure
+  .use(withUserProfile)
+  .use(hasRole(["admin"]));
+export const schoolAdminProcedure = t.procedure
+  .use(withUserProfile)
+  .use(hasRole(["school_admin", "admin"]));

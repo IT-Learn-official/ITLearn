@@ -34,11 +34,9 @@ export async function handleSubscriptionCreated(
   });
 
   if (!existingSubscription) {
-    console.error(
-      "User not found for Stripe customer:",
-      stripeSubscription.customer
+    throw new Error(
+      `Subscription record not found for Stripe customer ${stripeSubscription.customer}`
     );
-    return;
   }
 
   // Update subscription with Stripe data
@@ -134,8 +132,7 @@ export async function handlePaymentSucceeded(
   });
 
   if (!sub) {
-    console.error("Subscription not found for invoice:", invoice.id);
-    return;
+    throw new Error(`Subscription not found for invoice: ${invoice.id}`);
   }
 
   // Record payment in history
@@ -178,8 +175,10 @@ export async function handlePaymentFailed(
   });
 
   if (!sub) {
-    console.error("Subscription not found for failed invoice:", invoice.id);
-    return;
+    throw new Error(
+      `Subscription not found for failed invoice: ${invoice.id}`
+    );
+  }
   }
 
   await db.insert(paymentHistory).values({
