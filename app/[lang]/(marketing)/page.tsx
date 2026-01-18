@@ -164,7 +164,7 @@ export default async function Home({
           <div className="grid gap-8 md:grid-cols-3">
             {howItWorksCards.map((card, index) => (
               <div
-                className="group relative min-h-[420px] overflow-hidden rounded-2xl border border-border/50 bg-[#181d2c] p-8 text-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                className="group relative min-h-105 overflow-hidden rounded-2xl border border-border/50 bg-[#181d2c] p-8 text-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                 key={card.title}
               >
                 <div className="mb-6 overflow-hidden rounded-xl">
@@ -276,11 +276,15 @@ export default async function Home({
           {/* Gamification */}
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div className="order-2 space-y-8 lg:order-1">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500">
-                <HugeiconsIcon
-                  className="h-6 w-6"
-                  icon={Award01Icon}
-                  strokeWidth={1.8}
+              <div className="inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-[#181d2c]">
+                <video
+                  autoPlay
+                  className="h-full w-full object-contain"
+                  loop
+                  muted
+                  playsInline
+                  poster="/marketing/learning-that-keeps-you-motivated.jpg"
+                  src="/marketing/learning-that-keeps-you-motivated.mp4"
                 />
               </div>
               <div className="space-y-4">
@@ -330,11 +334,15 @@ export default async function Home({
             </div>
 
             <div className="space-y-8">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500">
-                <HugeiconsIcon
-                  className="h-6 w-6"
-                  icon={UserGroupIcon}
-                  strokeWidth={1.8}
+              <div className="inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-[#181d2c]">
+                <video
+                  autoPlay
+                  className="h-full w-full object-contain"
+                  loop
+                  muted
+                  playsInline
+                  poster="/marketing/je-leert-nooit-iets-alleen.jpg"
+                  src="/marketing/je-leert-nooit-iets-alleen.mp4"
                 />
               </div>
               <div className="space-y-4">
