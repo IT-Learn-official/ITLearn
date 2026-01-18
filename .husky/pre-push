@@ -1,0 +1,45 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+set -e
+
+failed=0
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$local_sha" = "0000000000000000000000000000000000000000" ]; then
+    continue
+  fi
+
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+    range="$local_sha"
+  else
+    range="$remote_sha..$local_sha"
+  fi
+
+  commits=$(git rev-list "$range")
+  if [ -z "$commits" ]; then
+    continue
+  fi
+
+  while read -r commit; do
+    status=$(git log --format="%G?" -n 1 "$commit")
+    case "$status" in
+      G|U)
+        ;;
+      *)
+        echo "Unsigned or unverified commit blocked: $commit (status $status)"
+        failed=1
+        ;;
+    esac
+  done <<EOF
+$commits
+EOF
+done
+
+if [ "$failed" -ne 0 ]; then
+  echo "Push blocked: all commits must be signed and verified (G or U)."
+  echo "Enable auto-signing: git config commit.gpgsign true"
+  echo "GPG setup: gpg --full-generate-key"
+  echo "SSH signing: git config gpg.format ssh"
+  exit 1
+fi

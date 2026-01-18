@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import BlurText from "@/components/marketing/blur-text";
-import { HomeAnimations } from "@/components/marketing/home-animations";
-import Prism from "@/components/marketing/prism";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -36,26 +34,10 @@ export default async function Home({
 
   return (
     <div>
-      <HomeAnimations />
-      <section className="relative overflow-hidden px-6 py-20">
-        <div className="pointer-events-none absolute inset-0 opacity-60">
-          <Prism
-            animationType="rotate"
-            baseWidth={5.5}
-            colorFrequency={1}
-            glow={1}
-            height={3.5}
-            noise={0}
-            scale={3.6}
-            timeScale={0.5}
-          />
-        </div>
+      <section className="relative min-h-screen overflow-hidden px-6 py-20">
         <div className="relative mx-auto grid w-full max-w-6xl items-center gap-12 md:grid-cols-[1.1fr_0.9fr]">
           <div className="flex flex-col gap-6 text-center md:text-left">
-            <div
-              className="flex items-center justify-center gap-3 md:justify-start"
-              data-animate="fade-up"
-            >
+            <div className="flex items-center justify-center gap-3 md:justify-start">
               <Image
                 alt="IT Learn logo"
                 height={56}
@@ -64,7 +46,7 @@ export default async function Home({
               />
               <span className="font-semibold text-lg">IT Learn</span>
             </div>
-            <p className="text-muted-foreground text-sm" data-animate="fade-up">
+            <p className="text-muted-foreground text-sm">
               {dict.marketing.home.hero.trustLine}
             </p>
             <BlurText
@@ -89,10 +71,7 @@ export default async function Home({
               direction="bottom"
               text={dict.marketing.home.hero.subheadline}
             />
-            <div
-              className="flex flex-wrap items-center justify-center gap-3 md:justify-start"
-              data-animate="fade-up"
-            >
+            <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
               <Button asChild size="lg">
                 <Link href={`/${lang}/register`}>
                   {dict.marketing.home.hero.primaryCta}
@@ -105,7 +84,7 @@ export default async function Home({
               </Button>
             </div>
           </div>
-          <div className="hidden md:block" data-animate="fade-up">
+          <div className="hidden md:block">
             <div className="rounded-3xl border bg-background/70 p-8 backdrop-blur">
               <Image
                 alt="IT Learn logo"
@@ -131,7 +110,6 @@ export default async function Home({
             {dict.marketing.home.socialProof.stats.map((stat) => (
               <div
                 className="rounded-xl border bg-background px-6 py-4"
-                data-animate="fade-up"
                 key={stat.label}
               >
                 <p className="font-semibold text-2xl">{stat.value}</p>
@@ -151,7 +129,7 @@ export default async function Home({
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {dict.marketing.home.howItWorks.steps.map((step) => (
-              <Card data-animate="fade-up" key={step.title}>
+              <Card key={step.title}>
                 <CardHeader>
                   <CardTitle>{step.title}</CardTitle>
                 </CardHeader>
@@ -180,7 +158,7 @@ export default async function Home({
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {courses.map((course) => (
-              <Card data-animate="fade-up" key={course.title}>
+              <Card key={course.title}>
                 <CardHeader>
                   <CardTitle>{course.title}</CardTitle>
                   <CardDescription>{course.level}</CardDescription>
@@ -223,7 +201,6 @@ export default async function Home({
             {dict.marketing.home.gamification.bullets.map((bullet) => (
               <li
                 className="rounded-lg border bg-background px-4 py-3"
-                data-animate="fade-up"
                 key={bullet}
               >
                 {bullet}
@@ -252,7 +229,6 @@ export default async function Home({
             {dict.marketing.home.community.features.map((feature) => (
               <li
                 className="rounded-lg border bg-background px-4 py-3"
-                data-animate="fade-up"
                 key={feature}
               >
                 {feature}
@@ -273,7 +249,7 @@ export default async function Home({
             </p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
-            <Card data-animate="fade-up">
+            <Card>
               <CardHeader>
                 <CardTitle>{pricingPlans.free.title}</CardTitle>
                 <CardDescription>{pricingPlans.free.price}</CardDescription>
@@ -292,10 +268,7 @@ export default async function Home({
               </CardFooter>
             </Card>
 
-            <Card
-              className="border-primary/60 shadow-md"
-              data-animate="fade-up"
-            >
+            <Card className="border-primary/60 shadow-md">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>{pricingPlans.pro.title}</CardTitle>
@@ -317,7 +290,7 @@ export default async function Home({
               </CardFooter>
             </Card>
 
-            <Card data-animate="fade-up">
+            <Card>
               <CardHeader>
                 <CardTitle>{pricingPlans.lifetime.title}</CardTitle>
                 <CardDescription>{pricingPlans.lifetime.price}</CardDescription>

@@ -2,7 +2,6 @@
 
 import { type Easing, motion, type Transition } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const sentenceSplitRegex = /(?<=[.!?])\s+/u;
 
@@ -61,7 +60,10 @@ const BlurText = ({
     return animateBy === "words" ? text.split(" ") : text.split("");
   }, [animateBy, text]);
 
-  const elementKeys = useMemo(() => elements.map(() => uuidv4()), [elements]);
+  const elementKeys = useMemo(
+    () => elements.map((_, index) => `${animateBy}-${index}`),
+    [animateBy, elements]
+  );
 
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
@@ -114,11 +116,14 @@ const BlurText = ({
     stepCount === 1 ? 0 : index / (stepCount - 1)
   );
 
+  const animateKeyframes = useMemo(
+    () => buildKeyframes(fromSnapshot, toSnapshots),
+    [fromSnapshot, toSnapshots]
+  );
+
   return (
     <p className={`flex flex-wrap blur-text ${className}`} ref={ref}>
       {elements.map((segment, index) => {
-        const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
-
         const spanTransition: Transition = {
           duration: totalDuration,
           times,
