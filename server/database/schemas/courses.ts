@@ -40,9 +40,7 @@ export const course = pgTable(
     accessType: courseAccessEnum("access_type").default("free").notNull(),
     status: courseStatusEnum("status").default("draft").notNull(),
     version: integer("version").default(1).notNull(),
-    previousVersionId: text("previous_version_id").references(
-      (): ReturnType<() => typeof course.id> => course.id
-    ),
+    previousVersionId: text("previous_version_id"),
     estimatedDurationMinutes: integer("estimated_duration_minutes"),
     totalXpReward: integer("total_xp_reward").default(0).notNull(),
     displayOrder: integer("display_order").default(0).notNull(),
