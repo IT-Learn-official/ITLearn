@@ -33,7 +33,7 @@
     "home": {
       "hero": {
         "headline": "Leer coderen zonder vast te lopen.",
-        "subheadline": "Interactieve lessen, gamification en een ondersteunende community — gebouwd voor complete beginners.",
+        "subheadline": "Interactieve lessen, gamification en een ondersteunende community - gebouwd voor complete beginners.",
         "primaryCta": "Start gratis met leren",
         "secondaryCta": "Zie hoe het werkt",
         "trustLine": "Gebouwd door onze studenten, gebruikt door leerlingen wereldwijd."
@@ -60,7 +60,7 @@
         "steps": [
           {
             "title": "Kies een cursus",
-            "description": "Begin met Python, HTML of CSS — geen ervaring nodig."
+            "description": "Begin met Python, HTML of CSS - geen ervaring nodig."
           },
           {
             "title": "Leer door te doen",
@@ -246,7 +246,7 @@
     },
     "courseDetail": {
       "title": "Python voor beginners",
-      "description": "Leer de basis van programmeren met Python — een van de populairste talen ter wereld.",
+      "description": "Leer de basis van programmeren met Python - een van de populairste talen ter wereld.",
       "cta": "Start cursus",
       "learnHeadline": "Wat je leert",
       "learnPoints": [
@@ -295,6 +295,313 @@
       "text": "Coderen is makkelijker als je het niet alleen doet. Sluit je aan bij onze Discord om contact te maken met andere leerlingen.",
       "cta": "Join Discord"
     },
+    "termsPage": {
+      "title": "Algemene voorwaarden",
+      "sections": [
+        {
+          "title": "1. Introductie en Acceptatie",
+          "paragraphs": [
+            "Welkom bij IT Learn. Deze Algemene Voorwaarden (\"Voorwaarden\") vormen een juridisch bindende overeenkomst tussen jou en IT Learn en zijn van toepassing op jouw toegang tot en gebruik van het IT Learn platform, de website en diensten (gezamenlijk de \"Dienst\").",
+            "Door een account aan te maken, toegang te krijgen tot of gebruik te maken van onze Dienst, erken je dat je deze Voorwaarden en onze Privacyverklaring hebt gelezen, begrepen en ermee akkoord gaat.",
+            "Als je niet akkoord gaat met deze Voorwaarden, mag je onze Dienst niet gebruiken.",
+            "Als je jonger bent dan 18 jaar, bevestig je dat je toestemming hebt van een ouder of voogd om de Dienst te gebruiken."
+          ]
+        },
+        {
+          "title": "2. Gebruikersaccounts en Geschiktheid",
+          "paragraphs": [
+            "Geschiktheid: Je moet minimaal 13 jaar oud zijn om een account te maken. Gebruikers tussen 13 en 18 jaar moeten toestemming hebben van een ouder of voogd.",
+            "Account aanmaken: Om bepaalde functies te gebruiken, moet je een account aanmaken met correcte, actuele en volledige informatie. Je kunt je registreren met je e-mailadres of via authenticatiediensten van derden (zoals Google OAuth).",
+            "Accountbeveiliging: Je bent zelf verantwoordelijk voor het geheimhouden van je accountgegevens en voor alle activiteiten die via jouw account plaatsvinden. Je gaat akkoord met het volgende:"
+          ],
+          "bullets": [
+            "Houd je wachtwoord veilig en vertrouwelijk",
+            "Meld ons onmiddellijk bij ongeautoriseerde toegang of een beveiligingsincident",
+            "Deel je account niet met anderen",
+            "Maak geen meerdere accounts aan en doe je niet voor als iemand anders"
+          ]
+        },
+        {
+          "title": "Account beëindiging",
+          "paragraphs": [
+            "We behouden ons het recht voor om je account te schorsen of te beëindigen als je deze Voorwaarden schendt of gedrag vertoont dat wij schadelijk achten voor andere gebruikers of onze Dienst."
+          ]
+        },
+        {
+          "title": "3. Copyright",
+          "paragraphs": [
+            "Het is niet toegestaan om delen van onze code te kopiëren of te hergebruiken, ongeacht of dit voor commerciële of niet-commerciële doeleinden is. Alle code op deze website is beschermd door ons auteursrecht."
+          ]
+        },
+        {
+          "title": "4. Acceptabel gebruik en verboden activiteiten",
+          "paragraphs": [
+            "Je gaat akkoord dat je de Dienst alleen gebruikt voor wettelijke doeleinden en in overeenstemming met deze Voorwaarden. Je gaat specifiek akkoord om NIET:"
+          ],
+          "bullets": [
+            "De Dienst te gebruiken voor illegale activiteiten of om illegaal gedrag te promoten",
+            "Malware, virussen of andere schadelijke code te verspreiden",
+            "De intellectuele eigendomsrechten, privacyrechten of andere rechten van anderen te schenden",
+            "Andere gebruikers te lastigvallen, bedreigen, belasteren of misbruiken",
+            "Ongeautoriseerde toegang te verkrijgen tot onze systemen, servers of netwerken",
+            "De Dienst of de verbonden servers/netwerken te verstoren of te onderbreken",
+            "Geautomatiseerde systemen (bots, scrapers) te gebruiken zonder toestemming",
+            "Valse, misleidende of frauduleuze informatie te verstrekken",
+            "Toegangsbeperkingen of beveiligingsmaatregelen te omzeilen",
+            "De Dienst door te verkopen, te herverdelen of commercieel te exploiteren zonder toestemming",
+            "De Dienst te gebruiken voor spam, phishing of andere vormen van ongewenste communicatie"
+          ]
+        },
+        {
+          "title": "Onderzoek en handhaving",
+          "paragraphs": [
+            "We behouden ons het recht voor om overtredingen te onderzoeken, accounts te schorsen of te beëindigen en illegale activiteiten te melden aan de bevoegde autoriteiten."
+          ]
+        },
+        {
+          "title": "5. Intellectuele eigendom",
+          "paragraphs": [
+            "Alle inhoud en software op de site zijn eigendom van IT Learn of haar licentiegevers en worden beschermd door auteursrecht en andere wetten. Niets in deze Voorwaarden geeft je eigendomsrechten op dergelijke inhoud."
+          ]
+        },
+        {
+          "title": "6. Disclaimers en beperking van aansprakelijkheid",
+          "paragraphs": [
+            "Dienst \"As Is\": De Dienst wordt geleverd \"zoals deze is\" en \"zoals beschikbaar\" zonder enige garanties, expliciet of impliciet, waaronder maar niet beperkt tot garanties van verkoopbaarheid, geschiktheid voor een bepaald doel of niet-inbreuk. We garanderen niet dat de Dienst ononderbroken, veilig of foutloos is.",
+            "Educatieve inhoud: Hoewel we ons inspannen om nauwkeurige en hoogwaardige educatieve inhoud te bieden, geven we geen garanties over de volledigheid, betrouwbaarheid of nauwkeurigheid van de inhoud. Je bent zelf verantwoordelijk voor het verifiëren van informatie en mag niet uitsluitend op onze inhoud vertrouwen voor professionele of kritieke beslissingen.",
+            "Beperking van aansprakelijkheid: Voor zover toegestaan door de toepasselijke wetgeving:"
+          ],
+          "bullets": [
+            "Onze totale aansprakelijkheid voor claims die voortvloeien uit jouw gebruik van de Dienst is beperkt tot het bedrag dat je ons in de afgelopen 12 maanden hebt betaald, of €100, afhankelijk van welk bedrag hoger is",
+            "Wij zijn niet aansprakelijk voor indirecte, incidentele, bijzondere, gevolg- of punitieve schade, inclusief verlies van winst, data, gebruik of andere immateriële verliezen",
+            "Wij zijn niet aansprakelijk voor schade als gevolg van: ongeautoriseerde toegang tot je account, onderbrekingen of fouten in de Dienst, inhoud of gedrag van derden, of jouw vertrouwen op inhoud verkregen via de Dienst"
+          ]
+        },
+        {
+          "title": "Dwingende rechten",
+          "paragraphs": [
+            "Niets in deze Voorwaarden sluit onze aansprakelijkheid uit of beperkt deze voor fraude, grove nalatigheid, overlijden of persoonlijk letsel veroorzaakt door onze nalatigheid, of enige aansprakelijkheid die niet kan worden uitgesloten onder toepasselijk recht. Consumenten in de EU behouden alle dwingende wettelijke rechten onder het consumentenrecht."
+          ]
+        },
+        {
+          "title": "7. Wijzigingen",
+          "paragraphs": [
+            "We kunnen deze Voorwaarden van tijd tot tijd wijzigen. We kondigen belangrijke wijzigingen vooraf aan. Door de Site te blijven gebruiken na de wijziging, accepteer je de updates."
+          ]
+        },
+        {
+          "title": "8. Toepasselijk recht",
+          "paragraphs": [
+            "Deze Algemene Voorwaarden worden beheerst door het recht van het land waarin IT Learn is gevestigd. Dit land is België in Europa, tenzij anders vereist door dwingend recht."
+          ]
+        },
+        {
+          "title": "9. Beschikbaarheid en wijzigingen van de Dienst",
+          "paragraphs": [
+            "We behouden ons het recht voor om de Dienst (of een deel daarvan) op elk moment te wijzigen, op te schorten of stop te zetten, met of zonder voorafgaande kennisgeving. Wij zijn niet aansprakelijk tegenover jou of derden voor enige wijziging, opschorting of stopzetting van de Dienst.",
+            "We kunnen onderhoud, updates of verbeteringen uitvoeren die de beschikbaarheid van de Dienst tijdelijk kunnen beïnvloeden. We doen redelijke inspanningen om vooraf bericht te geven over gepland onderhoud wanneer mogelijk."
+          ]
+        },
+        {
+          "title": "10. Schadeloosstelling",
+          "paragraphs": [
+            "Je stemt ermee in IT Learn, haar gelieerde ondernemingen en hun respectieve functionarissen, bestuurders, werknemers en agenten te vrijwaren, verdedigen en schadeloos te stellen voor claims, aansprakelijkheden, schade, verliezen, kosten of uitgaven (inclusief redelijke advocaatkosten) die voortvloeien uit:"
+          ],
+          "bullets": [
+            "Jouw gebruik van de Dienst",
+            "Jouw schending van deze Voorwaarden",
+            "Jouw schending van rechten van een andere partij",
+            "Alle inhoud die je indient of verzendt via de Dienst"
+          ]
+        },
+        {
+          "title": "11. Geschillenbeslechting en toepasselijk recht",
+          "paragraphs": [
+            "Toepasselijk recht: Deze Voorwaarden worden beheerst door en geïnterpreteerd in overeenstemming met het recht van België, zonder rekening te houden met conflictenrechtelijke bepalingen. Het Weens Koopverdrag is niet van toepassing.",
+            "Bevoegdheid: Behoudens dwingende consumentenbeschermingswetten worden alle geschillen die voortvloeien uit deze Voorwaarden of jouw gebruik van de Dienst voorgelegd aan de exclusieve bevoegdheid van de rechtbanken van België.",
+            "Consumentenrechten: Als je consument bent in de Europese Unie, behoud je het recht om procedures te starten in je land van verblijf, en niets in deze Voorwaarden tast je dwingende wettelijke rechten onder het EU-consumentenrecht aan."
+          ]
+        },
+        {
+          "title": "12. Scheidbaarheid",
+          "paragraphs": [
+            "Indien een bepaling van deze Voorwaarden ongeldig, onwettig of niet-afdwingbaar wordt bevonden, blijven de overige bepalingen volledig van kracht. De ongeldige bepaling wordt aangepast tot het minimum dat nodig is om geldig en afdwingbaar te zijn."
+          ]
+        },
+        {
+          "title": "13. Volledige overeenkomst",
+          "paragraphs": [
+            "Deze Voorwaarden, samen met onze Privacyverklaring, vormen de volledige overeenkomst tussen jou en IT Learn met betrekking tot de Dienst en vervangen alle eerdere afspraken, overeenkomsten en communicatie, zowel schriftelijk als mondeling."
+          ]
+        }
+      ],
+      "contact": {
+        "title": "14. Contactinformatie",
+        "emailLabel": "E-mail",
+        "abuseLabel": "Voor misbruikmeldingen",
+        "email": "contact.itlearn@gmail.com",
+        "abuseEmail": "abuse-ithelp-be@googlegroups.com"
+      }
+    },
+    "privacyPage": {
+      "title": "Privacyverklaring",
+      "effectiveDate": "Ingangsdatum: 2026-01-03",
+      "lastUpdated": "Laatst bijgewerkt: 2026-01-03",
+      "controller": "Verwerkingsverantwoordelijke: IT Learn | contact email: contact.itlearn@gmail.com",
+      "sections": [
+        {
+          "title": "1. Welke persoonsgegevens verwerken we?",
+          "paragraphs": ["We verwerken alleen de volgende persoonsgegevens:"],
+          "bullets": [
+            "Accountgegevens: e-mailadres, gekozen gebruikersnaam en wachtwoord (gehasht).",
+            "Authenticatiegegevens: gegevens van externe authenticatiediensten zoals Google OAuth (e-mailadres en account-ID), GitHub (gebruikersnaam, e-mailadres, profielinformatie) en Discord (gebruikersnaam, e-mailadres, Discord-ID).",
+            "Technische informatie: IP-adres en serverlogs (tijdelijk, voor beveiliging en debugging).",
+            "Chatgegevens: Wanneer je de Tawk.to chatfunctie gebruikt, verwerken we je berichten, naam (indien opgegeven) en metadata voor klantenondersteuning."
+          ]
+        },
+        {
+          "title": "2. Doeleinden en rechtsgrond",
+          "paragraphs": [
+            "We verwerken persoonsgegevens voor de volgende doeleinden, in overeenstemming met Artikel 6 van de GDPR:"
+          ],
+          "bullets": [
+            "Account aanmaken en inloggen (authenticatie) - Rechtsgrond: uitvoering van de overeenkomst (Artikel 6(1)(b) GDPR). Dit is noodzakelijk om je toegang te geven tot ons educatieve platform.",
+            "Beveiliging en misbruikpreventie - Rechtsgrond: gerechtvaardigd belang (Artikel 6(1)(f) GDPR), specifiek fraudedetectie, misbruikpreventie en technische troubleshooting om ons platform en onze gebruikers te beschermen.",
+            "Communicatie en verwerking van verzoeken - Rechtsgrond: uitvoering van de overeenkomst en gerechtvaardigd belang om gebruikersvragen te beantwoorden en klantenondersteuning te bieden.",
+            "Wettelijke naleving - Rechtsgrond: wettelijke verplichting (Artikel 6(1)(c) GDPR) om te voldoen aan toepasselijke wet- en regelgeving."
+          ]
+        },
+        {
+          "title": "Geen marketinggebruik",
+          "paragraphs": [
+            "We gebruiken persoonsgegevens niet voor nieuwsbrieven zonder expliciete toestemming, gerichte advertenties, profilering voor marketingdoeleinden of verkoop van data aan derden."
+          ]
+        },
+        {
+          "title": "3. Verwerkers / externe dienstverleners",
+          "paragraphs": [
+            "We gebruiken de volgende externe dienstverleners om ons platform te laten functioneren:"
+          ],
+          "bullets": [
+            "Supabase - Database- en authenticatiediensten; ons project is gevestigd in Ierland (EU). Supabase voldoet aan de GDPR en biedt verwerkersovereenkomsten.",
+            "Google (OAuth) - Externe authenticatiedienst voor login. Wanneer je inlogt met Google ontvangen wij je e-mailadres en Google account-ID. Onderworpen aan het Privacybeleid van Google.",
+            "GitHub (OAuth) - Externe authenticatiedienst voor login. Wanneer je inlogt met GitHub ontvangen wij je GitHub gebruikersnaam, e-mailadres en openbare profielinformatie. Onderworpen aan het Privacybeleid van GitHub.",
+            "Discord (OAuth) - Externe authenticatiedienst voor login. Wanneer je inlogt met Discord ontvangen wij je Discord gebruikersnaam, e-mailadres en Discord gebruikers-ID. Onderworpen aan het Privacybeleid van Discord.",
+            "Cloudflare - Content delivery network (CDN) en hostingdiensten. Cloudflare werkt wereldwijd maar voldoet aan de GDPR en EU-databeschermingsstandaarden. Cloudflare kan IP-adressen en technische gegevens verwerken.",
+            "PythonAnywhere - Backend serverinfrastructuur voor het draaien van applicatielogica. Servers bevinden zich doorgaans in de VS; Standard Contractual Clauses (SCCs) zijn van toepassing op gegevensoverdracht buiten de EU.",
+            "Tawk.to - Live chat support widget. Wanneer je de chatfunctie gebruikt, verwerkt Tawk.to je berichten, naam (indien opgegeven) en metadata. Tawk.to voldoet aan de GDPR; je kunt ervoor kiezen de chatfunctie niet te gebruiken."
+          ]
+        },
+        {
+          "title": "Jouw keuzes",
+          "paragraphs": [
+            "Je kunt zelf kiezen welke authenticatiemethode je gebruikt (e-mail/wachtwoord, Google, GitHub of Discord). Het gebruik van de Tawk.to chatfunctie is optioneel."
+          ]
+        },
+        {
+          "title": "4. Bewaartermijnen",
+          "bullets": [
+            "Accountgegevens: zolang het account actief is + 1 jaar na verwijdering.",
+            "Serverlogs/IP-adressen: 30 dagen (beveiliging en debugging).",
+            "Uploads (als dit later wordt toegevoegd): zolang het account actief is of tot 1 jaar na verwijdering."
+          ]
+        },
+        {
+          "title": "5. Minderjarigen en leeftijdsbeleid",
+          "paragraphs": [
+            "IT Learn staat registratie toe vanaf 13 jaar. In België is de digitale leeftijdsgrens 13 jaar. We vragen nooit om ID-foto's en doen geen ID-controles."
+          ]
+        },
+        {
+          "title": "6. Rechten van gebruikers (GDPR-rechten)",
+          "paragraphs": [
+            "Volgens de Algemene Verordening Gegevensbescherming (GDPR) heb je de volgende rechten:"
+          ],
+          "bullets": [
+            "Recht op inzage (Artikel 15) - Je kunt een kopie opvragen van je persoonsgegevens die wij bewaren.",
+            "Recht op rectificatie (Artikel 16) - Je kunt correctie vragen van onjuiste of onvolledige gegevens.",
+            "Recht op gegevenswissing/\"recht om vergeten te worden\" (Artikel 17) - Je kunt onder bepaalde voorwaarden verwijdering van je persoonsgegevens vragen.",
+            "Recht op beperking van verwerking (Artikel 18) - Je kunt vragen om het gebruik van je gegevens te beperken.",
+            "Recht op gegevensoverdraagbaarheid (Artikel 20) - Je kunt je gegevens opvragen in een gestructureerd, machineleesbaar formaat.",
+            "Recht van bezwaar (Artikel 21) - Je kunt bezwaar maken tegen verwerking op basis van gerechtvaardigde belangen.",
+            "Recht om toestemming in te trekken (Artikel 7(3)) - Als verwerking gebaseerd is op toestemming, kun je die op elk moment intrekken.",
+            "Recht om niet te worden onderworpen aan geautomatiseerde besluitvorming (Artikel 22) - Bescherming tegen uitsluitend geautomatiseerde beslissingen met juridische gevolgen."
+          ]
+        },
+        {
+          "title": "Uitoefenen van je rechten",
+          "paragraphs": [
+            "Om deze rechten uit te oefenen, kun je contact opnemen via contact.itlearn@gmail.com. We reageren binnen een maand, zoals vereist door de GDPR.",
+            "Als je niet tevreden bent met hoe we je verzoek behandelen of zorgen hebt over onze datapraktijken, heb je het recht een klacht in te dienen bij de Belgische Gegevensbeschermingsautoriteit (APD/GBA):",
+            "Adres: Rue de la Presse 35, 1000 Brussel, België",
+            "E-mail: contact@apd-gba.be",
+            "Telefoon: +32 2 274 48 00",
+            "Website: www.dataprotectionauthority.be"
+          ]
+        },
+        {
+          "title": "7. Accountverwijdering",
+          "paragraphs": [
+            "Zodra de functie beschikbaar is, kunnen gebruikers hun account zelf verwijderen via hun instellingen. Tot die tijd kun je een verzoek sturen naar contact.itlearn@gmail.com; we verwijderen de gegevens volgens de bewaartermijnen."
+          ]
+        },
+        {
+          "title": "8. Beveiligingsmaatregelen",
+          "paragraphs": [
+            "We nemen passende technische en organisatorische maatregelen om je persoonsgegevens te beschermen tegen ongeautoriseerde toegang, verlies, vernietiging of wijziging, waaronder:"
+          ],
+          "bullets": [
+            "HTTPS/TLS encryptie - Alle gegevens tussen je browser en onze servers zijn versleuteld.",
+            "Secure authentication - Supabase, Google OAuth, GitHub OAuth, en Discord OAuth voor veilige login.",
+            "Password protection - Wachtwoorden worden gehasht met standaard algoritmes en nooit in platte tekst opgeslagen.",
+            "Limited data retention - Serverlogs en IP-adressen worden maximaal 30 dagen bewaard.",
+            "Access controls - Beperkte toegang tot persoonsgegevens op need-to-know basis.",
+            "Regular security reviews - Doorlopende monitoring en updates van beveiligingspraktijken.",
+            "Third-party security - Alle dienstverleners zijn gecontroleerd op GDPR-naleving en veiligheidsstandaarden.",
+            "Uploads zijn momenteel uitgeschakeld."
+          ]
+        },
+        {
+          "title": "Beveiligingsmelding",
+          "paragraphs": [
+            "Hoewel we sterke beveiligingsmaatregelen toepassen, is geen enkele methode van datatransmissie of elektronische opslag 100% veilig. We kunnen absolute beveiliging niet garanderen, maar zetten ons in om beveiligingsincidenten snel aan te pakken."
+          ]
+        },
+        {
+          "title": "9. Cookies en trackers",
+          "paragraphs": [
+            "Alleen noodzakelijke cookies voor login en sitefunctionaliteit. Geen advertenties of analytics. Supabase of de hostingprovider kan functionele cookies plaatsen."
+          ]
+        },
+        {
+          "title": "10. Doorgifte buiten de EU",
+          "paragraphs": [
+            "Supabase opereert in Ierland (EU). Als gegevens in de toekomst buiten de EU worden verwerkt, gebruiken we passende waarborgen (SCCs)."
+          ]
+        },
+        {
+          "title": "11. Datalekken",
+          "paragraphs": [
+            "Als we een datalek vermoeden, onderzoeken we dit en melden we het indien wettelijk vereist."
+          ]
+        },
+        {
+          "title": "12. Wijzigingen",
+          "paragraphs": [
+            "We kunnen deze verklaring aanpassen; bij materiele wijzigingen publiceren we een nieuwe versie met een ingangsdatum."
+          ]
+        },
+        {
+          "title": "13. Contactinformatie",
+          "paragraphs": [
+            "Verwerkingsverantwoordelijke: IT Learn",
+            "Algemene vragen en verzoeken over gegevensbescherming: contact.itlearn@gmail.com",
+            "Misbruik- en beveiligingsmeldingen: abuse-ithelp-be@googlegroups.com",
+            "Voor vragen over gegevensbescherming, privacyrechten of juridische zaken kun je contact opnemen via contact.itlearn@gmail.com. We streven ernaar binnen 30 dagen te reageren. Voor officiële of juridische verwerking worden geautoriseerde vertegenwoordigers ingeschakeld en ontvang je op verzoek passende contactgegevens."
+          ]
+        }
+      ]
+    },
     "footer": {
       "product": "Product",
       "company": "Bedrijf",
@@ -307,7 +614,7 @@
       "contact": "Contact",
       "terms": "Voorwaarden",
       "privacy": "Privacy",
-      "tagline": "IT Learn — Gebouwd in België 🇧🇪"
+      "tagline": "IT Learn - Gebouwd in België 🇧🇪"
     }
   },
   "app": {

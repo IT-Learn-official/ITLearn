@@ -11,8 +11,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import type { FormEvent } from "react";
-import { useState } from "react";
+import { type FormEvent, useId, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,6 +26,8 @@ export default function RegisterPage() {
   const router = useRouter();
   const dict = useDictionary();
   const locale = useLocale();
+  const emailInputId = useId();
+  const passwordInputId = useId();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -272,12 +273,12 @@ export default function RegisterPage() {
           <form className="space-y-6" onSubmit={handleEmailRegister}>
             <div>
               {/* UPDATED: Removed extra classes to match Login Page default styling */}
-              <Label htmlFor="email-register">{dict.auth.register.email}</Label>
+              <Label htmlFor={emailInputId}>{dict.auth.register.email}</Label>
               <div className="relative mt-2.5">
                 <Input
                   autoComplete="email"
                   className="peer ps-9"
-                  id="email-register"
+                  id={emailInputId}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={dict.auth.register.emailPlaceholder}
                   required
@@ -297,14 +298,14 @@ export default function RegisterPage() {
             </div>
             <div>
               {/* UPDATED: Removed extra classes to match Login Page default styling */}
-              <Label htmlFor="password-register">
+              <Label htmlFor={passwordInputId}>
                 {dict.auth.register.password}
               </Label>
               <div className="relative mt-2.5">
                 <Input
                   autoComplete="new-password"
                   className="ps-9 pe-9"
-                  id="password-register"
+                  id={passwordInputId}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={dict.auth.register.passwordPlaceholder}
                   required
@@ -321,7 +322,7 @@ export default function RegisterPage() {
                   />
                 </div>
                 <Button
-                  aria-controls="password-register"
+                  aria-controls={passwordInputId}
                   aria-label={isVisible ? "Hide password" : "Show password"}
                   aria-pressed={isVisible}
                   className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md text-muted-foreground/80 outline-none transition-[color,box-shadow] hover:text-foreground focus:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"

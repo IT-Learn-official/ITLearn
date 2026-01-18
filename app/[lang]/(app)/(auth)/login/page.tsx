@@ -11,7 +11,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useId, useState } from "react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,6 +27,8 @@ export default function LoginPage() {
   const router = useRouter();
   const dict = useDictionary();
   const locale = useLocale();
+  const emailInputId = useId();
+  const passwordInputId = useId();
   const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -296,11 +298,11 @@ export default function LoginPage() {
 
           <form className="space-y-6" onSubmit={handlePasswordLogin}>
             <div>
-              <Label htmlFor="email">{dict.auth.login.email}</Label>
+              <Label htmlFor={emailInputId}>{dict.auth.login.email}</Label>
               <div className="relative mt-2.5">
                 <Input
                   className="peer ps-9"
-                  id="email"
+                  id={emailInputId}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={dict.auth.login.emailPlaceholder}
                   required
@@ -321,7 +323,9 @@ export default function LoginPage() {
 
             <div>
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">{dict.auth.login.password}</Label>
+                <Label htmlFor={passwordInputId}>
+                  {dict.auth.login.password}
+                </Label>
                 <Link className="text-primary text-sm hover:underline" href="#">
                   {dict.auth.login.forgotPassword}
                 </Link>
@@ -330,7 +334,7 @@ export default function LoginPage() {
                 <Input
                   autoComplete="current-password"
                   className="ps-9 pe-9"
-                  id="password"
+                  id={passwordInputId}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder={dict.auth.login.passwordPlaceholder}
                   required
@@ -347,7 +351,7 @@ export default function LoginPage() {
                   />
                 </div>
                 <Button
-                  aria-controls="password"
+                  aria-controls={passwordInputId}
                   aria-label={isVisible ? "Hide password" : "Show password"}
                   aria-pressed={isVisible}
                   className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md text-muted-foreground/80 outline-none transition-[color,box-shadow] hover:text-foreground focus:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"

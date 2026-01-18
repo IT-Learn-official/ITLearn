@@ -1,5 +1,24 @@
 import { drizzle } from "drizzle-orm/node-postgres";
-// biome-ignore lint/performance/noNamespaceImport: Drizzle requires the entire schema object
-import * as schema from "./schemas/auth";
+import {
+  account,
+  accountRelations,
+  rateLimit,
+  session,
+  sessionRelations,
+  user,
+  userRelations,
+  verification,
+} from "./schemas/auth";
 
-export const db = drizzle(process.env.DATABASE_URL || "", { schema });
+export const db = drizzle(process.env.DATABASE_URL || "", {
+  schema: {
+    account,
+    accountRelations,
+    rateLimit,
+    session,
+    sessionRelations,
+    user,
+    userRelations,
+    verification,
+  },
+});

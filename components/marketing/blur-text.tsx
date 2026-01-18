@@ -38,20 +38,20 @@ const buildKeyframes = (
   return keyframes;
 };
 
-const BlurText = ({
-  text = "",
-  delay = 200,
-  className = "",
-  animateBy = "words",
-  direction = "top",
-  threshold = 0.1,
-  rootMargin = "0px",
-  animationFrom,
-  animationTo,
-  easing = (time: number) => time,
-  onAnimationComplete,
-  stepDuration = 0.35,
-}: BlurTextProps) => {
+const BlurText = (props: BlurTextProps) => {
+  const text = props.text ?? "";
+  const delay = props.delay ?? 200;
+  const className = props.className ?? "";
+  const animateBy = props.animateBy ?? "words";
+  const direction = props.direction ?? "top";
+  const threshold = props.threshold ?? 0.1;
+  const rootMargin = props.rootMargin ?? "0px";
+  const animationFrom = props.animationFrom;
+  const animationTo = props.animationTo;
+  const easing = props.easing ?? ((time: number) => time);
+  const onAnimationComplete = props.onAnimationComplete;
+  const stepDuration = props.stepDuration ?? 0.35;
+
   const elements = useMemo(() => {
     if (animateBy === "sentences") {
       const parts = text.split(sentenceSplitRegex);
