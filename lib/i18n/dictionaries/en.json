@@ -256,8 +256,39 @@
       ]
     },
     "aboutPage": {
-      "headline": "Built by students, for students",
-      "text": "IT Learn was created by students who know how frustrating learning to code can be. Our goal is to make programming approachable, motivating, and fun."
+      "hero": {
+        "headline": "Empowering the next generation of developers",
+        "subheadline": "We believe coding should be accessible, fun, and community-driven."
+      },
+      "mission": {
+        "title": "Our Mission",
+        "description": "IT Learn was created with a simple goal: to strip away the complexity of learning to code. We provide a structured, interactive path for beginners to go from 'Hello World' to building real applications."
+      },
+      "values": {
+        "title": "What drives us",
+        "cards": [
+          {
+            "title": "Community First",
+            "description": "Learning is harder alone. We build tools that connect learners."
+          },
+          {
+            "title": "Practice over Theory",
+            "description": "You can't learn to swim by reading a book. We focus on interactive exercises."
+          },
+          {
+            "title": "Open for Everyone",
+            "description": "We can't make high-quality education completely free, but we offer a free plan."
+          }
+        ]
+      },
+      "story": {
+        "title": "Our Story",
+        "text": "IT Learn is a Dutch learning platform founded in 2025 by Broodje56 and Joren, with the mission to make learning programming accessible and enjoyable.\n\nMany learning platforms are overly complex or too theoretical. IT Learn focuses on learning by doing, using clear explanations, interactive lessons, and a motivating reward system.\n\nAt IT Learn, it’s not just about knowledge, but about understanding, growth, and community."
+      },
+      "cta": {
+        "title": "Ready to start?",
+        "button": "Join for free"
+      }
     },
     "communityPage": {
       "headline": "Learn together",

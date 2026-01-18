@@ -2,6 +2,7 @@
 
 import { type Easing, motion, type Transition } from "motion/react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const sentenceSplitRegex = /(?<=[.!?])\s+/u;
 
@@ -59,10 +60,9 @@ const BlurText = ({
     }
     return animateBy === "words" ? text.split(" ") : text.split("");
   }, [animateBy, text]);
-  const elementKeys = useMemo(
-    () => elements.map(() => crypto.randomUUID()),
-    [elements]
-  );
+
+  const elementKeys = useMemo(() => elements.map(() => uuidv4()), [elements]);
+
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
 

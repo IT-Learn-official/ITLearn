@@ -256,8 +256,39 @@
       ]
     },
     "aboutPage": {
-      "headline": "Gebouwd door studenten, voor studenten",
-      "text": "IT Learn is gemaakt door studenten die weten hoe frustrerend coderen leren kan zijn. Ons doel is om programmeren toegankelijk, motiverend en leuk te maken."
+      "hero": {
+        "headline": "De volgende generatie ontwikkelaars versterken",
+        "subheadline": "Wij geloven dat coderen toegankelijk, leuk en gemeenschapsgericht moet zijn."
+      },
+      "mission": {
+        "title": "Onze Missie",
+        "description": "IT Learn is opgericht met een simpel doel: de complexiteit van leren coderen wegnemen. We bieden een gestructureerd, interactief pad voor beginners om van 'Hello World' naar het bouwen van echte applicaties te gaan."
+      },
+      "values": {
+        "title": "Wat ons drijft",
+        "cards": [
+          {
+            "title": "Community Eerst",
+            "description": "Leren is moeilijker alleen. We bouwen tools die leerlingen verbinden."
+          },
+          {
+            "title": "Praktijk boven Theorie",
+            "description": "Je leert niet zwemmen door een boek te lezen. Wij focussen op interactieve oefeningen."
+          },
+          {
+            "title": "Open voor Iedereen",
+            "description": "Kwaliteitsonderwijs mag niet achter een betaalmuur zitten."
+          }
+        ]
+      },
+      "story": {
+        "title": "Ons Verhaal",
+        "text": "Gestart door studenten in België, groeide IT Learn uit frustratie met droge, theoretische studieboeken. We wilden het platform bouwen dat we zelf hadden willen hebben toen we begonnen."
+      },
+      "cta": {
+        "title": "Klaar om te starten?",
+        "button": "Gratis aanmelden"
+      }
     },
     "communityPage": {
       "headline": "Leer samen",
