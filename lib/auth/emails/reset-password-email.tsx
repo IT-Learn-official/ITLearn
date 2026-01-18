@@ -16,55 +16,15 @@ interface ResetPasswordEmailProps {
   userEmail: string;
 }
 
-const palette = {
-  background: "#ffffff",
-  card: "#f8fafc",
-  foreground: "#0f172a",
-  mutedForeground: "#64748b",
-  primary: "#2dd4bf",
-  primaryForeground: "#0f172a",
-  border: "#e2e8f0",
-};
-
-const bodyStyle = {
-  backgroundColor: palette.background,
-  fontFamily: "Proxima Nova, Helvetica Neue, Arial, sans-serif",
-  color: palette.foreground,
-  margin: 0,
-  padding: 0,
-};
-
-const containerStyle = {
-  maxWidth: "560px",
-  margin: "32px auto",
-  backgroundColor: palette.card,
-  borderRadius: "12px",
-  padding: "28px",
-  boxShadow: "0 10px 30px rgba(15, 23, 42, 0.08)",
-  border: `1px solid ${palette.border}`,
-};
-
-const buttonStyle = {
-  backgroundColor: palette.primary,
-  borderRadius: "12px",
-  color: palette.primaryForeground,
-  display: "inline-block",
-  fontSize: "14px",
-  fontWeight: 600,
-  padding: "12px 18px",
-  textDecoration: "none",
-};
-
-const textStyle = {
-  color: palette.foreground,
-  fontSize: "14px",
-  lineHeight: "1.6",
-};
-
-const mutedTextStyle = {
-  color: palette.mutedForeground,
-  fontSize: "13px",
-  lineHeight: "1.6",
+// Dark mode colors (from globals.css .dark)
+const colors = {
+  background: "oklch(0.1902 0.0226 276.0826)", // dark blue-gray
+  card: "oklch(0.2357 0.0312 275.5838)", // slightly lighter dark
+  foreground: "oklch(0.9288 0.0126 255.5078)", // light gray
+  mutedForeground: "oklch(0.7107 0.0351 256.7878)", // muted light
+  primary: "oklch(0.5736 0.1232 247.7994)", // blue-purple
+  primaryForeground: "oklch(0.1902 0.0226 276.0826)", // dark blue-gray
+  border: "oklch(0.3073 0.0421 274.2574)", // dark border
 };
 
 export const ResetPasswordEmailTemplate = ({
@@ -74,20 +34,80 @@ export const ResetPasswordEmailTemplate = ({
   <Html lang="en">
     <Head />
     <Preview>Reset your ITLearn password</Preview>
-    <Body style={bodyStyle}>
-      <Container style={containerStyle}>
-        <Heading as="h1">Reset your password</Heading>
-        <Text style={textStyle}>Hi {userEmail},</Text>
-        <Text style={textStyle}>
+    <Body
+      style={{
+        backgroundColor: colors.background,
+        fontFamily: "Proxima Nova, Helvetica Neue, Arial, sans-serif",
+        color: colors.foreground,
+        margin: 0,
+        padding: 0,
+      }}
+    >
+      <Container
+        style={{
+          maxWidth: "560px",
+          margin: "32px auto",
+          backgroundColor: colors.card,
+          borderRadius: "12px",
+          padding: "28px",
+          boxShadow: "0 4px 10px 0px hsl(0 0% 0% / 0.2)",
+          border: `1px solid ${colors.border}`,
+        }}
+      >
+        <Heading
+          as="h1"
+          style={{
+            color: colors.foreground,
+            fontSize: "24px",
+            fontWeight: 600,
+            marginBottom: "16px",
+          }}
+        >
+          Reset your password
+        </Heading>
+        <Text
+          style={{
+            color: colors.foreground,
+            fontSize: "14px",
+            lineHeight: "1.6",
+          }}
+        >
+          Hi {userEmail},
+        </Text>
+        <Text
+          style={{
+            color: colors.foreground,
+            fontSize: "14px",
+            lineHeight: "1.6",
+          }}
+        >
           We received a request to reset your ITLearn password. This link
           expires in 10 minutes and can only be used once.
         </Text>
-        <Section>
-          <Button href={url} style={buttonStyle}>
+        <Section style={{ marginTop: "24px", marginBottom: "24px" }}>
+          <Button
+            href={url}
+            style={{
+              backgroundColor: colors.primary,
+              borderRadius: "12px",
+              color: colors.primaryForeground,
+              display: "inline-block",
+              fontSize: "14px",
+              fontWeight: 600,
+              padding: "12px 18px",
+              textDecoration: "none",
+            }}
+          >
             Reset password
           </Button>
         </Section>
-        <Text style={mutedTextStyle}>
+        <Text
+          style={{
+            color: colors.mutedForeground,
+            fontSize: "13px",
+            lineHeight: "1.6",
+          }}
+        >
           If you did not request a reset, you can ignore this email.
         </Text>
       </Container>
