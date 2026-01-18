@@ -2,6 +2,12 @@
 
 set -e
 
+# Skip commit verification in CI/automated environments
+if [ -n "$CI" ] || [ -n "$GITHUB_ACTIONS" ] || [ -n "$CONTINUOUS_INTEGRATION" ]; then
+  echo "Skipping commit signature verification in CI environment"
+  exit 0
+fi
+
 failed=0
 
 while read -r local_ref local_sha remote_ref remote_sha; do
