@@ -46,6 +46,10 @@ export const subscriptionPlan = pgTable("subscription_plan", {
   currency: text("currency").default("EUR").notNull(),
   durationDays: integer("duration_days"), // null for lifetime
   features: text("features").array(), // JSON array of features
+  // Stripe integration fields
+  stripePriceId: text("stripe_price_id").unique(), // Stripe Price ID
+  stripeProductId: text("stripe_product_id"), // Stripe Product ID
+  trialDays: integer("trial_days").default(0), // Trial period in days
   isActive: boolean("is_active").default(true).notNull(),
   displayOrder: integer("display_order").default(0).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -73,6 +77,15 @@ export const subscription = pgTable(
     autoRenew: boolean("auto_renew").default(false).notNull(),
     cancelledAt: timestamp("cancelled_at"),
     cancellationReason: text("cancellation_reason"),
+    // Stripe integration fields
+    stripeCustomerId: text("stripe_customer_id").unique(),
+    stripeSubscriptionId: text("stripe_subscription_id").unique(),
+    stripePriceId: text("stripe_price_id"),
+    stripeCurrentPeriodStart: timestamp("stripe_current_period_start"),
+    stripeCurrentPeriodEnd: timestamp("stripe_current_period_end"),
+    stripeCancelAtPeriodEnd: boolean("stripe_cancel_at_period_end").default(false),
+    trialStart: timestamp("trial_start"),
+    trialEnd: timestamp("trial_end"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()
@@ -83,6 +96,8 @@ export const subscription = pgTable(
     index("subscription_userProfileId_idx").on(table.userProfileId),
     index("subscription_status_idx").on(table.status),
     index("subscription_endDate_idx").on(table.endDate),
+    index("subscription_stripeCustomerId_idx").on(table.stripeCustomerId),
+    index("subscription_stripeSubscriptionId_idx").on(table.stripeSubscriptionId),
   ]
 );
 
@@ -104,6 +119,10 @@ export const paymentHistory = pgTable(
     transactionId: text("transaction_id").unique(),
     invoiceUrl: text("invoice_url"),
     metadata: text("metadata"), // JSON for additional data
+    // Stripe integration fields
+    stripePaymentIntentId: text("stripe_payment_intent_id").unique(),
+    stripeInvoiceId: text("stripe_invoice_id").unique(),
+    stripeChargeId: text("stripe_charge_id"),
     paidAt: timestamp("paid_at"),
     refundedAt: timestamp("refunded_at"),
     refundReason: text("refund_reason"),
@@ -118,6 +137,7 @@ export const paymentHistory = pgTable(
     index("payment_history_userProfileId_idx").on(table.userProfileId),
     index("payment_history_status_idx").on(table.status),
     index("payment_history_transactionId_idx").on(table.transactionId),
+    index("payment_history_stripePaymentIntentId_idx").on(table.stripePaymentIntentId),
   ]
 );
 

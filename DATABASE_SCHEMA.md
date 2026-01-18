@@ -152,6 +152,33 @@ The platform supports four user roles:
 - ✅ No recurring payments
 - ✅ Best long-term value
 
+### Stripe Integration
+
+The subscription system is fully integrated with Stripe for payment processing:
+
+**Features:**
+- Automatic Stripe customer creation on signup
+- Secure checkout with Stripe Checkout
+- Subscription lifecycle management (create, update, cancel)
+- Trial period support with abuse prevention
+- Real-time webhook sync for subscription updates
+- Customer portal for self-service subscription management
+- Payment history tracking for invoicing
+
+**Database Fields:**
+- `subscription.stripeCustomerId` - Stripe Customer ID
+- `subscription.stripeSubscriptionId` - Stripe Subscription ID
+- `subscription.stripePriceId` - Current Stripe Price ID
+- `subscription_plan.stripePriceId` - Stripe Price for the plan
+- `subscription_plan.stripeProductId` - Stripe Product ID
+- `payment_history.stripePaymentIntentId` - Payment Intent ID
+- `payment_history.stripeInvoiceId` - Invoice ID
+
+**Trial Abuse Prevention:**
+Users can only claim one trial period per account across all plans. The system tracks `trialStart` and prevents subsequent trial claims.
+
+For detailed Stripe integration guide, see [STRIPE_INTEGRATION.md](./STRIPE_INTEGRATION.md).
+
 ---
 
 ## Course Structure
