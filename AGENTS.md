@@ -10,6 +10,11 @@ This project uses **Ultracite**, a zero-config preset that enforces strict code 
 
 Biome (the underlying engine) provides robust linting and formatting. Most issues are automatically fixable.
 
+## Documentation (Context7)
+
+- Use the Context7 MCP server for library/API docs, setup steps, and config questions when unsure
+- Prefer Context7 for up-to-date examples instead of guessing
+
 ---
 
 ## Core Principles
@@ -117,6 +122,71 @@ Biome's linter will catch most issues automatically. Focus your attention on:
 4. **Edge cases** - Handle boundary conditions and error states
 5. **User experience** - Accessibility, performance, and usability considerations
 6. **Documentation** - Add comments for complex logic, but prefer self-documenting code
+
+---
+
+## Icons and Loading States
+
+### Icons (non-negotiable)
+
+- NO `lucide-react` anywhere
+- HugeIcons only: `@hugeicons/react` and `@hugeicons/core-free-icons`
+
+Basic usage:
+
+```
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Notification03Icon } from "@hugeicons/core-free-icons";
+
+export function Example() {
+  return (
+    <HugeiconsIcon
+      icon={Notification03Icon}
+      size={24}
+      color="currentColor"
+      strokeWidth={1.5}
+    />
+  );
+}
+```
+
+Icon availability rule (MCP)
+
+- If you are not sure whether an icon exists or which icon name to use:
+  - Check the HugeIcons MCP server first (do not guess and do not invent icon names)
+  - Only add icons that exist in the package
+
+### Loading states & spinners
+
+- Always use `<Spinner />` from `@/components/ui/spinner` for loading states
+- NEVER create custom spinners (no custom divs with `animate-spin`)
+- The Spinner component is the official shadcn-style SVG spinner
+
+Usage:
+
+```
+import { Spinner } from "@/components/ui/spinner";
+
+<Button disabled={isLoading}>
+  {isLoading ? <Spinner size={15} /> : <Icon />}
+  {isLoading ? "Loading..." : "Click me"}
+</Button>
+
+<Spinner size={24} className="text-primary" />
+```
+
+Spinner props:
+
+- `size?: number` - Size in pixels (default: 16)
+- `className?: string` - Additional Tailwind classes
+- Inherits all standard SVG props
+
+Common sizes:
+
+- 15 - For button icons
+- 16 - Default/small inline
+- 24 - Medium standalone
+- 32 - Large loading states
 
 ---
 
