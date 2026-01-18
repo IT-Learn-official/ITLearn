@@ -74,10 +74,8 @@ STRIPE_PUBLISHABLE_KEY=pk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 
 # Stripe Price IDs
-STRIPE_PRICE_PRO_MONTHLY=price_...
-STRIPE_PRICE_PRO_QUARTERLY=price_...
-STRIPE_PRICE_PRO_YEARLY=price_...
-STRIPE_PRICE_LIFETIME=price_...
+STRIPE_PRICE_PRO_YEARLY=price_...  # €9/month billed annually (€108/year)
+STRIPE_PRICE_LIFETIME=price_...     # €69 one-time
 ```
 
 ### 3. Create Stripe Products
@@ -86,10 +84,8 @@ In the Stripe Dashboard:
 
 1. Go to **Products**
 2. Create products for each plan:
-   - Pro Monthly (recurring: monthly)
-   - Pro Quarterly (recurring: every 3 months)
-   - Pro Yearly (recurring: yearly)
-   - Lifetime (one-time payment)
+   - Pro Plan (recurring: yearly, price: €108/year or €9/month)
+   - Lifetime (one-time payment: €69)
 3. Copy the Price IDs to your `.env` file
 
 ### 4. Set Up Webhooks
@@ -112,7 +108,7 @@ In the Stripe Dashboard:
 import { createCheckoutSession } from "@/lib/stripe";
 
 const session = await createCheckoutSession({
-  priceId: process.env.STRIPE_PRICE_PRO_MONTHLY!,
+  priceId: process.env.STRIPE_PRICE_PRO_YEARLY!, // €9/month billed annually
   customerId: user.stripeCustomerId,
   userProfileId: user.id,
   successUrl: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
@@ -229,7 +225,7 @@ This works across all plans - if you used a trial on Monthly, you can't get a tr
 | Unlimited XP | ❌ | ✅ | ✅ |
 | Certificates | ❌ | ✅ | ✅ |
 | Auto-renew | N/A | ✅ | N/A |
-| Price | Free | €9-29/mo | €299 |
+| Price | Free | €9/mo (€108/year) | €69 (one-time) |
 
 ## Testing
 

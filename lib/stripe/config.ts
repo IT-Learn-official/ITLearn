@@ -20,10 +20,8 @@ export const stripeConfig = {
   // Subscription Plans Mapping
   // Map internal subscription types to Stripe Price IDs
   plans: {
-    pro_monthly: process.env.STRIPE_PRICE_PRO_MONTHLY || "",
-    pro_quarterly: process.env.STRIPE_PRICE_PRO_QUARTERLY || "",
-    pro_yearly: process.env.STRIPE_PRICE_PRO_YEARLY || "",
-    lifetime: process.env.STRIPE_PRICE_LIFETIME || "",
+    pro_yearly: process.env.STRIPE_PRICE_PRO_YEARLY || "", // €9/month billed annually
+    lifetime: process.env.STRIPE_PRICE_LIFETIME || "", // €69 one-time
   },
 
   // Feature Configuration

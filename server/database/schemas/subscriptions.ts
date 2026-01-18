@@ -14,10 +14,8 @@ import { userProfile } from "./users";
 // Subscription type enum
 export const subscriptionTypeEnum = pgEnum("subscription_type", [
   "free",
-  "pro_monthly",
-  "pro_quarterly",
-  "pro_yearly",
-  "lifetime",
+  "pro_yearly", // €9/month billed annually (€108/year)
+  "lifetime", // €69 one-time
 ]);
 
 // Subscription status enum

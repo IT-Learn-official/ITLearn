@@ -122,10 +122,7 @@ The platform supports four user roles:
 - ❌ Limited to free courses only
 
 ### Pro Tier
-**Price:** Variable (Monthly/Quarterly/Yearly)
-- **Monthly:** €X/month
-- **Quarterly:** €Y/3 months (save Z%)
-- **Yearly:** €W/year (save V% - best value!)
+**Price:** €9/month (billed annually at €108/year)
 
 **Features:**
 - ✅ Access to ALL courses
@@ -137,13 +134,11 @@ The platform supports four user roles:
 - ✅ Priority support
 - ✅ Early access to new content
 
-**Subscription Types:**
-- `pro_monthly` - Billed monthly
-- `pro_quarterly` - Billed every 3 months
-- `pro_yearly` - Billed annually with discount
+**Subscription Type:**
+- `pro_yearly` - €9/month billed annually (€108/year total)
 
 ### Lifetime Tier
-**Price:** One-time payment of €Z
+**Price:** €69 (one-time payment)
 
 **Features:**
 - ✅ All Pro features

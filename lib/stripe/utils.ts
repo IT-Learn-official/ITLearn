@@ -224,9 +224,7 @@ export async function getUserSubscriptionStatus(userProfileId: string) {
     };
   }
 
-  const isPro = ["pro_monthly", "pro_quarterly", "pro_yearly"].includes(
-    userSub.plan.type
-  );
+  const isPro = userSub.plan.type === "pro_yearly";
   const isLifetime = userSub.plan.type === "lifetime";
 
   return {
