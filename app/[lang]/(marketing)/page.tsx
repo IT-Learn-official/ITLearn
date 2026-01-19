@@ -1,12 +1,12 @@
 import {
-  ArrowRight,
-  Check,
-  Code2,
-  Sparkles,
-  Star,
-  Trophy,
-  Users,
-} from "lucide-react";
+  ArrowRight01Icon,
+  Award01Icon,
+  SparklesIcon,
+  StarIcon,
+  Tick01Icon,
+  UserGroupIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import BlurText from "@/components/marketing/blur-text";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,26 @@ export default async function Home({
   const howItWorksId = "how-it-works";
   const coursesId = "courses";
   const pricingId = "pricing";
+  const howItWorksMedia = [
+    {
+      videoSrc: "/marketing/done-with-the-old-way.mp4",
+      poster: "/marketing/done-with-the-old-way.jpg",
+    },
+    {
+      videoSrc: "/marketing/choose-a-course.mp4",
+      poster: "/marketing/choose-a-course.jpg",
+    },
+    {
+      videoSrc: "/marketing/build-real-projects.mp4",
+      poster: "/marketing/build-real-projects.jpg",
+    },
+  ];
+  const howItWorksCards = dict.marketing.home.howItWorks.steps.map(
+    (step, index) => ({
+      ...step,
+      ...howItWorksMedia[index],
+    })
+  );
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -90,7 +110,11 @@ export default async function Home({
               >
                 <Link href={`/${lang}/register`}>
                   {dict.marketing.home.hero.primaryCta}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <HugeiconsIcon
+                    className="ml-2 h-4 w-4"
+                    icon={ArrowRight01Icon}
+                    strokeWidth={1.8}
+                  />
                 </Link>
               </Button>
               <Button
@@ -138,21 +162,31 @@ export default async function Home({
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            {dict.marketing.home.howItWorks.steps.map((step, i) => (
+            {howItWorksCards.map((card, index) => (
               <div
-                className="group relative rounded-2xl border border-border/50 bg-card p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
-                key={step.title}
+                className="group relative min-h-105 overflow-hidden rounded-2xl border border-border/50 bg-[#181d2c] p-8 text-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                key={card.title}
               >
+                <div className="mb-6 overflow-hidden rounded-xl">
+                  <video
+                    autoPlay
+                    className="h-52 w-full object-contain"
+                    loop
+                    muted
+                    playsInline
+                    poster={card.poster}
+                    src={card.videoSrc}
+                  />
+                </div>
                 <div className="pointer-events-none absolute top-6 right-6 select-none font-bold text-6xl text-muted/20">
-                  {i + 1}
+                  {index + 1}
                 </div>
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                  <Code2 className="h-6 w-6" />
+                <div className="mt-6">
+                  <h3 className="mb-3 font-bold text-xl">{card.title}</h3>
+                  <p className="text-white/70 leading-relaxed">
+                    {card.description}
+                  </p>
                 </div>
-                <h3 className="mb-3 font-bold text-xl">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {step.description}
-                </p>
               </div>
             ))}
           </div>
@@ -172,7 +206,11 @@ export default async function Home({
             <Button asChild className="group" variant="ghost">
               <Link href={`/${lang}/courses`}>
                 View all paths{" "}
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <HugeiconsIcon
+                  className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
+                  icon={ArrowRight01Icon}
+                  strokeWidth={1.8}
+                />
               </Link>
             </Button>
           </div>
@@ -188,7 +226,11 @@ export default async function Home({
                     <span className="rounded-full border border-border bg-muted px-2.5 py-0.5 font-medium text-muted-foreground text-xs">
                       {course.level}
                     </span>
-                    <Sparkles className="h-4 w-4 text-primary opacity-0 transition-opacity group-hover:opacity-100" />
+                    <HugeiconsIcon
+                      className="h-4 w-4 text-primary opacity-0 transition-opacity group-hover:opacity-100"
+                      icon={SparklesIcon}
+                      strokeWidth={1.6}
+                    />
                   </div>
                   <CardTitle className="text-xl">{course.title}</CardTitle>
                 </CardHeader>
@@ -198,11 +240,19 @@ export default async function Home({
                   </p>
                   <div className="flex flex-col gap-2 pt-2 font-medium text-muted-foreground text-xs">
                     <div className="flex items-center gap-2">
-                      <Trophy className="h-3.5 w-3.5 text-primary" />{" "}
+                      <HugeiconsIcon
+                        className="h-3.5 w-3.5 text-primary"
+                        icon={Award01Icon}
+                        strokeWidth={1.6}
+                      />{" "}
                       {course.project}
                     </div>
                     <div className="flex items-center gap-2">
-                      <Users className="h-3.5 w-3.5 text-primary" />{" "}
+                      <HugeiconsIcon
+                        className="h-3.5 w-3.5 text-primary"
+                        icon={UserGroupIcon}
+                        strokeWidth={1.6}
+                      />{" "}
                       {course.time}
                     </div>
                   </div>
@@ -226,8 +276,16 @@ export default async function Home({
           {/* Gamification */}
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div className="order-2 space-y-8 lg:order-1">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/10 text-orange-500">
-                <Trophy className="h-6 w-6" />
+              <div className="inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-[#181d2c]">
+                <video
+                  autoPlay
+                  className="h-full w-full object-contain"
+                  loop
+                  muted
+                  playsInline
+                  poster="/marketing/learning-that-keeps-you-motivated.jpg"
+                  src="/marketing/learning-that-keeps-you-motivated.mp4"
+                />
               </div>
               <div className="space-y-4">
                 <h2 className="font-bold text-3xl tracking-tight">
@@ -243,7 +301,11 @@ export default async function Home({
                     className="flex items-center gap-3 rounded-lg border bg-background/50 p-3"
                     key={bullet}
                   >
-                    <Check className="h-4 w-4 shrink-0 text-primary" />
+                    <HugeiconsIcon
+                      className="h-4 w-4 shrink-0 text-primary"
+                      icon={Tick01Icon}
+                      strokeWidth={1.8}
+                    />
                     <span className="font-medium text-sm">{bullet}</span>
                   </li>
                 ))}
@@ -252,7 +314,11 @@ export default async function Home({
             {/* Visual Placeholder for Gamification */}
             <div className="relative order-1 flex h-75 items-center justify-center overflow-hidden rounded-2xl border bg-linear-to-br from-orange-500/20 via-background to-background lg:order-2 lg:h-100">
               <div className="absolute inset-0 opacity-20" />
-              <Trophy className="h-32 w-32 text-orange-500" />
+              <HugeiconsIcon
+                className="h-32 w-32 text-orange-500"
+                icon={Award01Icon}
+                strokeWidth={1.4}
+              />
             </div>
           </div>
 
@@ -260,11 +326,24 @@ export default async function Home({
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div className="relative flex h-75 items-center justify-center overflow-hidden rounded-2xl border bg-linear-to-br from-blue-500/20 via-background to-background lg:h-100">
               <div className="absolute inset-0 opacity-20" />
-              <Users className="h-32 w-32 text-blue-500" />
+              <HugeiconsIcon
+                className="h-32 w-32 text-blue-500"
+                icon={UserGroupIcon}
+                strokeWidth={1.4}
+              />
             </div>
+
             <div className="space-y-8">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-500">
-                <Users className="h-6 w-6" />
+              <div className="inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-[#181d2c]">
+                <video
+                  autoPlay
+                  className="h-full w-full object-contain"
+                  loop
+                  muted
+                  playsInline
+                  poster="/marketing/je-leert-nooit-iets-alleen.jpg"
+                  src="/marketing/je-leert-nooit-iets-alleen.mp4"
+                />
               </div>
               <div className="space-y-4">
                 <h2 className="font-bold text-3xl tracking-tight">
@@ -277,7 +356,11 @@ export default async function Home({
               <ul className="space-y-3">
                 {dict.marketing.home.community.features.map((feature) => (
                   <li className="flex items-center gap-3" key={feature}>
-                    <Star className="h-5 w-5 shrink-0 fill-blue-500/20 text-blue-500" />
+                    <HugeiconsIcon
+                      className="h-5 w-5 shrink-0 text-blue-500"
+                      icon={StarIcon}
+                      strokeWidth={1.6}
+                    />
                     <span className="text-base">{feature}</span>
                   </li>
                 ))}
@@ -322,7 +405,12 @@ export default async function Home({
                     className="flex gap-2 text-muted-foreground text-sm"
                     key={f}
                   >
-                    <Check className="mt-0.5 h-4 w-4" /> {f}
+                    <HugeiconsIcon
+                      className="mt-0.5 h-4 w-4"
+                      icon={Tick01Icon}
+                      strokeWidth={1.6}
+                    />{" "}
+                    {f}
                   </div>
                 ))}
               </CardContent>
@@ -358,7 +446,11 @@ export default async function Home({
                 {pricingPlans.pro.features.map((f) => (
                   <div className="flex gap-2 font-medium text-sm" key={f}>
                     <div className="rounded-full bg-primary/20 p-0.5">
-                      <Check className="h-3 w-3 text-primary" />
+                      <HugeiconsIcon
+                        className="h-3 w-3 text-primary"
+                        icon={Tick01Icon}
+                        strokeWidth={1.6}
+                      />
                     </div>{" "}
                     {f}
                   </div>
@@ -385,7 +477,12 @@ export default async function Home({
                     className="flex gap-2 text-muted-foreground text-sm"
                     key={f}
                   >
-                    <Check className="mt-0.5 h-4 w-4" /> {f}
+                    <HugeiconsIcon
+                      className="mt-0.5 h-4 w-4"
+                      icon={Tick01Icon}
+                      strokeWidth={1.6}
+                    />{" "}
+                    {f}
                   </div>
                 ))}
               </CardContent>
