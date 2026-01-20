@@ -127,9 +127,7 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() => router.push("/dashboard/settings")}
-              >
+              <DropdownMenuItem>
                 <HugeiconsIcon icon={User02Icon} strokeWidth={2} />
                 Account
               </DropdownMenuItem>
