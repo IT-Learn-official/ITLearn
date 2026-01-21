@@ -4,6 +4,16 @@ import superjson from "superjson";
 import { userProfile } from "../database/schemas/users";
 import type { TRPCContext } from "./context";
 
+type UserProfile = typeof userProfile.$inferSelect;
+
+const isUserProfile = (value: unknown): value is UserProfile => {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  return "id" in value && "userId" in value && "role" in value;
+};
+
 const t = initTRPC.context<TRPCContext>().create({
   transformer: superjson,
 });
@@ -42,7 +52,7 @@ const withUserProfile = t.middleware(async ({ ctx, next }) => {
     where: eq(userProfile.userId, ctx.user.id),
   });
 
-  if (!profile) {
+  if (!isUserProfile(profile)) {
     throw new TRPCError({
       code: "NOT_FOUND",
       message: "User profile not found",
@@ -73,9 +83,11 @@ const hasRole = (
 ) =>
   t.middleware(async ({ ctx, next }) => {
     // Check if we already have userProfile from withUserProfile middleware
-    if ("userProfile" in ctx && ctx.userProfile) {
+    const existingProfile = "userProfile" in ctx ? ctx.userProfile : null;
+
+    if (isUserProfile(existingProfile)) {
       // Profile already fetched, just check the role
-      if (!roles.includes(ctx.userProfile.role)) {
+      if (!roles.includes(existingProfile.role)) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: `You must be a ${roles.join(" or ")} to access this resource`,
@@ -83,7 +95,10 @@ const hasRole = (
       }
 
       return next({
-        ctx,
+        ctx: {
+          ...ctx,
+          userProfile: existingProfile,
+        },
       });
     }
 
@@ -99,7 +114,7 @@ const hasRole = (
       where: eq(userProfile.userId, ctx.user.id),
     });
 
-    if (!profile) {
+    if (!isUserProfile(profile)) {
       throw new TRPCError({
         code: "NOT_FOUND",
         message: "User profile not found",

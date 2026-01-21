@@ -24,6 +24,7 @@ export async function handleSubscriptionCreated(
   event: Stripe.CustomerSubscriptionCreatedEvent
 ) {
   const stripeSubscription = event.data.object;
+  const periodWindow = getSubscriptionPeriodWindow(stripeSubscription);
 
   // Find user by Stripe customer ID
   const existingSubscription = await db.query.subscription.findFirst({
@@ -46,12 +47,12 @@ export async function handleSubscriptionCreated(
       stripeSubscriptionId: stripeSubscription.id,
       stripePriceId: stripeSubscription.items.data[0]?.price.id,
       status: mapStripeStatus(stripeSubscription.status),
-      stripeCurrentPeriodStart: new Date(
-        stripeSubscription.current_period_start * 1000
-      ),
-      stripeCurrentPeriodEnd: new Date(
-        stripeSubscription.current_period_end * 1000
-      ),
+      stripeCurrentPeriodStart:
+        periodWindow.start !== null
+          ? new Date(periodWindow.start * 1000)
+          : null,
+      stripeCurrentPeriodEnd:
+        periodWindow.end !== null ? new Date(periodWindow.end * 1000) : null,
       stripeCancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
       trialStart: stripeSubscription.trial_start
         ? new Date(stripeSubscription.trial_start * 1000)
@@ -74,18 +75,19 @@ export async function handleSubscriptionUpdated(
   event: Stripe.CustomerSubscriptionUpdatedEvent
 ) {
   const stripeSubscription = event.data.object;
+  const periodWindow = getSubscriptionPeriodWindow(stripeSubscription);
 
   await db
     .update(subscription)
     .set({
       stripePriceId: stripeSubscription.items.data[0]?.price.id,
       status: mapStripeStatus(stripeSubscription.status),
-      stripeCurrentPeriodStart: new Date(
-        stripeSubscription.current_period_start * 1000
-      ),
-      stripeCurrentPeriodEnd: new Date(
-        stripeSubscription.current_period_end * 1000
-      ),
+      stripeCurrentPeriodStart:
+        periodWindow.start !== null
+          ? new Date(periodWindow.start * 1000)
+          : null,
+      stripeCurrentPeriodEnd:
+        periodWindow.end !== null ? new Date(periodWindow.end * 1000) : null,
       stripeCancelAtPeriodEnd: stripeSubscription.cancel_at_period_end,
       cancelledAt: stripeSubscription.canceled_at
         ? new Date(stripeSubscription.canceled_at * 1000)
@@ -122,13 +124,16 @@ export async function handlePaymentSucceeded(
   event: Stripe.InvoicePaymentSucceededEvent
 ) {
   const invoice = event.data.object;
+  const paymentDetails = getInvoicePaymentDetails(invoice);
+  const invoiceSubscriptionId = getInvoiceSubscriptionId(invoice);
+
+  if (!invoiceSubscriptionId) {
+    throw new Error(`Subscription not found on invoice payload: ${invoice.id}`);
+  }
 
   // Find subscription by Stripe subscription ID
   const sub = await db.query.subscription.findFirst({
-    where: eq(
-      subscription.stripeSubscriptionId,
-      invoice.subscription as string
-    ),
+    where: eq(subscription.stripeSubscriptionId, invoiceSubscriptionId),
   });
 
   if (!sub) {
@@ -143,10 +148,13 @@ export async function handlePaymentSucceeded(
     amount: (invoice.amount_paid / 100).toString(),
     currency: invoice.currency.toUpperCase(),
     status: "completed",
-    paymentMethod: invoice.payment_intent ? "stripe" : "unknown",
+    paymentMethod:
+      paymentDetails.paymentIntentId || paymentDetails.chargeId
+        ? "stripe"
+        : "unknown",
     stripeInvoiceId: invoice.id,
-    stripePaymentIntentId: invoice.payment_intent as string,
-    stripeChargeId: invoice.charge as string,
+    stripePaymentIntentId: paymentDetails.paymentIntentId ?? undefined,
+    stripeChargeId: paymentDetails.chargeId ?? undefined,
     invoiceUrl: invoice.hosted_invoice_url || undefined,
     paidAt: invoice.status_transitions.paid_at
       ? new Date(invoice.status_transitions.paid_at * 1000)
@@ -166,12 +174,17 @@ export async function handlePaymentFailed(
   event: Stripe.InvoicePaymentFailedEvent
 ) {
   const invoice = event.data.object;
+  const paymentDetails = getInvoicePaymentDetails(invoice);
+  const invoiceSubscriptionId = getInvoiceSubscriptionId(invoice);
+
+  if (!invoiceSubscriptionId) {
+    throw new Error(
+      `Subscription not found on failed invoice payload: ${invoice.id}`
+    );
+  }
 
   const sub = await db.query.subscription.findFirst({
-    where: eq(
-      subscription.stripeSubscriptionId,
-      invoice.subscription as string
-    ),
+    where: eq(subscription.stripeSubscriptionId, invoiceSubscriptionId),
   });
 
   if (!sub) {
@@ -185,9 +198,12 @@ export async function handlePaymentFailed(
     amount: (invoice.amount_due / 100).toString(),
     currency: invoice.currency.toUpperCase(),
     status: "failed",
-    paymentMethod: invoice.payment_intent ? "stripe" : "unknown",
+    paymentMethod:
+      paymentDetails.paymentIntentId || paymentDetails.chargeId
+        ? "stripe"
+        : "unknown",
     stripeInvoiceId: invoice.id,
-    stripePaymentIntentId: invoice.payment_intent as string,
+    stripePaymentIntentId: paymentDetails.paymentIntentId ?? undefined,
     metadata: JSON.stringify({
       billingReason: invoice.billing_reason,
       attemptCount: invoice.attempt_count,
@@ -217,6 +233,77 @@ function mapStripeStatus(
     default:
       return "pending";
   }
+}
+
+function getSubscriptionPeriodWindow(stripeSubscription: Stripe.Subscription): {
+  start: number | null;
+  end: number | null;
+} {
+  const items = stripeSubscription.items?.data ?? [];
+
+  if (items.length === 0) {
+    return { start: null, end: null };
+  }
+
+  const maxStart = Math.max(...items.map((item) => item.current_period_start));
+  const maxEnd = Math.max(...items.map((item) => item.current_period_end));
+
+  return {
+    start: Number.isFinite(maxStart) ? maxStart : null,
+    end: Number.isFinite(maxEnd) ? maxEnd : null,
+  };
+}
+
+function normalizeStripeId(
+  value: string | { id: string } | null | undefined
+): string | null {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (value && typeof value === "object" && "id" in value) {
+    return value.id;
+  }
+
+  return null;
+}
+
+function getInvoicePaymentDetails(invoice: Stripe.Invoice): {
+  paymentIntentId: string | null;
+  chargeId: string | null;
+} {
+  const payments = invoice.payments?.data ?? [];
+
+  const paymentIntent =
+    payments.find((payment) => payment.payment.type === "payment_intent")
+      ?.payment.payment_intent ?? null;
+  const charge =
+    payments.find((payment) => payment.payment.type === "charge")?.payment
+      .charge ?? null;
+
+  return {
+    paymentIntentId: normalizeStripeId(paymentIntent),
+    chargeId: normalizeStripeId(charge),
+  };
+}
+
+function getInvoiceSubscriptionId(invoice: Stripe.Invoice): string | null {
+  const lines = invoice.lines?.data ?? [];
+
+  const subscriptionLine =
+    lines.find((line) => line.subscription) ??
+    lines.find(
+      (line) => line.parent?.subscription_item_details?.subscription
+    ) ??
+    lines.find((line) => line.parent?.invoice_item_details?.subscription);
+
+  const subscriptionId =
+    subscriptionLine?.subscription ??
+    subscriptionLine?.parent?.subscription_item_details?.subscription ??
+    subscriptionLine?.parent?.invoice_item_details?.subscription ??
+    null;
+
+  return normalizeStripeId(subscriptionId);
 }
 
 /**
