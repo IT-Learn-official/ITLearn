@@ -15,12 +15,12 @@
  */
 function getRequiredEnv(name: string): string {
   const value = process.env[name];
-  
+
   // In development, allow empty values for easier local setup
   if (!value && process.env.NODE_ENV === "production") {
     throw new Error(`Missing required Stripe environment variable: ${name}`);
   }
-  
+
   return value || "";
 }
 

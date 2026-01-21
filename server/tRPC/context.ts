@@ -6,8 +6,8 @@ import { db } from "../database";
 export const createTRPCContext = async ({
   req,
 }: FetchCreateContextFnOptions) => {
-  let session = null;
-  
+  let session: Awaited<ReturnType<typeof auth.api.getSession>> | null = null;
+
   try {
     session = await auth.api.getSession({ headers: req.headers });
   } catch (error) {

@@ -175,10 +175,7 @@ export async function handlePaymentFailed(
   });
 
   if (!sub) {
-    throw new Error(
-      `Subscription not found for failed invoice: ${invoice.id}`
-    );
-  }
+    throw new Error(`Subscription not found for failed invoice: ${invoice.id}`);
   }
 
   await db.insert(paymentHistory).values({
