@@ -161,6 +161,7 @@ model Account {
   updatedAt             DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([providerId, accountId], map: "account_providerId_accountId_unique")
   @@index([userId], map: "account_userId_idx")
   @@map("account")
 }
@@ -179,7 +180,7 @@ model Verification {
 
 model RateLimit {
   id          String  @id @default(uuid())
-  key         String?
+  key         String  @unique
   count       Int?
   lastRequest BigInt? @map("last_request")
 
@@ -224,8 +225,6 @@ model UserProfile {
   quizAttempts         QuizAttempt[]
 
   @@index([role], map: "user_profile_role_idx")
-  @@index([username], map: "user_profile_username_idx")
-  @@index([userId], map: "user_profile_userId_idx")
   @@map("user_profile")
 }
 
@@ -241,7 +240,7 @@ model SubscriptionPlan {
   price           Decimal          @db.Decimal(10, 2)
   currency        String           @default("EUR")
   durationDays    Int?             @map("duration_days")
-  features        String[]
+  features        String[]  @default([])
   stripePriceId   String?          @unique @map("stripe_price_id")
   stripeProductId String?          @map("stripe_product_id")
   trialDays       Int?             @default(0) @map("trial_days")
@@ -280,11 +279,8 @@ model Subscription {
 
   payments PaymentHistory[]
 
-  @@index([userProfileId], map: "subscription_userProfileId_idx")
   @@index([status], map: "subscription_status_idx")
   @@index([endDate], map: "subscription_endDate_idx")
-  @@index([stripeCustomerId], map: "subscription_stripeCustomerId_idx")
-  @@index([stripeSubscriptionId], map: "subscription_stripeSubscriptionId_idx")
   @@map("subscription")
 }
 
@@ -313,8 +309,6 @@ model PaymentHistory {
   @@index([subscriptionId], map: "payment_history_subscriptionId_idx")
   @@index([userProfileId], map: "payment_history_userProfileId_idx")
   @@index([status], map: "payment_history_status_idx")
-  @@index([transactionId], map: "payment_history_transactionId_idx")
-  @@index([stripePaymentIntentId], map: "payment_history_stripePaymentIntentId_idx")
   @@map("payment_history")
 }
 
@@ -353,6 +347,7 @@ model UserBadge {
   isDisplayed   Boolean    @default(true) @map("is_displayed")
   createdAt     DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
 
+  @@unique([userProfileId, badgeId], map: "user_badge_unique")
   @@index([userProfileId], map: "user_badge_userProfileId_idx")
   @@index([badgeId], map: "user_badge_badgeId_idx")
   @@index([earnedAt], map: "user_badge_earnedAt_idx")
@@ -426,7 +421,7 @@ model Course {
   estimatedDurationMinutes Int?        @map("estimated_duration_minutes")
   totalXpReward           Int          @default(0) @map("total_xp_reward")
   displayOrder            Int          @default(0) @map("display_order")
-  tags                    String[]
+  tags                    String[]  @default([])
   createdBy               String       @map("created_by")
   publishedAt             DateTime?    @map("published_at") @db.Timestamptz(6)
   archivedAt              DateTime?    @map("archived_at") @db.Timestamptz(6)
@@ -438,7 +433,6 @@ model Course {
   prerequisites   CoursePrerequisite[] @relation("CoursePrerequisites")
   requiredBy      CoursePrerequisite[] @relation("CourseRequiredBy")
 
-  @@index([slug], map: "course_slug_idx")
   @@index([status], map: "course_status_idx")
   @@index([accessType], map: "course_accessType_idx")
   @@index([createdBy], map: "course_createdBy_idx")
@@ -455,6 +449,7 @@ model CoursePrerequisite {
   isRequired           Boolean   @default(true) @map("is_required")
   createdAt            DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
 
+  @@unique([courseId, prerequisiteCourseId], map: "course_prerequisite_unique")
   @@index([courseId], map: "course_prerequisite_courseId_idx")
   @@index([prerequisiteCourseId], map: "course_prerequisite_prerequisiteCourseId_idx")
   @@map("course_prerequisite")
@@ -616,7 +611,7 @@ model QuizAttemptAnswer {
   attempt           QuizAttempt   @relation(fields: [attemptId], references: [id], onDelete: Cascade)
   questionId        String        @map("question_id")
   question          QuizQuestion  @relation(fields: [questionId], references: [id])
-  selectedAnswerIds String[]      @map("selected_answer_ids")
+  selectedAnswerIds String[]  @default([]) @map("selected_answer_ids")
   isCorrect         Boolean       @default(false) @map("is_correct")
   pointsEarned      Int           @default(0) @map("points_earned")
   createdAt         DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -638,7 +633,7 @@ model Exercise {
   starterCode   String?            @map("starter_code")
   solutionCode  String?            @map("solution_code")
   testCases     Json?              @map("test_cases")
-  hints         String[]
+  hints         String[]  @default([])
   maxAttempts   Int?               @map("max_attempts")
   timeLimit     Int?               @map("time_limit")
   isPro         Boolean            @default(false) @map("is_pro")
@@ -682,9 +677,9 @@ model Project {
   lesson         Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   title          String
   description    String
-  objectives     String[]
-  requirements   String[]
-  resources      String[]
+  objectives     String[]  @default([])
+  requirements   String[]  @default([])
+  resources      String[]  @default([])
   starterCode    String?  @map("starter_code")
   rubric         Json?
   estimatedHours Int?     @map("estimated_hours")
@@ -710,7 +705,7 @@ model ProjectSubmission {
   description     String?
   repositoryUrl   String?       @map("repository_url")
   liveUrl         String?       @map("live_url")
-  screenshotUrls  String[]      @map("screenshot_urls")
+  screenshotUrls  String[]  @default([]) @map("screenshot_urls")
   notes           String?
   status          ProjectStatus @default(draft)
   score           Int?
@@ -734,15 +729,14 @@ model ProjectFeedback {
   teacherId       String          @map("teacher_id")
   status          ProjectStatus   @default(under_review)
   overallFeedback String          @map("overall_feedback")
-  strengths       String[]
-  improvements    String[]
+  strengths       String[]  @default([])
+  improvements    String[]  @default([])
   score           Int
   rubricScores    Json?           @map("rubric_scores")
   isPublic        Boolean         @default(true) @map("is_public")
   createdAt       DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  @@index([submissionId], map: "project_feedback_submissionId_idx")
   @@index([teacherId], map: "project_feedback_teacherId_idx")
   @@map("project_feedback")
 }
@@ -875,7 +869,6 @@ model ClassRoom {
   teacherAssignments TeacherAssignment[]
 
   @@index([schoolId], map: "class_schoolId_idx")
-  @@index([code], map: "class_code_idx")
   @@map("class")
 }
 
