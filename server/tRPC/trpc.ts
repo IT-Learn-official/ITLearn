@@ -1,8 +1,7 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import type { UserProfile } from "@prisma/client";
 import type { TRPCContext } from "./context";
-
-type UserProfile = typeof userProfile.$inferSelect;
 
 const isUserProfile = (value: unknown): value is UserProfile => {
   if (!value || typeof value !== "object") {
@@ -74,55 +73,20 @@ const withUserProfile = t.middleware(async ({ ctx, next }) => {
   });
 });
 
-// Middleware to ensure user has a specific role
-// This middleware builds on top of withUserProfile to avoid duplicate queries
+// Middleware to ensure user has a specific role.
+// Must be chained after `withUserProfile` — the profile is expected
+// to already be in the context so we don't query the database twice.
 const hasRole = (
   roles: Array<"student" | "teacher" | "admin" | "school_admin">
 ) =>
-  t.middleware(async ({ ctx, next }) => {
-    // Check if we already have userProfile from withUserProfile middleware
-    const existingProfile = "userProfile" in ctx ? ctx.userProfile : null;
-
-    if (isUserProfile(existingProfile)) {
-      // Profile already fetched, just check the role
-      if (!roles.includes(existingProfile.role)) {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: `You must be a ${roles.join(" or ")} to access this resource`,
-        });
-      }
-
-      return next({
-        ctx: {
-          ...ctx,
-          userProfile: existingProfile,
-        },
-      });
-    }
-
-    // If no profile in context, fetch it (fallback for standalone usage)
-    if (!(ctx.session && ctx.user)) {
-      throw new TRPCError({
-        code: "UNAUTHORIZED",
-        message: "You must be logged in to access this resource",
-      });
-    }
-
-    const profile = await ctx.db.query.userProfile.findFirst({
-      where: eq(userProfile.userId, ctx.user.id),
-    });
+  t.middleware(({ ctx, next }) => {
+    const profile = ctx.userProfile;
 
     if (!isUserProfile(profile)) {
       throw new TRPCError({
-        code: "NOT_FOUND",
-        message: "User profile not found",
-      });
-    }
-
-    if (profile.isBanned) {
-      throw new TRPCError({
-        code: "FORBIDDEN",
-        message: "Your account has been banned",
+        code: "INTERNAL_SERVER_ERROR",
+        message:
+          "hasRole middleware must be chained after withUserProfile so the user profile is in context",
       });
     }
 
@@ -136,8 +100,6 @@ const hasRole = (
     return next({
       ctx: {
         ...ctx,
-        session: ctx.session,
-        user: ctx.user,
         userProfile: profile,
       },
     });
