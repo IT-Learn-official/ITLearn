@@ -1,38 +1,21 @@
 import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { haveIBeenPwned, lastLoginMethod } from "better-auth/plugins";
+import { PrismaClient } from "@prisma/client";
 import {
   sendResetPasswordEmail,
   sendVerificationEmail,
 } from "@/lib/emails/send-email";
-import { db } from "@/server/database/index";
-import {
-  account,
-  accountRelations,
-  rateLimit,
-  session,
-  sessionRelations,
-  user,
-  userRelations,
-  verification,
-} from "@/server/database/schemas/auth";
+import { prisma } from "@/src/db/prisma";
+
+const prismaClient = prisma as PrismaClient;
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL,
 
-  database: drizzleAdapter(db, {
-    provider: "pg",
-    schema: {
-      account,
-      accountRelations,
-      rateLimit,
-      session,
-      sessionRelations,
-      user,
-      userRelations,
-      verification,
-    },
+  database: prismaAdapter(prismaClient, {
+    provider: "postgresql",
   }),
 
   /* ------------------------------

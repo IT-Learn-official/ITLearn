@@ -1,15 +1,13 @@
 import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { badge, userBadge } from "@/server/database/schemas/badges";
 import { createTRPCRouter, publicProcedure, userProcedure } from "../trpc";
 
 export const badgesRouter = createTRPCRouter({
   // Get all available badges
   getAll: publicProcedure.query(async ({ ctx }) => {
-    const badges = await ctx.db.query.badge.findMany({
-      where: eq(badge.isActive, true),
-      orderBy: (badge, { asc }) => [asc(badge.displayOrder)],
+    const badges = await ctx.db.badge.findMany({
+      where: { isActive: true },
+      orderBy: { displayOrder: "asc" },
     });
 
     return badges;
@@ -17,12 +15,12 @@ export const badgesRouter = createTRPCRouter({
 
   // Get user's earned badges
   getMyBadges: userProcedure.query(async ({ ctx }) => {
-    const userBadges = await ctx.db.query.userBadge.findMany({
-      where: eq(userBadge.userProfileId, ctx.userProfile.id),
-      with: {
+    const userBadges = await ctx.db.userBadge.findMany({
+      where: { userProfileId: ctx.userProfile.id },
+      include: {
         badge: true,
       },
-      orderBy: (userBadge, { desc }) => [desc(userBadge.earnedAt)],
+      orderBy: { earnedAt: "desc" },
     });
 
     return userBadges;
@@ -33,12 +31,11 @@ export const badgesRouter = createTRPCRouter({
     .input(z.object({ badgeId: z.string() }))
     .mutation(async ({ ctx, input }) => {
       // Check if user already has this badge
-      const existing = await ctx.db.query.userBadge.findFirst({
-        where: (ub, { and, eq }) =>
-          and(
-            eq(ub.userProfileId, ctx.userProfile.id),
-            eq(ub.badgeId, input.badgeId)
-          ),
+      const existing = await ctx.db.userBadge.findFirst({
+        where: {
+          userProfileId: ctx.userProfile.id,
+          badgeId: input.badgeId,
+        },
       });
 
       if (existing) {
@@ -49,8 +46,8 @@ export const badgesRouter = createTRPCRouter({
       }
 
       // Get badge details
-      const badgeDetails = await ctx.db.query.badge.findFirst({
-        where: eq(badge.id, input.badgeId),
+      const badgeDetails = await ctx.db.badge.findFirst({
+        where: { id: input.badgeId },
       });
 
       if (!badgeDetails) {
@@ -61,16 +58,15 @@ export const badgesRouter = createTRPCRouter({
       }
 
       // Create user badge
-      const [newUserBadge] = await ctx.db
-        .insert(userBadge)
-        .values({
+      const newUserBadge = await ctx.db.userBadge.create({
+        data: {
           id: crypto.randomUUID(),
           userProfileId: ctx.userProfile.id,
           badgeId: input.badgeId,
           earnedAt: new Date(),
           claimedAt: new Date(),
-        })
-        .returning();
+        },
+      });
 
       return newUserBadge;
     }),
@@ -84,11 +80,10 @@ export const badgesRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const [updated] = await ctx.db
-        .update(userBadge)
-        .set({ isDisplayed: input.isDisplayed })
-        .where(eq(userBadge.id, input.userBadgeId))
-        .returning();
+      const updated = await ctx.db.userBadge.update({
+        where: { id: input.userBadgeId },
+        data: { isDisplayed: input.isDisplayed },
+      });
 
       return updated;
     }),

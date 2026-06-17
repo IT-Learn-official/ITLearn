@@ -321,9 +321,9 @@ Designed to support educational institutions:
 ## Technical Implementation
 
 ### Database Technology
-- **ORM:** Drizzle ORM
+- **ORM:** Prisma ORM
 - **Database:** PostgreSQL
-- **Migrations:** Drizzle Kit
+- **Migrations:** Prisma Migrate
 
 ### API Layer
 - **Framework:** tRPC
@@ -439,7 +439,7 @@ Performance-critical indexes on:
 1. **Role Verification:** All protected routes check user role
 2. **Ownership Validation:** Users can only access their own data
 3. **Subscription Checks:** Feature access validated on every request
-4. **SQL Injection:** Drizzle ORM provides parameterized queries
+4. **SQL Injection:** Prisma Client uses parameterized queries
 5. **XSS Prevention:** Content sanitization on input
 6. **Rate Limiting:** Better Auth rate limiting enabled
 

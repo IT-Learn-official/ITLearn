@@ -1,19 +1,13 @@
 import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
 import { z } from "zod";
-import {
-  paymentHistory,
-  subscription,
-  subscriptionPlan,
-} from "@/server/database/schemas/subscriptions";
 import { adminProcedure, createTRPCRouter, userProcedure } from "../trpc";
 
 export const subscriptionsRouter = createTRPCRouter({
   // Get all available subscription plans
   getPlans: userProcedure.query(async ({ ctx }) => {
-    const plans = await ctx.db.query.subscriptionPlan.findMany({
-      where: eq(subscriptionPlan.isActive, true),
-      orderBy: (plan, { asc }) => [asc(plan.displayOrder)],
+    const plans = await ctx.db.subscriptionPlan.findMany({
+      where: { isActive: true },
+      orderBy: { displayOrder: "asc" },
     });
 
     return plans;
@@ -21,9 +15,9 @@ export const subscriptionsRouter = createTRPCRouter({
 
   // Get current user's subscription
   getMy: userProcedure.query(async ({ ctx }) => {
-    const userSubscription = await ctx.db.query.subscription.findFirst({
-      where: eq(subscription.userProfileId, ctx.userProfile.id),
-      with: {
+    const userSubscription = await ctx.db.subscription.findFirst({
+      where: { userProfileId: ctx.userProfile.id },
+      include: {
         plan: true,
       },
     });
@@ -33,9 +27,9 @@ export const subscriptionsRouter = createTRPCRouter({
 
   // Get subscription status (for feature flags)
   getStatus: userProcedure.query(async ({ ctx }) => {
-    const userSubscription = await ctx.db.query.subscription.findFirst({
-      where: eq(subscription.userProfileId, ctx.userProfile.id),
-      with: {
+    const userSubscription = await ctx.db.subscription.findFirst({
+      where: { userProfileId: ctx.userProfile.id },
+      include: {
         plan: true,
       },
     });
@@ -65,9 +59,9 @@ export const subscriptionsRouter = createTRPCRouter({
 
   // Get payment history
   getPaymentHistory: userProcedure.query(async ({ ctx }) => {
-    const payments = await ctx.db.query.paymentHistory.findMany({
-      where: eq(paymentHistory.userProfileId, ctx.userProfile.id),
-      orderBy: (payment, { desc }) => [desc(payment.createdAt)],
+    const payments = await ctx.db.paymentHistory.findMany({
+      where: { userProfileId: ctx.userProfile.id },
+      orderBy: { createdAt: "desc" },
     });
 
     return payments;
@@ -84,17 +78,16 @@ export const subscriptionsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const [newSubscription] = await ctx.db
-        .insert(subscription)
-        .values({
+      const newSubscription = await ctx.db.subscription.create({
+        data: {
           id: crypto.randomUUID(),
           userProfileId: input.userProfileId,
           planId: input.planId,
           status: "active",
           startDate: input.startDate,
           endDate: input.endDate ?? null,
-        })
-        .returning();
+        },
+      });
 
       return newSubscription;
     }),
@@ -107,8 +100,8 @@ export const subscriptionsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const userSubscription = await ctx.db.query.subscription.findFirst({
-        where: eq(subscription.userProfileId, ctx.userProfile.id),
+      const userSubscription = await ctx.db.subscription.findFirst({
+        where: { userProfileId: ctx.userProfile.id },
       });
 
       if (!userSubscription) {
@@ -118,16 +111,15 @@ export const subscriptionsRouter = createTRPCRouter({
         });
       }
 
-      const [cancelled] = await ctx.db
-        .update(subscription)
-        .set({
+      const cancelled = await ctx.db.subscription.update({
+        where: { id: userSubscription.id },
+        data: {
           status: "cancelled",
           cancelledAt: new Date(),
           cancellationReason: input.reason,
           autoRenew: false,
-        })
-        .where(eq(subscription.id, userSubscription.id))
-        .returning();
+        },
+      });
 
       return cancelled;
     }),

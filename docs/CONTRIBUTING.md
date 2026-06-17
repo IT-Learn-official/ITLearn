@@ -77,7 +77,7 @@ Before you begin, ensure you have the following installed:
    # Apply migrations
    bun run db:migrate
 
-   # Optional: Open Drizzle Studio to view your database
+   # Optional: Open Prisma Studio to view your database
    bun run db:studio
    ```
 
@@ -368,7 +368,7 @@ www.itlearn.be/
 - **Styling:** Tailwind CSS 4
 - **UI Components:** Radix UI, shadcn/ui
 - **Authentication:** Better Auth
-- **Database:** PostgreSQL with Drizzle ORM
+- **Database:** PostgreSQL with Prisma ORM
 - **Email:** Resend + React Email
 - **Code Quality:** Biome (via Ultracite)
 - **Icons:** HugeIcons

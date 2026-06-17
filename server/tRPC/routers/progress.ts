@@ -1,6 +1,4 @@
-import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { lessonProgress } from "@/server/database/schemas/progress";
 import { createTRPCRouter, userProcedure } from "../trpc";
 
 export const progressRouter = createTRPCRouter({
@@ -8,12 +6,11 @@ export const progressRouter = createTRPCRouter({
   getCourseProgress: userProcedure
     .input(z.object({ courseId: z.string() }))
     .query(async ({ ctx, input }) => {
-      const progress = await ctx.db.query.courseProgress.findFirst({
-        where: (cp, { and, eq }) =>
-          and(
-            eq(cp.userProfileId, ctx.userProfile.id),
-            eq(cp.courseId, input.courseId)
-          ),
+      const progress = await ctx.db.courseProgress.findFirst({
+        where: {
+          userProfileId: ctx.userProfile.id,
+          courseId: input.courseId,
+        },
       });
 
       return progress;
@@ -23,18 +20,17 @@ export const progressRouter = createTRPCRouter({
   getChapterProgress: userProcedure
     .input(z.object({ courseId: z.string() }))
     .query(async ({ ctx, input }) => {
-      const chapters = await ctx.db.query.chapter.findMany({
-        where: (chapter, { eq }) => eq(chapter.courseId, input.courseId),
+      const chapters = await ctx.db.chapter.findMany({
+        where: { courseId: input.courseId },
       });
 
       const chapterIds = chapters.map((c) => c.id);
 
-      const progress = await ctx.db.query.chapterProgress.findMany({
-        where: (cp, { and, eq, inArray }) =>
-          and(
-            eq(cp.userProfileId, ctx.userProfile.id),
-            inArray(cp.chapterId, chapterIds)
-          ),
+      const progress = await ctx.db.chapterProgress.findMany({
+        where: {
+          userProfileId: ctx.userProfile.id,
+          chapterId: { in: chapterIds },
+        },
       });
 
       return progress;
@@ -44,12 +40,11 @@ export const progressRouter = createTRPCRouter({
   getLessonProgress: userProcedure
     .input(z.object({ lessonId: z.string() }))
     .query(async ({ ctx, input }) => {
-      const progress = await ctx.db.query.lessonProgress.findFirst({
-        where: (lp, { and, eq }) =>
-          and(
-            eq(lp.userProfileId, ctx.userProfile.id),
-            eq(lp.lessonId, input.lessonId)
-          ),
+      const progress = await ctx.db.lessonProgress.findFirst({
+        where: {
+          userProfileId: ctx.userProfile.id,
+          lessonId: input.lessonId,
+        },
       });
 
       return progress;
@@ -59,29 +54,27 @@ export const progressRouter = createTRPCRouter({
   startLesson: userProcedure
     .input(z.object({ lessonId: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const existing = await ctx.db.query.lessonProgress.findFirst({
-        where: (lp, { and, eq }) =>
-          and(
-            eq(lp.userProfileId, ctx.userProfile.id),
-            eq(lp.lessonId, input.lessonId)
-          ),
+      const existing = await ctx.db.lessonProgress.findFirst({
+        where: {
+          userProfileId: ctx.userProfile.id,
+          lessonId: input.lessonId,
+        },
       });
 
       if (existing) {
         return existing;
       }
 
-      const [progress] = await ctx.db
-        .insert(lessonProgress)
-        .values({
+      const progress = await ctx.db.lessonProgress.create({
+        data: {
           id: crypto.randomUUID(),
           userProfileId: ctx.userProfile.id,
           lessonId: input.lessonId,
           status: "in_progress",
           startedAt: new Date(),
           lastAccessedAt: new Date(),
-        })
-        .returning();
+        },
+      });
 
       return progress;
     }),
@@ -96,34 +89,31 @@ export const progressRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const existing = await ctx.db.query.lessonProgress.findFirst({
-        where: (lp, { and, eq }) =>
-          and(
-            eq(lp.userProfileId, ctx.userProfile.id),
-            eq(lp.lessonId, input.lessonId)
-          ),
+      const existing = await ctx.db.lessonProgress.findFirst({
+        where: {
+          userProfileId: ctx.userProfile.id,
+          lessonId: input.lessonId,
+        },
       });
 
       if (existing) {
-        const [updated] = await ctx.db
-          .update(lessonProgress)
-          .set({
+        const updated = await ctx.db.lessonProgress.update({
+          where: { id: existing.id },
+          data: {
             status: "completed",
             xpEarned: input.xpEarned,
             timeSpentSeconds:
               input.timeSpentSeconds ?? existing.timeSpentSeconds,
             completedAt: new Date(),
             lastAccessedAt: new Date(),
-          })
-          .where(eq(lessonProgress.id, existing.id))
-          .returning();
+          },
+        });
 
         return updated;
       }
 
-      const [progress] = await ctx.db
-        .insert(lessonProgress)
-        .values({
+      const progress = await ctx.db.lessonProgress.create({
+        data: {
           id: crypto.randomUUID(),
           userProfileId: ctx.userProfile.id,
           lessonId: input.lessonId,
@@ -133,8 +123,8 @@ export const progressRouter = createTRPCRouter({
           startedAt: new Date(),
           completedAt: new Date(),
           lastAccessedAt: new Date(),
-        })
-        .returning();
+        },
+      });
 
       return progress;
     }),

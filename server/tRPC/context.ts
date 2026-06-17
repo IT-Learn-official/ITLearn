@@ -1,7 +1,7 @@
 import type { FetchCreateContextFnOptions } from "@trpc/server/adapters/fetch";
 
 import { auth } from "@/lib/auth";
-import { db } from "../database";
+import { prisma } from "@/src/db/prisma";
 
 export const createTRPCContext = async ({
   req,
@@ -17,7 +17,7 @@ export const createTRPCContext = async ({
   }
 
   return {
-    db,
+    db: prisma,
     headers: req.headers,
     session,
     user: session?.user ?? null,

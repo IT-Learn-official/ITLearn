@@ -1,7 +1,5 @@
 import { initTRPC, TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
 import superjson from "superjson";
-import { userProfile } from "../database/schemas/users";
 import type { TRPCContext } from "./context";
 
 type UserProfile = typeof userProfile.$inferSelect;
@@ -48,8 +46,8 @@ const withUserProfile = t.middleware(async ({ ctx, next }) => {
     });
   }
 
-  const profile = await ctx.db.query.userProfile.findFirst({
-    where: eq(userProfile.userId, ctx.user.id),
+  const profile = await ctx.db.userProfile.findFirst({
+    where: { userId: ctx.user.id },
   });
 
   if (!isUserProfile(profile)) {

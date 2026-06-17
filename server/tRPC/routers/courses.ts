@@ -1,9 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { and, asc, eq } from "drizzle-orm";
 import { z } from "zod";
-import { chapter } from "@/server/database/schemas/chapters";
-import { course } from "@/server/database/schemas/courses";
-import { lesson } from "@/server/database/schemas/lessons";
 import {
   createTRPCRouter,
   publicProcedure,
@@ -24,17 +20,14 @@ export const coursesRouter = createTRPCRouter({
         .optional()
     )
     .query(async ({ ctx, input }) => {
-      const conditions = [eq(course.status, "published")];
-
-      if (input?.accessType) {
-        conditions.push(eq(course.accessType, input.accessType));
-      }
-
-      const courses = await ctx.db.query.course.findMany({
-        where: and(...conditions),
+      const courses = await ctx.db.course.findMany({
+        where: {
+          status: "published",
+          ...(input?.accessType ? { accessType: input.accessType } : {}),
+        },
         limit: input?.limit ?? 50,
         offset: input?.offset ?? 0,
-        orderBy: (course, { asc }) => [asc(course.displayOrder)],
+        orderBy: { displayOrder: "asc" },
       });
 
       return courses;
@@ -56,16 +49,14 @@ export const coursesRouter = createTRPCRouter({
         });
       }
 
-      const courseData = await ctx.db.query.course.findFirst({
-        where: input.id
-          ? eq(course.id, input.id)
-          : eq(course.slug, input.slug ?? ""),
-        with: {
+      const courseData = await ctx.db.course.findFirst({
+        where: input.id ? { id: input.id } : { slug: input.slug ?? "" },
+        include: {
           chapters: {
-            orderBy: [asc(chapter.displayOrder)],
-            with: {
+            orderBy: { displayOrder: "asc" },
+            include: {
               lessons: {
-                orderBy: [asc(lesson.displayOrder)],
+                orderBy: { displayOrder: "asc" },
               },
             },
           },
@@ -92,17 +83,16 @@ export const coursesRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const newCourse = await ctx.db
-        .insert(course)
-        .values({
+      const newCourse = await ctx.db.course.create({
+        data: {
           ...input,
           id: crypto.randomUUID(),
           createdBy: ctx.userProfile.userId,
           status: "draft",
-        })
-        .returning();
+        },
+      });
 
-      return newCourse[0];
+      return newCourse;
     }),
 
   // Update course (teachers and admins only)
@@ -125,21 +115,19 @@ export const coursesRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { id, ...updates } = input;
 
-      const [updatedCourse] = await ctx.db
-        .update(course)
-        .set(updates)
-        .where(eq(course.id, id))
-        .returning();
+      const updatedCourse = await ctx.db.course.update({
+        where: { id },
+        data: updates,
+      });
 
       return updatedCourse;
     }),
 
   // Get user's enrolled courses
   getMyCourses: userProcedure.query(async ({ ctx }) => {
-    const enrolledCourses = await ctx.db.query.courseProgress.findMany({
-      where: (courseProgress, { eq }) =>
-        eq(courseProgress.userProfileId, ctx.userProfile.id),
-      with: {
+    const enrolledCourses = await ctx.db.courseProgress.findMany({
+      where: { userProfileId: ctx.userProfile.id },
+      include: {
         course: true,
       },
     });
